@@ -224,7 +224,7 @@ Update the template's CSS to include the custom font at the front of the cascade
 
 ```ballerina
 // template.bal — only the <style> body line changes
-body { font-family: 'NotoSansCJK', 'Liberation Sans', sans-serif; padding: 20px; color: #111; }
+body { font-family: 'NotoSansSC', 'Liberation Sans', sans-serif; padding: 20px; color: #111; }
 ```
 
 Load the font bytes once at module init and pass them to every call:
@@ -252,7 +252,7 @@ service /boardingpass on new http:Listener(port) {
                 passengerName, flightNumber, seat, gate, boardingTime);
 
         byte[] pdfBytes = check pdf:parseHtml(html, customFonts = [{
-            family: "NotoSansCJK",
+            family: "NotoSansSC",
             content: cjkFontBytes,
             bold: false,
             italic: false
@@ -298,9 +298,9 @@ Pass any of these as named arguments to `pdf:parseHtml`:
 | `pageSize` | `StandardPageSize` or `CustomPageSize` | `A4` | `A4`, `LETTER`, `LEGAL`, or a `{width, height}` record in points. Swap width and height for landscape — there is no separate `orientation` field. |
 | `margins` | `PageMargins` | `{top: 0, right: 0, bottom: 0, left: 0}` | Page margins in points |
 | `fallbackFontSize` | `float` | `12.0` | Font size used when CSS doesn't specify one |
-| `customFonts` | `Font[]` | (none) | Array of `{family, content, bold, italic}` entries for fonts to load |
-| `additionalCss` | `string` | (none) | Extra CSS injected into every render |
-| `maxPages` | `int` | (none) | Cap on the number of pages rendered — rejects documents larger than this |
+| `customFonts` | `Font[]?` | `()` | Array of `{family, content, bold, italic}` entries for fonts to load |
+| `additionalCss` | `string?` | `()` | Extra CSS injected into every render |
+| `maxPages` | `int?` | `()` | Cap on the number of pages rendered — must be greater than 0 if set. Rejects documents larger than this |
 
 ## Production Considerations
 

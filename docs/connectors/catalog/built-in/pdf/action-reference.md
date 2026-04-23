@@ -26,7 +26,7 @@ Converts an HTML document to PDF bytes. Supports configurable page size, margins
 | `html` | <code>string</code> | Yes | The HTML document to render. Inline CSS and data-URL images are supported. |
 | `options` | <code>*ConversionOptions</code> | No | Included-record options — see the [ConversionOptions](#conversionoptions) record below. |
 
-**Returns:** `byte[]|Error`
+**Returns:** `byte[]|Error` — the rendered PDF as a byte array.
 
 **Sample code:**
 
@@ -193,15 +193,26 @@ Options for `parseHtml`, passed as an included record (named arguments).
 
 ### `PageSize`
 
-Union type: `StandardPageSize | CustomPageSize`.
+Describes the paper dimensions used when rendering. Use a `StandardPageSize` value for common paper formats, or a `CustomPageSize` record to set explicit width and height. For landscape orientation with a standard size, switch to a `CustomPageSize` with the height and width swapped.
+
+| Member | Description |
+|--------|-------------|
+| `StandardPageSize` | Enum of common paper formats — `A4`, `LETTER`, `LEGAL`. |
+| `CustomPageSize` | Record with explicit `width` and `height` in points. |
 
 ### `StandardPageSize`
 
-Enum. Members: `A4`, `LETTER`, `LEGAL`.
+Enum of the common paper sizes supported out of the box.
+
+| Member | Description |
+|--------|-------------|
+| `A4` | ISO A4 — 210 × 297 mm. This is the default. |
+| `LETTER` | US Letter — 8.5 × 11 inches. |
+| `LEGAL` | US Legal — 8.5 × 14 inches. |
 
 ### `CustomPageSize`
 
-Custom page dimensions in points. For landscape orientation, swap `width` and `height`.
+Custom page dimensions in points (1 point = 1/72 inch). For landscape orientation, swap `width` and `height`.
 
 | Field | Type | Description |
 |-------|------|-------------|
