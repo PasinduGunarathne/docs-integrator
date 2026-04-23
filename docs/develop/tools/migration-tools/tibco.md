@@ -14,7 +14,7 @@ The migration wizard guides you through a 3-step process to convert your TIBCO B
 
 ### Step 1: Select source project
 
-1. Open WSO2 Integrator and select **Migrate External Integration**.
+1. Open WSO2 Integrator, click **More Actions**, and select **Migrate Integrations from Other Vendors**.
 2. Select **TIBCO** as the source platform.
 3. Under **Select Your Project Folder**, click **Browse** and select your TIBCO BusinessWorks project folder or main configuration file.
 4. Under **Configure TIBCO Settings**, set the following:
