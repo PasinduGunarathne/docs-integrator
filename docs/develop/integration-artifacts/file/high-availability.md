@@ -13,7 +13,7 @@ Turning on **Coordination** fixes this. One copy is elected as the active node a
 | Step | What happens |
 |---|---|
 | **1. Leader election** | On startup, every copy in the same `coordinationGroup` registers with the shared database. One copy is elected active. |
-| **2. Heartbeat** | The active node writes a heartbeat to the database at a regular interval. |
+| **2. Heartbeat** | Every node in the group — active and standby — writes its own heartbeat row at the `heartbeatFrequency` interval. This advertises liveness so any node can be promoted when needed. |
 | **3. Liveness check** | Standby nodes periodically check the active node's heartbeat. If the heartbeat goes stale, the active node is considered dead. |
 | **4. Failover** | A standby is promoted to active and starts polling immediately — no manual intervention. |
 | **5. Polling behaviour** | Only the active node polls the FTP server. Standby nodes skip polling entirely, consuming no FTP server resources. |
