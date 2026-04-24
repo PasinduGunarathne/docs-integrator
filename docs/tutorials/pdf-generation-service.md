@@ -28,16 +28,15 @@ The service takes passenger details as query parameters, fills them into a board
 
 ## What You'll Learn
 
-- Using the `ballerina/pdf` module to convert HTML to PDF locally
-- Returning a binary (non-JSON) payload from a Ballerina HTTP service
-- Embedding images and styled tables in a document template
-- Loading custom fonts with `customFonts` to support non-Latin scripts
-- Which HTML and CSS features the renderer does and doesn't support
+- Using the WSO2 Integrator visual editor to build an HTTP service without writing service/resource code
+- Configuring query parameters and a typed response schema in the resource editor
+- Creating a reusable function for the HTML template with the flow designer
+- Using `pdf:parseHtml` from the Standard Library inside a resource flow
+- Returning a binary (`byte[]`) PDF payload with a custom content type
 
 ## Prerequisites
 
-- WSO2 Integrator VS Code extension installed
-- A font file covering any non-Latin scripts you want to render — [Noto Sans SC from Google Fonts](https://fonts.google.com/noto/specimen/Noto+Sans+SC) is a good default. Only required for the last step of the tutorial.
+- WSO2 Integrator installed
 
 **Time estimate:** 30 minutes
 
@@ -45,137 +44,186 @@ The service takes passenger details as query parameters, fills them into a board
 
 ### Step 1: Create the Project
 
-1. Open VS Code and run **WSO2 Integrator: Open BI Integrator**, then create a new project named `pdf-generation-service`.
-2. In `Config.toml`, set the listener port:
+1. Open WSO2 Integrator.
+2. In the home screen, click **Create** under **Create New Integration**.
+3. Fill in the dialog:
 
-   ```toml
-   port = 8290
+   | Field | Value |
+   |---|---|
+   | Integration Name | `pdf-generation-service` |
+   | Project Name | `pdf-generation-service`|
+   | Create within a project | ✓ checked |
+
+4. Click **Create Integration**.
+
+![Create Integration dialog with pdf-generation-service filled in](/img/tutorials/pdf-generation-service/01-create-integration.png)
+
+### Step 2: Add an HTTP Service
+
+1. In the project view, navigate to **Artifacts → Service**.
+2. Select **HTTP Service**.
+3. Leave **Service Contract** as **Design From Scratch**.
+4. Set **Service Base Path** to `/boardingpass`.
+5. Click **Create**.
+
+![Create HTTP Service form with /boardingpass entered as the base path](/img/tutorials/pdf-generation-service/02-create-http-service.png)
+
+### Step 3: Add the GET /render Resource
+
+1. On the HTTP Service canvas, click **+ Add Resource**.
+2. Set **HTTP Method** to `GET` and **Resource Path** to `render`.
+3. Click **+ Query Parameter** five times and add the following (all type `string`):
+
+   | Name | Type |
+   |---|---|
+   | `passengerName` | string |
+   | `flightNumber` | string |
+   | `seat` | string |
+   | `gate` | string |
+   | `boardingTime` | string |
+
+4. The default **200** response is pre-added. Click its edit icon to open **Response Configuration**:
+   - Keep the **Status Code** as it is.
+   - Expand the **Advanced Configurations**
+   - Set **Response Body Schema** to `byte[]`.
+   - Check **Make This Response Reusable**.
+   - Set **Response Definition Name** to `OkResponse`.
+   - Click **Save**
+5. Click **Save**.
+
+![New Resource Configuration panel showing all five query parameters and the OkResponse definition set to byte\[\]](/img/tutorials/pdf-generation-service/03-resource-configuration.png)
+
+After saving, the HTTP Service view shows the `GET render` resource. The sidebar also shows `OkResponse` added under **Types** — this is the response record the resource will return.
+
+### Step 4: Create the HTML Template Function
+
+The boarding-pass HTML is built by a reusable function so the resource flow stays focused on wiring. Create it under **Functions** in the left sidebar.
+
+1. In the left sidebar, expand **Functions** and click **+**.
+2. Enter the function name: `buildBoardingPassHtml`.
+3. Add five parameters, each of type `string`:
+
+   `passengerName`, `flightNumber`, `seat`, `gate`, `boardingTime`
+
+4. Set **Return Type** to `string`.
+5. Click **Create**.
+
+![Function Configuration panel showing all five string parameters and string return type](/img/tutorials/pdf-generation-service/04-function-configuration.png)
+
+### Step 5: Build the Function Body
+
+With the function saved, its flow editor opens automatically.
+
+1. Click the **+** button in the middle of the flow. A side panel opens.
+2. In the right-side node panel, expand **Control** and click **Return**.
+3. In the **Expression** field of the Return panel, paste the HTML template as a Ballerina string template. The `${...}` placeholders reference the five function parameters directly:
+
+   ```ballerina
+   string `<!DOCTYPE html>
+   <html>
+   <head>
+     <style>
+       body { font-family: 'Liberation Sans', sans-serif; padding: 20px; color: #111; }
+       .header { background: #003366; color: #fff; padding: 12px; text-align: center; }
+       .header h1 { margin: 0; }
+       table { border-collapse: collapse; margin-top: 16px; width: 100%; }
+       td { border: 1px solid #000; padding: 8px 14px; }
+       .label { background: #eee; font-weight: bold; width: 40%; }
+       .banner { background: #003366; color: #fff; text-align: center; font-weight: bold; }
+       .footer { margin-top: 24px; font-size: 10px; color: #555; }
+     </style>
+   </head>
+   <body>
+
+       <h1>Boarding Pass</h1>
+
+     <table>
+       <tr><td class="banner" colspan="2">PASSENGER DETAILS</td></tr>
+       <tr><td class="label">Passenger</td><td>${passengerName}</td></tr>
+       <tr><td class="label">Flight</td><td>${flightNumber}</td></tr>
+       <tr><td class="label">Seat</td><td>${seat}</td></tr>
+       <tr><td class="label">Gate</td><td>${gate}</td></tr>
+       <tr><td class="label">Boarding</td><td>${boardingTime}</td></tr>
+     </table>
+     <p class="footer">Please arrive at the gate at least 30 minutes before boarding.</p>
+   </body>
+   </html>`
    ```
 
-### Step 2: Set Up the HTTP Service
+4. Click **Save**.
 
-1. In the project, add an HTTP service. Use a named path like `/boardingpass` rather than the base path.
-2. Add a resource `GET /render` that takes five string query parameters: `passengerName`, `flightNumber`, `seat`, `gate`, `boardingTime`.
-3. **Change the resource return type from the default `json|error` to `http:Response|error`.** This is the one non-obvious setup step. The PDF is a binary payload, and `http:Response` is the type that lets you set `Content-Type: application/pdf` and a `byte[]` body. Without this change, the service compiles but can't return a PDF.
+![Function flow editor showing the Return node with the HTML template string expression](/img/tutorials/pdf-generation-service/05-function-return-expression.png)
 
-Your starter service looks like this — we'll fill in the body in later steps:
-
-```ballerina
-// service.bal
-import ballerina/http;
-
-configurable int port = 8290;
-
-service /boardingpass on new http:Listener(port) {
-
-    resource function get render(
-            string passengerName,
-            string flightNumber,
-            string seat,
-            string gate,
-            string boardingTime) returns http:Response|error {
-
-        // Body filled in Step 4.
-        return error("not implemented");
-    }
-}
-```
-
-### Step 3: Build the HTML Template
-
-The template is a Ballerina string with placeholders for the five parameters. Put it in its own file so the service stays focused on wiring.
-
-```ballerina
-// template.bal
-
-// Returns a fully-populated boarding-pass HTML document ready for pdf:parseHtml.
-function buildBoardingPassHtml(
-        string passengerName,
-        string flightNumber,
-        string seat,
-        string gate,
-        string boardingTime) returns string {
-
-    return string `<!DOCTYPE html>
-<html>
-<head>
-  <style>
-    body { font-family: 'Liberation Sans', sans-serif; padding: 20px; color: #111; }
-    .header { background: #003366; color: #fff; padding: 12px; text-align: center; }
-    .header h1 { margin: 0; }
-    table { border-collapse: collapse; margin-top: 16px; width: 100%; }
-    td { border: 1px solid #000; padding: 8px 14px; }
-    .label { background: #eee; font-weight: bold; width: 40%; }
-    .banner { background: #003366; color: #fff; text-align: center; font-weight: bold; }
-    .footer { margin-top: 24px; font-size: 10px; color: #555; }
-  </style>
-</head>
-<body>
-
-    <h1>Boarding Pass</h1>
-
-  <table>
-    <tr><td class="banner" colspan="2">PASSENGER DETAILS</td></tr>
-    <tr><td class="label">Passenger</td><td>${passengerName}</td></tr>
-    <tr><td class="label">Flight</td><td>${flightNumber}</td></tr>
-    <tr><td class="label">Seat</td><td>${seat}</td></tr>
-    <tr><td class="label">Gate</td><td>${gate}</td></tr>
-    <tr><td class="label">Boarding</td><td>${boardingTime}</td></tr>
-  </table>
-  <p class="footer">Please arrive at the gate at least 30 minutes before boarding.</p>
-</body>
-</html>`;
-}
-```
-
-A few notes on the CSS used here — these all work cleanly:
+A few notes on the CSS used here — these all work cleanly with the `ballerina/pdf` renderer:
 
 - `Liberation Sans` is one of the two fonts bundled with `ballerina/pdf` (the other is Liberation Serif). Between them they cover Latin-1 and Latin Extended-A scripts — enough for most Western European names including accented characters.
 - `colspan` on `<td>` and `border-collapse: collapse` render as you'd expect in a browser.
 - `solid` borders, cell backgrounds, percentage widths, and cell padding all compose together without special handling.
 
-### Step 4: Generate and Return the PDF
+### Step 6: Wire the Resource Flow
 
-Complete the resource body. The minimum recipe is three calls: render the template, call `pdf:parseHtml`, wrap the result in an `http:Response`.
+With `buildBoardingPassHtml` ready, go back to the `render` resource and build the four-node flow that calls the function, converts the HTML to PDF, constructs the response, and returns it.
 
-```ballerina
-// service.bal (complete)
-import ballerina/http;
-import ballerina/pdf;
+Navigate to **HTTP Service → /boardingpass → render** in the left sidebar to open the resource flow editor.
 
-configurable int port = 8290;
+#### 6.1 Call buildBoardingPassHtml
 
-service /boardingpass on new http:Listener(port) {
+1. Click the + button in the middle of the flow. A side panel opens.
+2. In the right-side panel, click **Call Function → Within Project** and click **buildBoardingPassHtml**.
+3. Map each input field to the matching query parameter using **Expression** mode:
 
-    resource function get render(
-            string passengerName,
-            string flightNumber,
-            string seat,
-            string gate,
-            string boardingTime) returns http:Response|error {
+   | Input | Expression |
+   |---|---|
+   | Passenger Name | `passengerName` |
+   | Flight Number | `flightNumber` |
+   | Seat | `seat` |
+   | Gate | `gate` |
+   | Boarding Time | `boardingTime` |
 
-        string html = buildBoardingPassHtml(
-                passengerName, flightNumber, seat, gate, boardingTime);
+4. Set **Result** name to `html` and **Result Type** to `string`.
+5. Click **Save**.
 
-        byte[] pdfBytes = check pdf:parseHtml(html);
+![Call Function node configured for buildBoardingPassHtml with all five inputs mapped](/img/tutorials/pdf-generation-service/06-call-buildBoardingPassHtml.png)
 
-        http:Response response = new;
-        response.setBinaryPayload(pdfBytes);
-        response.setContentType("application/pdf");
-        return response;
-    }
-}
-```
+#### 6.2 Convert HTML to PDF
 
-That's the entire pattern. No listener setup, no chunk handling, no intermediate files — `pdf:parseHtml` takes an HTML string and returns the PDF bytes directly.
+1. Click the + button in the middle of the flow.
+2. In the panel, click **Call Function**, search for `parseHtml`, then under **Standard Library → pdf**, click **parseHtml**.
+3. Set the **html** input to the `html` variable (select it from **Variables**).
+4. The **Result Type** is `byte[]` — leave it as-is and set **Result** name to `pdfBytes`.
+5. Click **Save**.
 
-### Step 5: Run and Test
+![pdf:parseHtml node configured with html variable as input and byte\[\] result](/img/tutorials/pdf-generation-service/07-pdf-parseHtml-node.png)
 
-1. Run the project (**WSO2 Integrator: Run Project**, or `bal run` from the terminal).
-2. Send a request:
+#### 6.3 Construct the Response
+
+1. Click the + button in the middle of the flow and choose **Statement → Declare Variable** in the right-hand side panel.
+2. Set **Name** to `response` and **Type** to `OkResponse`.
+3. In the **Expression** field, switch to **Record** mode. The Record Configuration for `OkResponse` opens:
+   - Set **body** to `pdfBytes` (select from **Variables**).
+   - Enable **mediaType** (optional field) and set its value to `"application/pdf"`.
+4. Click **Save**.
+
+![Declare Variable panel with OkResponse record configured — body mapped to pdfBytes, mediaType set to application/pdf](/img/tutorials/pdf-generation-service/08-declare-response-variable.png)
+
+#### 6.4 Return the Response
+
+1. Click the + button in the middle of the flow and choose **Control → Return** in the right-hand side panel.
+2. Set the **Expression** to `response` (select from **Variables**).
+3. Click **Save**.
+
+The completed resource flow has four nodes in sequence:
+
+![Complete resource flow showing buildBoardingPassHtml, pdf:parseHtml, Declare Variable, and Return nodes](/img/tutorials/pdf-generation-service/09-complete-resource-flow.png)
+
+### Step 7: Run and Test
+
+1. Click **Try It** in the top-right of the resource editor. WSO2 Integrator starts the service and opens the **Try Service** panel.
+2. The panel shows `GET /render` with all five query parameters listed as required strings.
+3. Run the service using curl (copy the generated URL from the panel and add your values):
 
    ```bash
-   curl "http://localhost:8290/boardingpass/render?\
+   curl "http://localhost:9090/boardingpass/render?\
    passengerName=Alice%20Zhang&\
    flightNumber=WS2026&\
    seat=14A&\
@@ -184,18 +232,20 @@ That's the entire pattern. No listener setup, no chunk handling, no intermediate
      -o boarding-pass.pdf
    ```
 
-3. Open `boarding-pass.pdf`. You should see a formatted boarding pass with the passenger details laid out in a table.
+4. Open `boarding-pass.pdf`. You should see a formatted boarding pass with the passenger details laid out in a table.
+
+![Try Service panel showing GET /render with five required query parameters and the curl command in the terminal](/img/tutorials/pdf-generation-service/10-try-service-and-test.png)
 
 ![Rendered boarding pass PDF showing the five fields laid out in a styled table](/img/tutorials/pdf-generation-service/boarding-pass-rendered.png)
 
 If a required parameter is missing, `ballerina/http` returns a `400 Bad Request` with a structured JSON body before your resource runs — no need to add your own validation for missing-parameter cases.
 
-### Step 6: Support International Character Sets
+### Step 8: Support International Character Sets
 
 Try the same request with a passenger name in Chinese:
 
 ```bash
-curl "http://localhost:8290/boardingpass/render?\
+curl "http://localhost:9090/boardingpass/render?\
 passengerName=%E5%BC%A0%E4%B8%89&\
 flightNumber=WS2026&seat=14A&gate=B7&boardingTime=2026-04-20%2008:45" \
   -o boarding-pass-cjk.pdf
@@ -207,81 +257,68 @@ The request succeeds and the PDF comes back — but the passenger cell is empty.
 
 The fix is the `customFonts` option on `pdf:parseHtml`. You load a font that covers the scripts you need, pass it in, and reference it by family name in the template's CSS.
 
-Download [Noto Sans SC from Google Fonts](https://fonts.google.com/noto/specimen/Noto+Sans+SC) and place it in a `resources/` directory in your project:
+Download [Noto Sans SC from Google Fonts](https://fonts.google.com/noto/specimen/Noto+Sans+SC) and place the `.ttf` file in the root of your project (e.g. `NotoSansSC-VariableFont_wght.ttf`).
 
-```
-pdf-generation-service/
-├── Ballerina.toml
-├── Config.toml
-├── main.bal
-├── service.bal
-├── template.bal
-└── resources/
-    └── NotoSansSC.ttf
-```
+#### 8.1 Update the HTML Template CSS
 
-Update the template's CSS to include the custom font at the front of the cascade:
+1. In the left sidebar, expand **Functions** and click **buildBoardingPassHtml** to open its flow editor.
+2. Click the **Return** node to open its expression panel.
+3. In the **Expression** field, locate the `body` line inside the `<style>` block and update it to include `NotoSansCJK` at the front of the font cascade:
 
-```ballerina
-// template.bal — only the <style> body line changes
-body { font-family: 'NotoSansSC', 'Liberation Sans', sans-serif; padding: 20px; color: #111; }
-```
+   ```css
+   body { font-family: 'NotoSansCJK', 'Liberation Sans', sans-serif; padding: 20px; color: #111; }
+   ```
 
-Load the font bytes once at module init and pass them to every call:
+4. Click **Save**.
 
-```ballerina
-// service.bal (updated)
-import ballerina/http;
-import ballerina/io;
-import ballerina/pdf;
+![buildBoardingPassHtml Return node expression panel showing the updated body font-family with NotoSansCJK](/img/tutorials/pdf-generation-service/08-1-buildBoardingPassHtml-css-update.png)
 
-configurable int port = 8290;
+#### 8.2 Add an `io:fileReadBytes` Node to the Resource Flow
 
-final byte[] & readonly cjkFontBytes = check io:fileReadBytes("./resources/NotoSansSC.ttf");
+Navigate back to **HTTP Service → /boardingpass → render** to open the resource flow editor.
 
-service /boardingpass on new http:Listener(port) {
+1. Click the **+** button at the very top of the flow (before the `buildBoardingPassHtml` node).
+2. In the right-side panel, click **Call Function** and search for `fileReadBytes`. Under **Standard Library → io**, click **fileReadBytes**.
+3. Set **Path** to `./NotoSansSC-VariableFont_wght.ttf`.
+4. Set **Result** name to `cjkFontBytes`. The **Result Type** is automatically set to `byte[] & readonly` — leave it as-is.
+5. Click **Save**.
 
-    resource function get render(
-            string passengerName,
-            string flightNumber,
-            string seat,
-            string gate,
-            string boardingTime) returns http:Response|error {
+![io:fileReadBytes node configured with the font file path and cjkFontBytes result](/img/tutorials/pdf-generation-service/08-1-io-fileReadBytes-node.png)
 
-        string html = buildBoardingPassHtml(
-                passengerName, flightNumber, seat, gate, boardingTime);
+#### 8.3 Update the `pdf:parseHtml` Node
 
-        byte[] pdfBytes = check pdf:parseHtml(html, customFonts = [{
-            family: "NotoSansSC",
-            content: cjkFontBytes,
-            bold: false,
-            italic: false
-        }]);
+1. Click the `pdf:parseHtml` node in the flow to open its configuration panel.
+2. Expand **Advanced Configurations**.
+3. Locate **Custom Fonts** and click **Initialize Array** to add the first font entry.
+4. The **Record Configuration** opens with `Font` fields:
+   - Set **family** (`string`) to `"NotoSansCJK"`.
+   - Set **content** (`byte[]`) to `cjkFontBytes` — click the field, switch to **Expression** mode, then select `cjkFontBytes` from **Variables**.
+   - Leave **bold** and **italic** (optional) unchecked.
+5. Confirm **Result** name is `pdfBytes` and **Result Type** is `byte[]`.
+6. Click **Save**.
 
-        http:Response response = new;
-        response.setBinaryPayload(pdfBytes);
-        response.setContentType("application/pdf");
-        return response;
-    }
-}
-```
+![pdf:parseHtml node with customFonts configured — family NotoSansCJK, content cjkFontBytes](/img/tutorials/pdf-generation-service/08-2-parseHtml-customFonts.png)
 
-Re-run the project and re-send the CJK request. The characters render correctly.
+The completed resource flow now has five nodes in sequence:
+
+![Complete resource flow showing io:fileReadBytes, buildBoardingPassHtml, pdf:parseHtml, Declare Variable, and Return nodes](/img/tutorials/pdf-generation-service/08-3-complete-resource-flow-with-font.png)
+
+Re-run the project using **Try It** and re-send the CJK request. The characters render correctly.
 
 ![Boarding pass PDF rendering CJK characters correctly using a custom font](/img/tutorials/pdf-generation-service/cjk-with-customfonts.png)
 
-The font is also subset automatically — only the glyphs actually used appear in the output. A 17 MB source font typically contributes only a few KB to each generated PDF.
+The font is subset automatically — only the glyphs actually used appear in the output. A 17 MB source font typically contributes only a few KB to each generated PDF.
 
-The `family` value in the `customFonts` entry must match the name you reference in the CSS. You can load multiple fonts at once (for example, a CJK font and a RTL font) by adding more entries to the array.
+The `family` value in the `customFonts` entry must match the name you reference in the CSS. You can load multiple fonts at once (for example, a CJK font and a RTL font) by adding more entries to the array via **+ Add New Item** in the Custom Fonts configuration.
 
 ## Limitations and Supported Subset
 
 The `ballerina/pdf` renderer covers the HTML and CSS you need for document-style templates but isn't a full browser engine. A few limits worth knowing:
 
 | Not supported | Use instead |
-|---|---|
+| --- | --- |
 | `display: flex`, CSS Grid, `position: fixed` | Tables or floats for multi-column layouts |
-| `@font-face` CSS rules | `customFonts` option on `ConversionOptions` (see Step 6) |
+| `@font-face` CSS rules | `customFonts` option on `ConversionOptions` (see Step 8) |
 | Inline `<svg>` elements | Rasterise the SVG to PNG at build time (`rsvg-convert`, Inkscape) and embed as a data URL |
 | `rowspan`, `<caption>`, `table-layout: fixed` | Plain table rows with `colspan` are supported |
 | Non-`solid` border styles (`dashed`, `dotted`, `double`) | Use `solid` and adjust width |
@@ -294,7 +331,7 @@ Unsupported features do not raise errors. The renderer silently falls back — f
 Pass any of these as named arguments to `pdf:parseHtml`:
 
 | Field | Type | Default | Purpose |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `pageSize` | `StandardPageSize` or `CustomPageSize` | `A4` | `A4`, `LETTER`, `LEGAL`, or a `{width, height}` record in points. Swap width and height for landscape — there is no separate `orientation` field. |
 | `margins` | `PageMargins` | `{top: 0, right: 0, bottom: 0, left: 0}` | Page margins in points |
 | `fallbackFontSize` | `float` | `12.0` | Font size used when CSS doesn't specify one |
