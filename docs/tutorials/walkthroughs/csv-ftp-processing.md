@@ -1,21 +1,21 @@
 ---
-title: Process CSV files from FTP with fail-safe error handling
+title: Process CSV files from FTP with typed record binding
 ---
 
-# Process CSV files from FTP with fail-safe error handling
+# Process CSV files from FTP with typed record binding
 
-Build an FTP file processing service that watches a directory for inventory CSV files, parses rows into typed records with fail-safe error handling, and automatically routes files to separate directories based on processing outcome.
+Build an FTP file processing service that watches a directory for inventory CSV files, binds rows directly to typed records, and automatically routes files to separate directories based on whether the file parsed cleanly.
 
 ## What you'll build
 
-An FTP listener that monitors `/incoming` for CSV files uploaded by warehouse systems. Each file contains inventory records with fields like SKU, quantity, and unit price. The service parses every row into a typed `InventoryRecord`, skips malformed rows instead of failing the entire file, and logs errors to a local file. After processing, the FTP connector automatically moves the file to `/processed` on success or `/errors` on failure.
+An FTP listener that monitors `/incoming` for CSV files uploaded by warehouse systems. Each file contains inventory records with fields like SKU, quantity, and unit price. The service binds every row to a typed `InventoryRecord`. Files that parse cleanly are logged and moved to `/processed`. Files with any row that fails to bind to the record type fall through to an `onError` handler, which moves them to `/errors` for later inspection.
 
 ## What you'll learn
 
 - Configuring an FTP listener to watch for CSV files with a file name pattern
-- Using `onFileCsv` to receive CSV content and parsing it with `csv:parseList`
-- Applying fail-safe CSV parsing options to skip invalid rows and log errors
+- Using `onFileCsv` with a typed record array parameter so the runtime performs CSV-to-record binding for you
 - Using `@ftp:FunctionConfig` with `afterProcess` and `afterError` to auto-move files
+- Providing an `onError` handler to route files that fail to bind
 - Handling processing errors with `do/on fail`
 
 ## Prerequisites
@@ -32,21 +32,19 @@ An FTP listener that monitors `/incoming` for CSV files uploaded by warehouse sy
 flowchart LR
     Warehouse["Warehouse<br/>(Uploads CSV via FTP)"]
     subgraph Service["CSV Processing Service"]
-        Listen["FTP Listener<br/>(onFileCsv)"]
-        Parse["Parse CSV<br/>(failSafe)"]
-        Process["Process valid<br/>records"]
-        Log["Log errors<br/>to file"]
+        Listen["FTP Listener"]
+        OnFile["onFileCsv<br/>(binds to InventoryRecord[])"]
+        OnErr["onError<br/>(binding failed)"]
 
-        Listen ----> Parse
-        Parse ----> Process
-        Parse ----> Log
+        Listen -- "binding succeeds" --> OnFile
+        Listen -- "binding fails" --> OnErr
     end
     Processed["/processed"]
     Errors["/errors"]
 
     Warehouse ----> Listen
-    Process -- "success" ----> Processed
-    Service -- "failure" ----> Errors
+    OnFile -- "success" ----> Processed
+    OnErr ----> Errors
 ```
 
 ## Step 1: Create the Ballerina project
@@ -59,15 +57,6 @@ cd csv_ftp_processor
 ```
 
 This creates a project directory with a `Ballerina.toml` and a default `main.bal`. You will replace the generated files with the ones below.
-
-Add the `data.csv` dependency to `Ballerina.toml` to pin it to the version compatible with the FTP module:
-
-```toml
-[[dependency]]
-org = "ballerina"
-name = "data.csv"
-version = "0.8.2"
-```
 
 ## Step 2: Define the data types
 
@@ -86,7 +75,7 @@ type InventoryRecord record {|
 |};
 ```
 
-The closed record (`record {|...|}`) ensures that only these six fields are accepted. The `quantity` (int) and `unitPrice` (decimal) fields enable fail-safe testing — rows with non-numeric values in these columns are skipped during parsing.
+The closed record (`record {|...|}`) ensures that only these six fields are accepted. The `quantity` (int) and `unitPrice` (decimal) fields are typed so that rows with non-numeric values fail binding and route the file to the error path.
 
 ## Step 3: Add configurable values
 
@@ -96,15 +85,13 @@ Create `config.bal` in the project root to declare the FTP connection and path v
 // config.bal
 
 configurable string ftpHost = "127.0.0.1";
-configurable int ftpPort = 21;
+configurable int ftpPort = 2123;
 configurable string ftpUser = "admin";
 configurable string ftpPassword = "admin";
 
 configurable string incomingPath = "/incoming";
 configurable string processedPath = "/processed";
 configurable string errorsPath = "/errors";
-
-configurable string errorLogPath = "./logs/inventory-errors.log";
 ```
 
 ## Step 4: Build the FTP listener and service
@@ -113,17 +100,14 @@ Replace the contents of `main.bal` with the listener and service:
 
 ```ballerina
 // main.bal
-import ballerina/data.csv;
 import ballerina/ftp;
 import ballerina/log;
 
 listener ftp:Listener ftpListener = new (
     protocol = ftp:FTP,
     host = ftpHost,
-    port = ftpPort,
     auth = {credentials: {username: ftpUser, password: ftpPassword}},
-    userDirIsRoot = true,
-    pollingInterval = 10
+    port = ftpPort
 );
 
 @ftp:ServiceConfig {
@@ -136,32 +120,16 @@ service on ftpListener {
         afterProcess: {moveTo: processedPath},
         afterError: {moveTo: errorsPath}
     }
-    remote function onFileCsv(string[][] content, ftp:FileInfo fileInfo) returns error? {
-        log:printInfo(string `Processing file: ${fileInfo.name} (${fileInfo.size} bytes)`);
-
+    remote function onFileCsv(InventoryRecord[] inventoryRecords, ftp:FileInfo fileInfo) returns error? {
         do {
-            InventoryRecord[] inventory = check csv:parseList(content, {
-                customHeaders: ["warehouseId", "sku", "productName", "quantity", "unitPrice", "lastUpdated"],
-                failSafe: {
-                    enableConsoleLogs: true,
-                    fileOutputMode: {
-                        filePath: errorLogPath,
-                        contentType: csv:METADATA,
-                        fileWriteOption: csv:APPEND
-                    }
-                }
-            });
-
-            log:printInfo(string `Parsed ${inventory.length()} valid records from ${fileInfo.name}`);
-
-            if inventory.length() == 0 {
-                return error(string `No valid records found in ${fileInfo.name}`);
+            log:printInfo(string `Processing file: ${fileInfo.name} (${fileInfo.size} bytes)`);
+            if inventoryRecords.length() == 0 {
+                return error("No valid records found in " + fileInfo.name);
             }
-
-            foreach InventoryRecord item in inventory {
+            foreach InventoryRecord item in inventoryRecords {
                 log:printInfo(string `Warehouse: ${item.warehouseId}, SKU: ${item.sku}, ` +
-                    string `Product: ${item.productName}, Qty: ${item.quantity}, ` +
-                    string `Price: ${item.unitPrice}, Updated: ${item.lastUpdated}`);
+                        string `Product: ${item.productName}, Qty: ${item.quantity}, ` +
+                        string `Price: ${item.unitPrice}, Updated: ${item.lastUpdated}`);
             }
 
             log:printInfo(string `Successfully processed ${fileInfo.name}`);
@@ -170,17 +138,30 @@ service on ftpListener {
             return err;
         }
     }
+
+    @ftp:FunctionConfig {
+        afterProcess: {moveTo: errorsPath},
+        afterError: {moveTo: errorsPath}
+    }
+    remote function onError(ftp:Error ftpError) returns error? {
+        do {
+            log:printError("Failed to parse file content to the target schema: " + ftpError.message());
+        } on fail error err {
+            log:printError("Failed to handle the error", 'error = err);
+            return err;
+        }
+    }
 }
 ```
 
 Key points in this code:
 
-- **`onFileCsv(string[][] content, ...)`** — receives CSV rows as a two-dimensional string array. This gives you control over parsing with fail-safe options rather than relying on automatic data binding.
-- **`csv:parseList` with `failSafe`** — parses rows into typed `InventoryRecord` records. Malformed rows (for example, `"INVALID"` in the `quantity` column) are skipped instead of failing the entire file. Errors are logged to the console and written to the error log file.
-- **`customHeaders`** — maps positional columns to record field names since `string[][]` content does not include header names.
-- **Zero-records check** — if fail-safe parsing skips every row, the handler explicitly returns an error. Without this check, the handler would succeed with an empty array and the file would move to `/processed` instead of `/errors`.
+- **`onFileCsv(InventoryRecord[] inventoryRecords, ...)`** — the typed array parameter tells the FTP connector to bind each CSV row to an `InventoryRecord`. The first row of the CSV is used as the header, so column names must match the record fields. No `csv` module import is needed.
+- **Whole-file binding** — if any row fails to convert (for example, a non-numeric `quantity`), the entire binding fails and `onFileCsv` is *not* invoked. The file falls through to the `onError` handler instead. This is the main trade-off against per-row fail-safe parsing: you get simpler code at the cost of losing valid rows that happened to share a file with a bad row.
 - **`afterProcess` / `afterError`** — the FTP connector automatically moves the file to the `moveTo` path after the handler completes. `afterProcess` triggers on success (moving to `/processed`), and `afterError` triggers when the handler returns an error (moving to `/errors`).
-- **`do/on fail`** — catches any unrecoverable error during parsing or processing and re-returns it so the `afterError` action triggers.
+- **`onError` handler** — called when binding fails before `onFileCsv` can run. Both `afterProcess` and `afterError` point at `errorsPath`, so the file ends up in `/errors` regardless of whether the handler itself throws.
+- **Zero-records check** — an empty but structurally valid file would otherwise succeed with no work done. Returning an error triggers `afterError` instead so the file is not silently moved to `/processed`.
+- **`do/on fail`** — catches any unrecoverable error during processing and re-returns it so the `afterError` action triggers.
 
 ## Step 5: Add the configuration file
 
@@ -190,15 +171,13 @@ Create `Config.toml` in the project root with default values for the local Docke
 # Config.toml
 
 ftpHost = "127.0.0.1"
-ftpPort = 21
+ftpPort = 2123
 ftpUser = "admin"
 ftpPassword = "admin"
 
 incomingPath = "/incoming"
 processedPath = "/processed"
 errorsPath = "/errors"
-
-errorLogPath = "./logs/inventory-errors.log"
 ```
 
 ## Step 6: Prepare sample data
@@ -209,18 +188,18 @@ Create a `sample-data/` directory in the project root:
 mkdir sample-data
 ```
 
-Create `sample-data/warehouse-daily.csv` with a mix of valid rows and one malformed row to test fail-safe behavior. The third row has `INVALID` in the `quantity` column:
+Create `sample-data/warehouse-daily.csv` with five well-formed inventory rows. This file exercises the happy path — all rows bind cleanly, `onFileCsv` runs, and the file moves to `/processed`:
 
 ```csv
 warehouseId,sku,productName,quantity,unitPrice,lastUpdated
 WH-01,SKU-1001,Wireless Mouse,150,24.99,2026-04-06
 WH-01,SKU-1002,USB-C Hub,75,49.50,2026-04-06
-WH-02,SKU-2001,Monitor Stand,INVALID,34.99,2026-04-06
+WH-02,SKU-2001,Monitor Stand,20,34.99,2026-04-06
 WH-02,SKU-2002,Desk Lamp,200,19.99,2026-04-06
 WH-03,SKU-3001,Keyboard,120,89.00,2026-04-06
 ```
 
-Create `sample-data/bad-inventory.csv` with all data rows containing invalid values in the typed columns. This file tests the error path — every row fails parsing, so the handler returns an error and the file moves to `/errors`:
+Create `sample-data/bad-inventory.csv` with data rows containing invalid values in the typed columns. `INVALID` is not an `int` and `NaN` is not a `decimal`, so binding fails at the first bad row. This exercises the error path — `onError` runs and the file moves to `/errors`:
 
 ```csv
 warehouseId,sku,productName,quantity,unitPrice,lastUpdated
@@ -235,24 +214,24 @@ Create a `docker-compose.yml` in the project root:
 ```yaml
 services:
   ftp:
-    image: stilliard/pure-ftpd
+    image: delfer/alpine-ftp-server
     environment:
-      - FTP_USER_NAME=admin
-      - FTP_USER_PASS=admin
-      - FTP_USER_HOME=/home/ftpfiles
-      - PUBLICHOST=127.0.0.1
+      - USERS=admin|admin|/ftp/admin
+      - ADDRESS=127.0.0.1
+      - MIN_PORT=30000
+      - MAX_PORT=30009
     ports:
-      - "21:21"
+      - "2123:21"
       - "30000-30009:30000-30009"
-    entrypoint: >
-      bash -c "
-        mkdir -p /home/ftpfiles/incoming /home/ftpfiles/processed /home/ftpfiles/errors &&
-        chown -R ftpuser:ftpgroup /home/ftpfiles &&
-        /run.sh -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R -P 127.0.0.1 -p 30000:30009
-      "
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        mkdir -p /ftp/admin/incoming /ftp/admin/processed /ftp/admin/errors
+        printf '\nchroot_local_user=YES\nallow_writeable_chroot=YES\n' >> /etc/vsftpd/vsftpd.conf
+        (sleep 3 && chown -R admin:admin /ftp/admin) &
+        exec /sbin/tini -- /bin/start_vsftpd.sh
 ```
-
-The custom entrypoint creates the required directories and sets ownership to `ftpuser` before the FTP daemon starts. This avoids permission errors on uploads.
 
 Start the FTP server:
 
@@ -271,31 +250,31 @@ bal run
 In a separate terminal, upload the sample CSV file to the FTP server:
 
 ```bash
-curl -T sample-data/warehouse-daily.csv ftp://127.0.0.1/incoming/warehouse-daily.csv --user "admin:admin"
+curl -T sample-data/warehouse-daily.csv ftp://127.0.0.1:2123/incoming/warehouse-daily.csv --user "admin:admin"
 ```
 
 The listener detects the new CSV file on the next polling cycle and processes it. Expected output:
 
-```text
-time=... level=INFO module=.../csv_ftp_processor message="Processing file: warehouse-daily.csv (299 bytes)"
-time=... level=INFO module=.../csv_ftp_processor message="Parsed 4 valid records from warehouse-daily.csv"
+```bash
+time=... level=INFO module=.../csv_ftp_processor message="Processing file: warehouse-daily.csv (294 bytes)"
 time=... level=INFO module=.../csv_ftp_processor message="Warehouse: WH-01, SKU: SKU-1001, Product: Wireless Mouse, Qty: 150, Price: 24.99, Updated: 2026-04-06"
 time=... level=INFO module=.../csv_ftp_processor message="Warehouse: WH-01, SKU: SKU-1002, Product: USB-C Hub, Qty: 75, Price: 49.5, Updated: 2026-04-06"
+time=... level=INFO module=.../csv_ftp_processor message="Warehouse: WH-02, SKU: SKU-2001, Product: Monitor Stand, Qty: 20, Price: 34.99, Updated: 2026-04-06"
 time=... level=INFO module=.../csv_ftp_processor message="Warehouse: WH-02, SKU: SKU-2002, Product: Desk Lamp, Qty: 200, Price: 19.99, Updated: 2026-04-06"
 time=... level=INFO module=.../csv_ftp_processor message="Warehouse: WH-03, SKU: SKU-3001, Product: Keyboard, Qty: 120, Price: 89.0, Updated: 2026-04-06"
 time=... level=INFO module=.../csv_ftp_processor message="Successfully processed warehouse-daily.csv"
 ```
 
-The third row (`Monitor Stand` with `INVALID` quantity) is skipped. The fail-safe parser logs the error to the console and appends it to `./logs/inventory-errors.log`.
+All five rows bind successfully, so the file moves to `/processed`.
 
 After processing completes, verify the file moved to `/processed`:
 
 ```bash
 # File should now be in /processed
-curl ftp://127.0.0.1/processed/ --user "admin:admin"
+curl ftp://127.0.0.1:2123/processed/ --user "admin:admin"
 
 # /incoming should be empty
-curl ftp://127.0.0.1/incoming/ --user "admin:admin"
+curl ftp://127.0.0.1:2123/incoming/ --user "admin:admin"
 ```
 
 ### Testing the error path
@@ -303,30 +282,29 @@ curl ftp://127.0.0.1/incoming/ --user "admin:admin"
 Upload the `bad-inventory.csv` file where every data row has invalid values in the `quantity` and `unitPrice` columns:
 
 ```bash
-curl -T sample-data/bad-inventory.csv ftp://127.0.0.1/incoming/bad-inventory.csv --user "admin:admin"
+curl -T sample-data/bad-inventory.csv ftp://127.0.0.1:2123/incoming/bad-inventory.csv --user "admin:admin"
 ```
 
-The fail-safe parser skips both rows. Since zero valid records remain, the handler returns an error and `afterError` moves the file to `/errors`. Expected output:
+Binding to `InventoryRecord[]` fails at the first bad row, so `onFileCsv` is never invoked. The FTP connector calls `onError` instead, which logs the failure and lets `afterProcess` move the file to `/errors`. Expected output:
 
 ```text
-time=... level=INFO module=.../csv_ftp_processor message="Processing file: bad-inventory.csv (156 bytes)"
-time=... level=INFO module=.../csv_ftp_processor message="Parsed 0 valid records from bad-inventory.csv"
-error: No valid records found in bad-inventory.csv
+time=... level=ERROR module=.../csv_ftp_processor message="Failed to parse file content to the target schema: <binding error detail>"
 ```
 
-The row-level parsing errors are also appended to `./logs/inventory-errors.log` in your project directory. Verify the file moved to `/errors` on the FTP server:
+Verify the file moved to `/errors` on the FTP server:
 
 ```bash
 # File should now be in /errors
-curl ftp://127.0.0.1/errors/ --user "admin:admin"
+curl ftp://127.0.0.1:2123/errors/ --user "admin:admin"
 
 # /incoming should be empty
-curl ftp://127.0.0.1/incoming/ --user "admin:admin"
+curl ftp://127.0.0.1:2123/incoming/ --user "admin:admin"
 ```
 
 ## Extend it
 
-- **Stream large files** — Replace `string[][] content` with `stream<string[], error?> content` in the `onFileCsv` signature to process rows incrementally without loading the entire file into memory
+- **Tolerate malformed rows** — Replace the typed `InventoryRecord[]` parameter with `string[][] content` and use `csv:parseList` with its `failSafe` option to skip bad rows individually instead of rejecting the whole file
+- **Stream large files** — Use `stream<string[], error?> content` in the `onFileCsv` signature to process rows incrementally without loading the entire file into memory
 - **Write valid records to a database** — Add a MySQL or PostgreSQL connector and insert each `InventoryRecord` into a database table inside the foreach loop
 - **Send alerts on failure** — Add an email or Slack notification when files land in `/errors` so operations teams can investigate promptly
 - **Add file dependency** — Require a `.done` marker file before processing, similar to the [FTP order batch walkthrough](ftp-listener-with-age-filter-and-file-dependency.md)
