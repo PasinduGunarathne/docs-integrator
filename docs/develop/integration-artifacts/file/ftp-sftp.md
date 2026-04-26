@@ -128,7 +128,7 @@ part of the configuration.
    configuration — at minimum a truststore or certificate path so the
    client can verify the server:
 
-   ```
+   ```ballerina
    {
        cert: {path: "/path/to/truststore.jks", password: "changeit"}
    }
@@ -197,18 +197,18 @@ Use this flow for SFTP (FTP over SSH). Default port: `22`. The form collects the
    | **Host** | Hostname or IP address of the remote server (e.g., `sftp.example.com`). |
    | **Port Number** | Port to connect on. Set to `22` for SFTP. |
 
-4. Choose **Certificate Based Authentication** under **authentication method**. This reveals the **Private Key** and **Username** fields.
+4. Choose **Certificate-Based Authentication** under **authentication method**. This reveals the **Private Key** and **Username** fields.
 
 5. Enter the **Private Key** record. Click **Record** on the field and supply:
 
-   ```
+   ```ballerina
    {path: "/path/to/private_key"}
    ```
 
    If the private key is passphrase-protected, include the passphrase
    in the record:
 
-   ```
+   ```ballerina
    {path: "/path/to/private_key", password: "my-passphrase"}
    ```
 
@@ -310,7 +310,7 @@ In the **Service Designer**, click **+ Add File Handler** and pick **onCreate**,
 | Field | Description |
 |---|---|
 | **File Format** | (onCreate only) The format of incoming files. Determines the handler function name and the type of the `content` parameter. Options: **TEXT**, **JSON**, **XML**, **CSV**, **RAW**. See [Content types](#content-types). |
-| **Rows** | (CSV only) Content schema contains a row of CSV Row type. |
+| **Rows** | (CSV only) The content schema is defined per row — each CSV row maps to a record type (Row schema). |
 | **Stream (Large Files)** | (CSV and RAW) Process the file content in chunks instead of loading it all into memory. See [Typed content and streaming](#typed-content-and-streaming). |
 | **+ Define Row Schema** | (CSV only) Map CSV rows to a typed record. See [Typed content and streaming](#typed-content-and-streaming). |
 | **+ Define Content Schema** | (JSON, XML only) Map the document to a typed record. See [Typed content and streaming](#typed-content-and-streaming). |

@@ -4,11 +4,11 @@ title: Streaming Large Files
 
 # Streaming Large Files
 
-By default, a file handler loads the whole file into memory before it runs. For files in the hundreds of megabytes or larger, that can exhaust the integration's memory budget. Turning on **Stream (Large Files)** when you add a handler changes this: the runtime delivers the content to the handler a row (CSV) or chunk (RAW) at a time, so memory use stays flat no matter how big the file is.
+By default, a file handler loads the whole file into memory before it runs. For files in the hundreds of megabytes or larger, that can exhaust the integration's memory budget. Enabling **Stream (Large Files)** when configuring a handler changes how files are processed, delivering data row by row (CSV) or in chunks (RAW) so memory usage stays constant regardless of file size.
 
 ## When to stream
 
-| Scenario | What to pick |
+| Scenario | Approach |
 |---|---|
 | Files smaller than ~50 MB | Leave **Stream** off. Simpler handler code, and you get the whole file at once. |
 | CSV files larger than ~50 MB | Tick **Stream**. Define a row schema so each row arrives as a typed record. |

@@ -4,15 +4,15 @@ title: High Availability and Coordination
 
 # High Availability and Coordination
 
-When you deploy several copies of the same FTP/SFTP integration — for example, one per pod in a Kubernetes cluster — every copy would normally connect to the same remote directory and pick up every file. That causes duplicate processing, race conditions, and inconsistent downstream state.
+When you deploy several instances of the same FTP/SFTP integration — for example, one per pod in a Kubernetes cluster — every instance would normally connect to the same remote directory and pick up every file. That causes duplicate processing, race conditions, and inconsistent downstream state.
 
-Turning on **Coordination** fixes this. One copy is elected as the active node and polls the server; the others stay as warm standbys and take over automatically if the active one goes down. You only need one extra thing — a shared database the nodes use to elect a leader and exchange heartbeats.
+Turning on **Coordination** fixes this. One instance is elected as the active node and polls the server; the others stay as warm standbys and take over automatically if the active one goes down. You only need one extra thing — a shared database the nodes use to elect a leader and exchange heartbeats.
 
 ## How it works
 
 | Step | What happens |
 |---|---|
-| **1. Leader election** | On startup, every copy in the same `coordinationGroup` registers with the shared database. One copy is elected active. |
+| **1. Leader election** | On startup, every node in the same `coordinationGroup` registers with the shared database. One node is elected active. |
 | **2. Heartbeat** | Every node in the group — active and standby — writes its own heartbeat row at the `heartbeatFrequency` interval. This advertises liveness so any node can be promoted when needed. |
 | **3. Liveness check** | Standby nodes periodically check the active node's heartbeat. If the heartbeat goes stale, the active node is considered dead. |
 | **4. Failover** | A standby is promoted to active and starts polling immediately — no manual intervention. |
@@ -28,13 +28,13 @@ The pattern is **active-passive**: at most one node polls at a time. Per-file lo
 
    | Field | What to enter |
    |---|---|
-   | **Member Id** | A unique name for this copy of the integration. Every pod/instance must have a different value. Typically sourced from a `configurable` so each deployment can set its own. |
-   | **Coordination Group** | A shared name that all copies of the same listener use. Copies with matching group names coordinate; copies with different group names are independent. |
+   | **Member Id** | A unique name for this instance of the integration. Every pod/instance must have a different value. Typically sourced from a `configurable` so each deployment can set its own. |
+   | **Coordination Group** | A shared name that all instances of the same listener use. Instances with matching group names coordinate; instances with different group names are independent. |
    | **Database Config** | Connection details (host, port, user, password, database) for the shared MySQL or PostgreSQL database used to track leader election. |
 
-4. Save the listener. Deploy each copy with a different **Member Id**.
+4. Save the listener. Deploy each instance with a different **Member Id**.
 
-Add a `coordination` record to the `ftp:Listener` configuration. Source `memberId` from a `configurable` so each deployment sets its own value; keep `coordinationGroup` identical across copies you want to coordinate.
+Add a `coordination` record to the `ftp:Listener` configuration. Source `memberId` from a `configurable` so each deployment sets its own value; keep `coordinationGroup` identical across instances you want to coordinate.
 
 ```ballerina
 import ballerina/ftp;
@@ -64,7 +64,7 @@ listener ftp:Listener ftpListener = new ({
 
 service on ftpListener {
     remote function onFileText(string content, ftp:FileInfo fileInfo) returns error? {
-        // Only one copy in the cluster executes this handler per file.
+        // Only one instance in the cluster executes this handler per file.
     }
 }
 ```
@@ -78,6 +78,9 @@ service on ftpListener {
 | `coordinationGroup` | `string` | — | Name of the coordination group. All listeners with the same group coordinate together. Required. |
 | `livenessCheckInterval` | `int` | `30` | Seconds between heartbeat checks by standby nodes. |
 | `heartbeatFrequency` | `int` | `1` | Seconds between heartbeat writes by the active node. |
+
+:::warning[Each instance needs a unique Member ID]
+The runtime trusts the Member ID you provide — it does **not** check that the value is unique across your cluster. If two pods come up with the same Member ID in the same Coordination Group, **both become active and process every file twice**.
 
 ### Database schema
 
@@ -123,6 +126,9 @@ Coordination depends on the shared database being reachable. If the database goe
 - **Standby nodes** also cannot take over until the database is reachable again. On recovery, a standby promotes itself within one liveness-check interval and begins polling.
 
 Treat the coordination database as critical infrastructure on the data path: plan replicas, backups, and failover to the same standard as your FTP/SFTP source.
+
+:::warning[Monitor the coordination database directly]
+The coordination database sits on the file-processing data path: its availability directly determines whether files are picked up. Add it to your infrastructure monitoring (uptime checks, query latency, connection counts) alongside the FTP/SFTP source itself, so your operators are alerted by the database, not by files piling up at the source.
 
 ## What's next
 

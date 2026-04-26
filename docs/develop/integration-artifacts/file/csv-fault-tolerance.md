@@ -13,7 +13,7 @@ Real-world CSV files rarely arrive perfectly clean. A single bad row — a stray
 | **Off** (default) | The first malformed row trips data binding | An `error` instead of content | Moves to the **After Error** destination |
 | **On** | The row is dropped before the handler is called | Only valid rows, as usual | Moves to the **After Success** destination |
 
-:::note Fault tolerance needs a typed row schema
+:::note[Fault tolerance needs a typed row schema]
 Fault tolerance only skips rows that fail **typed binding**. If your handler is generated with the default `string[][]` content type, every row is valid as a string array and nothing is ever dropped.
 
 On the **Add File Handler** form, click **+ Define Row Schema** and describe each column as a field on a Ballerina record. This flips the handler parameter to a typed array (for example `Order[]`), and rows that don't match trigger binding errors that fault tolerance can skip. See the [row-schema step in Streaming large files](streaming-large-files.md#enabling-streaming) for a walkthrough.
@@ -23,7 +23,7 @@ Fault tolerance combines cleanly with:
 - **Streaming** — works with [streamed CSV](streaming-large-files.md). A bad row no longer terminates the stream; processing continues through the rest of the file.
 - **Move / Delete post-processing** — because the handler completes successfully, the file follows the **After Success** action as it would for a clean run.
 
-## Enabling it
+## Configuration
 
 Fault tolerance is a **listener-level** setting. Turn it on once per listener and every CSV handler attached to that service inherits the behaviour. It is part of the listener's regular configuration, not tucked under Advanced.
 
@@ -90,7 +90,7 @@ The `_error.log` filename, location, and JSON layout are the built-in defaults f
 
 ## Routing files with dropped rows
 
-:::note Dropped rows don't flip the file to After Error
+:::note[Dropped rows don't flip the file to After Error]
 The listener's **After Success** and **After Error** branches are picked based on whether the handler returned an error. A dropped row is not itself an error — even if every row in the file gets dropped, the handler still receives an empty typed array and the file takes the **After Success** path by default.
 
 If your flow needs a file with dropped rows to go to the error directory instead, the handler has to detect the condition and route the file explicitly. The reliable signal is the presence of the `_error.log` side file described above.
@@ -114,9 +114,9 @@ remote function onFileCsv(Order[] orders, ftp:FileInfo fileInfo, ftp:Caller call
         return;
     }
 
-    string prefix = fileInfo.name;
-    int? dot = prefix.indexOf(".");
-    if dot is int { prefix = prefix.substring(0, dot); }
+    string name = fileInfo.name;
+    int? dot = name.lastIndexOf(".");
+    string prefix = dot is int ? name.substring(0, dot) : name;
 
     if check file:test(prefix + "_error.log", file:EXISTS) {
         // Every row was dropped by fault tolerance.

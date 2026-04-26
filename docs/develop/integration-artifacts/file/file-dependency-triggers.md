@@ -10,7 +10,7 @@ By default, an FTP/SFTP listener triggers as soon as it detects a new file. In p
 
 The `fileNamePattern` field accepts a regex that filters which files trigger the handler. Files that don't match are ignored.
 
-On the **Service Configuration** panel, open the **Record Configuration** builder for the **Service Configuration** field, tick **fileNamePattern**, and enter a regex (for example, `.*\.csv`).
+On the **FTP Integration Configuration** panel, open the **Record Configuration** builder for the **Service Configuration** field, tick **fileNamePattern**, and enter a regex (for example, `.*\.csv`).
 
 ```ballerina
 @ftp:ServiceConfig {
@@ -35,7 +35,7 @@ Common patterns:
 
 The `fileAgeFilter` field prevents processing files that are too new (still being uploaded) or too old (stale). Both bounds are optional.
 
-On the **Service Configuration** panel, open the **Record Configuration** builder for the **Service Configuration** field, tick **fileAgeFilter**, and set **minAge** and/or **maxAge** in seconds.
+On the **FTP Integration Configuration** panel, open the **Record Configuration** builder for the **Service Configuration** field, tick **fileAgeFilter**, and set **minAge** and/or **maxAge** in seconds.
 
 ```ballerina
 @ftp:ServiceConfig {
@@ -62,7 +62,7 @@ service on ftpListener {
 
 The `fileDependencyConditions` field blocks processing until one or more related files exist in the same directory. This is useful when an upstream system uploads a data file first and a marker file second to signal that the upload is complete.
 
-On the **Service Configuration** panel, open the **Record Configuration** builder for the **Service Configuration** field, tick **fileDependencyConditions**, and add an entry. Set the target pattern to match the data file, and list the required files that must be present before processing triggers.
+On the **FTP Integration Configuration** panel, open the **Record Configuration** builder for the **Service Configuration** field, tick **fileDependencyConditions**, and add an entry. Set the target pattern to match the data file, and list the required files that must be present before processing triggers.
 
 ```ballerina
 @ftp:ServiceConfig {
