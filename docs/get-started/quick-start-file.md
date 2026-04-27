@@ -17,7 +17,7 @@ File integrations are ideal for batch uploads, scheduled file processing, and ET
 1. Open WSO2 Integrator.
 2. Select **Create**.
 3. Set **Integration Name** to `FileTracker`.
-4. Set **Project Name** to `Quick_Start`.
+4. Set **Project Name** to `QuickStart`.
 5. Select **Browse**.
 6. Select the project location and select **Open**.
 7. Select **Create Integration**.

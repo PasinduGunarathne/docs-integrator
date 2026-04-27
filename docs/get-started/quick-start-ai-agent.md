@@ -31,8 +31,8 @@ sequenceDiagram
 
 1. Open WSO2 Integrator.
 2. Select **Create**.
-3. Set **Integration Name** to `AI Agent`.
-4. Set **Project Name** to `Quick_Start`.
+3. Set **Integration Name** to `AIAgent`.
+4. Set **Project Name** to `QuickStart`.
 5. Select **Browse**.
 6. Select the project location and select **Open**.
 7. Select **Create Integration**.
@@ -47,7 +47,7 @@ sequenceDiagram
 
 ## Step 2: Add an AI Chat Agent
 
-1. Select **AI Agent**.
+1. Select **AIAgent**.
 2. In the design view, select **+ Add Artifact**.
 3. Scroll down and select **AI Chat Agent** under **AI Integration**.
 4. Set **Name** to `Wso2 Integrator Assistant`.
@@ -63,7 +63,7 @@ sequenceDiagram
 
 ## Step 3: Configure the AI Agent
 
-1. Select **AI Agent**.
+1. Select **AIAgent**.
 2. Set **Instructions** to `You are a highly skilled WSO2 Integration Architect. Your goal is to assist developers in building, debugging, and optimizing integration flows.`.
 3. Select **Save**.
 

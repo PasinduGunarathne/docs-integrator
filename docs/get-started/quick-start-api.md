@@ -28,8 +28,8 @@ sequenceDiagram
 
 1. Open WSO2 Integrator.
 2. Select **Create**.
-3. Set **Integration Name** to `Hello_World_API`.
-4. Set **Project Name** to `Quick_Start`.
+3. Set **Integration Name** to `HelloWorldAPI`.
+4. Set **Project Name** to `QuickStart`.
 5. Select **Browse**.
 6. Select the project location and select **Open**.
 7. Select **Create Integration**.
@@ -44,7 +44,7 @@ sequenceDiagram
 
 ## Step 2: Add an HTTP service
 
-1. Select **Hello_World_API**.
+1. Select **HelloWorldAPI**.
 2. In the design view, select **Add Artifact**.
 3. Select **HTTP Service** under **Integration as API**.
 4. Keep **Service contract** as **Design from scratch**.

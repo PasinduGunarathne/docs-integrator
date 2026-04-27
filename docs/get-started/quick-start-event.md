@@ -18,7 +18,7 @@ Event integrations are ideal for reactive workflows triggered by messages from K
 1. Open WSO2 Integrator.
 2. Select **Create**.
 3. Set **Integration Name** to `OrderProcessor`.
-4. Set **Project Name** to `Quick_Start`.
+4. Set **Project Name** to `QuickStart`.
 5. Select **Browse**.
 6. Select the project location and select **Open**.
 7. Select **Create Integration**.
