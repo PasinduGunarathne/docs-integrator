@@ -2,103 +2,89 @@
 
 ## What you'll build
 
-Build an integration that connects to Microsoft OneDrive and creates a new folder inside an existing drive item. The integration uses a configurable bearer token for authentication and invokes the `createChildren` operation to create a child folder in a specified OneDrive drive item.
+Build an integration in WSO2 Integrator that uses the **Microsoft OneDrive** connector to list all available drives. The integration uses an **Automation** entry point to invoke the `listDrive` operation and log the results.
 
 **Operations used:**
-- **createChildren** : Creates a new child item (folder) inside a specified OneDrive drive item
+- **listDrive** : Retrieves all available drives from Microsoft OneDrive
 
 ## Architecture
 
 ```mermaid
 flowchart LR
-    A((User)) --> B[createChildren Operation]
-    B --> C[OneDrive Connector]
+    A((User)) --> B[listDrive Operation]
+    B --> C[Microsoft OneDrive Connector]
     C --> D((Microsoft OneDrive))
 ```
 
 ## Prerequisites
 
-- A Microsoft OneDrive account with an active bearer token (OAuth 2.0 access token)
+- A Microsoft OneDrive account with a valid access token
 
-## Setting up the OneDrive integration
+## Setting up the Microsoft OneDrive integration
 
 > **New to WSO2 Integrator?** Follow the [Create a New Integration](../../../../develop/create-integrations/create-new-integration.md) guide to set up your integration first, then return here to add the connector.
 
-## Adding the OneDrive connector
+## Adding the Microsoft OneDrive connector
 
-### Step 1: Open the Add Connection palette
+### Step 1: Add the Microsoft OneDrive connection
 
-Select **+ Add Connection** in the integration design canvas to open the **Add Connection** palette, which shows a grid of pre-built connectors.
+Select **+** in the **Connections** section to open the Add Connection panel.
 
-![OneDrive connector palette open with search field before any selection](/img/connectors/catalog/productivity-collaboration/microsoft.onedrive/microsoft_onedrive_screenshot_01_palette.png)
+![Microsoft OneDrive connector palette open with search field before any selection](/img/connectors/catalog/productivity-collaboration/microsoft.onedrive/microsoft_onedrive_screenshot_01_palette.png)
 
-### Step 2: Search for and select the OneDrive connector
+## Configuring the Microsoft OneDrive connection
 
-1. Enter `onedrive` in the search box at the top of the palette.
-2. Select the **Onedrive** connector card to open the **Configure Onedrive** form.
+### Step 2: Fill in the connection parameters
 
-## Configuring the OneDrive connection
+Enter the connection details, binding each field to a configurable variable:
 
-### Step 3: Fill in the connection parameters
+- **connectionName** : Enter `onedriveClient` as the connection name
+- **config** : Switch to **Expression** mode and enter `{auth: {token: oneDriveToken}}`, referencing the `oneDriveToken` configurable variable that holds your access token at runtime
 
-Fill in the connection parameters, binding each field to a configurable variable:
+![Microsoft OneDrive connection form fully filled with all parameters before saving](/img/connectors/catalog/productivity-collaboration/microsoft.onedrive/microsoft_onedrive_screenshot_02_connection_form.png)
 
-- **Config** : Authentication and HTTP client settings for the connector — bind to a new configurable variable `oneDriveToken` of type `string` using the expression `{auth: {token: oneDriveToken}}`
-- **Connection Name** : Logical name used to reference the connection in your integration — set to `onedriveClient`
+### Step 3: Save the connection
 
-![OneDrive connection form fully filled with all parameters before saving](/img/connectors/catalog/productivity-collaboration/microsoft.onedrive/microsoft_onedrive_screenshot_02_connection_form.png)
+Select **Save** to create the connection. The `onedriveClient` entry now appears under the **Connections** section.
 
-### Step 4: Save the connection
+![Microsoft OneDrive Connections panel showing onedriveClient entry after saving](/img/connectors/catalog/productivity-collaboration/microsoft.onedrive/microsoft_onedrive_screenshot_03_connections_list.png)
 
-Select **Save Connection** to persist the connection. The **Connections** section in the left sidebar now lists `onedriveClient` and the design canvas shows the connection node.
+### Step 4: Set actual values for your configurables
 
-![OneDrive Connections panel showing onedriveClient entry after saving](/img/connectors/catalog/productivity-collaboration/microsoft.onedrive/microsoft_onedrive_screenshot_03_canvas_after_save.png)
+In the left panel, select **Configurations**. Set a value for each configurable listed below:
 
-### Step 5: Set actual values for your configurables
+- **oneDriveToken** (string) : Your Microsoft OneDrive access token
 
-1. In the left panel, select **Configurations**.
-2. Set a value for each configurable listed below.
+## Configuring the Microsoft OneDrive listDrive operation
 
-- **oneDriveToken** (string) : Your Microsoft Graph bearer token with scope `https://graph.microsoft.com/Files.ReadWrite`
+### Step 5: Add an Automation entry point
 
-## Configuring the OneDrive createChildren operation
+Select **Add Artifact** and choose **Automation** as the entry point type. Enter `main` as the function name, then select **Create** to generate the automation entry point.
 
-### Step 6: Add an Automation entry point
+### Step 6: Select and configure the listDrive operation
 
-1. Select **+ Add Artifact** on the design canvas toolbar.
-2. Select **Automation** from the artifacts panel.
-3. Select **Create** to accept the default settings.
+Expand the **onedriveClient** connection node on the canvas to view available operations, then select **List Drive** to add it to the flow.
 
-An `Automation` entry point named `main` is added under **Entry Points** in the sidebar. The flow canvas opens showing a **Start** node and an **Error Handler** node.
+![Microsoft OneDrive connection node expanded showing all available operations before selection](/img/connectors/catalog/productivity-collaboration/microsoft.onedrive/microsoft_onedrive_screenshot_04_operations.png)
 
-### Step 7: Select and configure the createChildren operation
+Configure the operation parameters:
 
-1. In the automation flow canvas, select the **+** button between the **Start** node and the **Error Handler** node.
-2. Under **Connections**, select **onedriveClient** to expand the list of available OneDrive operations.
+- **resultVariable** : Enter `result` as the variable name to store the response
+- **resultType** : Set to `onedrive:DriveCollectionResponse`
 
-![OneDrive connection node expanded showing all available operations before selection](/img/connectors/catalog/productivity-collaboration/microsoft.onedrive/microsoft_onedrive_screenshot_04_operations_panel.png)
+![Microsoft OneDrive listDrive operation configuration filled with all values](/img/connectors/catalog/productivity-collaboration/microsoft.onedrive/microsoft_onedrive_screenshot_05_operation_form.png)
 
-3. Select **Create Children** to open the **onedriveClient → createChildren** configuration form.
-4. Fill in the operation fields:
+Select **Save** to add the operation to the flow.
 
-- **Drive Id** : Unique identifier of the OneDrive drive
-- **Drive Item Id** : Unique identifier of the parent drive item (folder)
-- **Payload** : The new item to create — set to `{name: "Projects", folder: {}}` to create a folder
-- **Result** : Name of the variable to store the returned `DriveItem`
-
-![OneDrive createChildren operation configuration filled with all values](/img/connectors/catalog/productivity-collaboration/microsoft.onedrive/microsoft_onedrive_screenshot_05_operation_fields.png)
-
-Select **Save**. The operation node is added to the automation flow canvas between **Start** and **Error Handler**.
-
-![Completed OneDrive automation flow](/img/connectors/catalog/productivity-collaboration/microsoft.onedrive/microsoft_onedrive_screenshot_06_completed_flow.png)
+![Completed Microsoft OneDrive automation flow](/img/connectors/catalog/productivity-collaboration/microsoft.onedrive/microsoft_onedrive_screenshot_06_completed_flow.png)
 
 ## Try it yourself
 
 Try this sample in WSO2 Integration Platform.
 
-[![Deploy to Devant](https://openindevant.choreoapps.dev/images/DeployDevant-White.svg)](https://console.devant.dev/new?gh=wso2/integration-samples/tree/main/connectors/microsoft.onedrive_connector_sample)
+[![Deploy to Devant](https://openindevant.choreoapps.dev/images/DeployDevant-White.svg)](https://console.devant.dev/new?gh=wso2/integration-samples/tree/main/connectors/microsoft_onedrive_connector_sample)
 
-[View source on GitHub](https://github.com/wso2/integration-samples/tree/main/connectors/microsoft.onedrive_connector_sample)
+[View source on GitHub](https://github.com/wso2/integration-samples/tree/main/connectors/microsoft_onedrive_connector_sample)
 
 ## More code examples
 
