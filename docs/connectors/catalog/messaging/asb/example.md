@@ -2,6 +2,7 @@
 
 - [ASB MessageSender Example](#asb-messagesender-example)
 - [ASB MessageReceiver Example](#asb-messagereceiver-example)
+- [ASB Trigger Example](#asb-trigger-example)
 
 ## ASB MessageSender Example
 
@@ -92,9 +93,9 @@ The design canvas opens showing a bare flow: **Start → Error Handler**.
 
 Try this sample in WSO2 Integration Platform.
 
-[![Deploy to Devant](https://openindevant.choreoapps.dev/images/DeployDevant-White.svg)](https://console.devant.dev/new?gh=wso2/integration-samples/tree/main/connectors/asb_message_sender_connector_sample)
+[![Deploy to Devant](https://openindevant.choreoapps.dev/images/DeployDevant-White.svg)](https://console.devant.dev/new?gh=wso2/integration-samples/tree/main/integrator-default-profile/connectors/asb_message_sender_connector_sample)
 
-[View source on GitHub](https://github.com/wso2/integration-samples/tree/main/connectors/asb_message_sender_connector_sample)
+[View source on GitHub](https://github.com/wso2/integration-samples/tree/main/integrator-default-profile/connectors/asb_message_sender_connector_sample)
 
 ### More code examples
 
@@ -204,9 +205,9 @@ Select **Save** to add the node to the canvas.
 
 Try this sample in WSO2 Integration Platform.
 
-[![Deploy to Devant](https://openindevant.choreoapps.dev/images/DeployDevant-White.svg)](https://console.devant.dev/new?gh=wso2/integration-samples/tree/main/connectors/asb_message_receiver_sample)
+[![Deploy to Devant](https://openindevant.choreoapps.dev/images/DeployDevant-White.svg)](https://console.devant.dev/new?gh=wso2/integration-samples/tree/main/integrator-default-profile/connectors/asb_message_receiver_sample)
 
-[View source on GitHub](https://github.com/wso2/integration-samples/tree/main/connectors/asb_message_receiver_sample)
+[View source on GitHub](https://github.com/wso2/integration-samples/tree/main/integrator-default-profile/connectors/asb_message_receiver_sample)
 
 ### More code examples
 
@@ -215,3 +216,121 @@ There are two sets of examples demonstrating the use of the Ballerina Azure Serv
 - **[Management Related Examples](https://github.com/ballerina-platform/module-ballerinax-azure-service-bus/tree/main/examples/admin)**: These examples cover operations related to managing the Service Bus, such as managing queues, topics, subscriptions, and rules.
 
 - **[Message Sending and Receiving Related Examples](https://github.com/ballerina-platform/module-ballerinax-azure-service-bus/tree/main/examples/sender_reciever)**: This set includes examples for sending to and receiving messages from queues, topics, and subscriptions in the Service Bus.
+
+---
+## ASB Trigger Example
+### What you'll build
+
+This integration listens to an Azure Service Bus (ASB) queue and processes each incoming message automatically. When a message arrives on the configured queue, the `onMessage` handler receives an `asb:Message` payload and logs its JSON representation. The overall flow runs from the ASB listener through the handler to a `log:printInfo` statement.
+
+### Architecture
+
+```mermaid
+flowchart LR
+    A((Azure Service Bus Producer)) --> B[(ASB Queue)]
+    B --> C[[ASB Trigger Listener]]
+    C --> D[Handler: onMessage]
+    D --> E[log:printInfo]
+```
+
+### Prerequisites
+
+- An Azure Service Bus namespace with a queue provisioned
+- The namespace connection string (`Endpoint=sb://…`) and the queue name
+
+### Setting up the Azure Service Bus integration
+
+> **New to WSO2 Integrator?** Follow the [Create a New Integration](../../../../develop/create-integrations/create-new-integration.md) guide to set up your integration first, then return here to add the trigger.
+
+### Adding the Azure Service Bus trigger
+
+#### Step 1: Open the Artifacts palette
+
+Select **+ Add Artifact** in the WSO2 Integrator canvas to open the Artifacts palette, then expand the **Event Integration** category to see the available trigger cards.
+
+![Artifacts palette open showing the Event Integration category with Azure Service Bus card visible](/img/connectors/catalog/messaging/asb/asb_trigger_screenshots_01_artifact_palette.png)
+
+### Configuring the Azure Service Bus listener
+
+#### Step 2: Bind listener parameters to configurable variables
+
+In the **Create Azure Service Bus Event Integration** form, bind each field to a configurable variable:
+
+1. Select inside the **Connection String** field, then select the **Open Helper Panel** icon to open the helper panel.
+2. Go to the **Configurables** tab and select **+ New Configurable**.
+3. Set **Variable Name** to `connectionString` and **Variable Type** to `string`, then select **Save**. The `connectionString` tag appears in the field.
+4. Select **+ New Configurable** again, set **Variable Name** to `queueName` and **Variable Type** to `string`, then select **Save**.
+5. In the **Entity Config** field, select the **Expression** toggle and enter `{ queueName: queueName }`.
+6. Confirm that **Listener Name** is set to `asbListener`.
+
+- **connectionString** : The Azure Service Bus namespace connection string used to authenticate the listener
+- **queueName** : The name of the Azure Service Bus queue to listen on
+- **entityConfig** : Expression referencing the `queueName` configurable variable to identify the target queue
+- **listenerName** : The identifier for the listener instance within the integration
+
+![Azure Service Bus trigger configuration form fully filled with all listener parameters before clicking Create](/img/connectors/catalog/messaging/asb/asb_trigger_screenshots_02_trigger_config_form.png)
+
+#### Step 3: Set actual values for your configurations
+
+Select **Configurations** in the left panel of WSO2 Integrator to open the Configurations panel, then set a value for each configuration listed below:
+
+- **connectionString** (string) : The full Azure Service Bus namespace connection string, for example `Endpoint=sb://.servicebus.windows.net/;SharedAccessKeyName=<KEY_NAME>;SharedAccessKey=<KEY_VALUE>`
+- **queueName** (string) : The name of the queue to consume messages from, for example `my-queue`
+
+![Configurations panel open showing the configurable variables listed with empty value fields](/img/connectors/catalog/messaging/asb/asb_trigger_screenshots_03_configurations_panel.png)
+
+#### Step 4: Create the trigger
+
+Select **Create** to submit the form and generate the service scaffold.
+
+### Handling Azure Service Bus events
+
+#### Step 5: Add the onMessage handler
+
+In the service view, select **+ Add Handler**. The **Select Handler to Add** side panel opens on the right, listing the available handler options.
+
+![Service view with Select Handler to Add side panel open listing Azure Service Bus handler options](/img/connectors/catalog/messaging/asb/asb_trigger_screenshots_04_add_handler_panel.png)
+
+#### Step 6: Inspect the initial handler flow canvas
+
+Select **onMessage** from the side panel to register the handler.
+
+> **Note:** Azure Service Bus uses the library-defined `asb:Message` type—there's no **Define Value / Create Type Schema** modal for this trigger. The message schema is fixed by the `ballerinax/asb` package.
+
+Select the **onMessage** row in the service view to open the flow canvas.
+
+#### Step 7: Add the log:printInfo step
+
+Select the **+** icon in the flow chart, and in the side panel that opens, choose **Log Info** from the **Logging** section, then enter `message.toJsonString()` as the message.
+
+![onMessage handler flow canvas showing log:printInfo step added](/img/connectors/catalog/messaging/asb/asb_trigger_screenshots_06_handler_flow.png)
+
+#### Step 8: Return to the service view
+
+Select the back arrow or select **Azure Service Bus Event Integration** in the breadcrumb to return to the service view and confirm the `onMessage` handler row is registered under **Event Handlers**.
+
+![Trigger Service view showing the registered Event onMessage handler row](/img/connectors/catalog/messaging/asb/asb_trigger_screenshots_07_service_view_final.png)
+
+### Running the integration
+
+Select **Run Integration** (▶) in the WSO2 Integrator toolbar to start the listener.
+
+To fire a test event, use one of the following approaches:
+
+1. **Azure Portal** — navigate to your Service Bus namespace, open the queue, select **Service Bus Explorer**, and use **Send messages** to publish a test message directly from the browser.
+2. **Azure CLI** — use `az rest` to call the Service Bus REST API: `az rest --method POST --uri https://<namespace>.servicebus.windows.net/<queue-name>/messages --auth-type key-auth --resource https://servicebus.azure.net --body '{"hello":"world"}'` to send a message from the command line.
+3. **Azure SDK client** — use the Azure Service Bus SDK for your preferred language (JavaScript, Python, Java, or .NET) to send a message programmatically.
+
+After a message is sent, the console prints output similar to:
+
+```bash
+time = 2024-01-15T10:30:00.000Z level = INFO message = {"body":"Hello, ASB!","messageId":"abc123",...}
+```
+
+### Try it yourself
+
+Try this sample in WSO2 Integration Platform.
+
+[![Deploy to Devant](https://openindevant.choreoapps.dev/images/DeployDevant-White.svg)](https://console.devant.dev/new?gh=wso2/integration-samples/tree/main/integrator-default-profile/connectors/asb_trigger_sample)
+
+[View source on GitHub](https://github.com/wso2/integration-samples/tree/main/integrator-default-profile/connectors/asb_trigger_sample)
