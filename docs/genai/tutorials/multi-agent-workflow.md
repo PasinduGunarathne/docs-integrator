@@ -372,5 +372,5 @@ You now have a multi-agent system that:
 
 - [Multi-Agent Orchestration](/docs/genai/agents/multi-agent-orchestration) -- Advanced patterns (pipeline, supervisor, fan-out)
 - [Agent Tracing](/docs/genai/agent-observability/agent-tracing) -- Trace across agent boundaries
-- [AI Customer Support Agent](ai-customer-support.md) -- Simpler single-agent version
+- [AI Customer Support Agent](ai-customer-support-agent.md) -- Simpler single-agent version
 - [Token & Cost Management](/docs/genai/guardrails/token-cost-management) -- Optimize costs across agents

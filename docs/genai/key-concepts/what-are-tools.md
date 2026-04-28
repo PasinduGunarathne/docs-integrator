@@ -53,6 +53,6 @@ final agent:ChatAgent myAgent = check new (
 
 ## What's next
 
-- [What is AI Agent Memory?](what-is-agent-memory.md) -- How agents maintain context
+- [What is AI Agent Memory?](what-is-ai-agent-memory.md) -- How agents maintain context
 - [Adding Tools to an Agent](/docs/genai/develop/agents/adding-tools) -- Detailed tool patterns
 - [What is MCP?](what-is-mcp.md) -- Expose tools to external AI assistants

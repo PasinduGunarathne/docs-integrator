@@ -136,4 +136,4 @@ Key aspects of this implementation:
 
 - [Saga / Compensation](saga-compensation.md) -- For long-running orchestrations where each step has an explicit compensating action.
 - [Scatter-Gather](scatter-gather.md) -- When backend calls are independent and can run in parallel.
-- [Circuit Breaker & Retry](circuit-breaker.md) -- To add resilience to individual backend calls within the orchestration.
+- [Circuit Breaker & Retry](circuit-breaker-retry.md) -- To add resilience to individual backend calls within the orchestration.

@@ -211,6 +211,6 @@ service "OrderService" on ep {
 
 ## See also
 
-- [bal Command Reference](bal-commands.md) -- All bal subcommands
+- [bal Command Reference](bal-command-reference.md) -- All bal subcommands
 - [Protocols Reference](/docs/reference/protocols) -- Supported protocols including gRPC
 - [Ballerina by Example](/docs/reference/by-example) -- Runnable gRPC examples

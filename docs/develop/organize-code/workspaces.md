@@ -243,5 +243,5 @@ order-service/
 ## What's next
 
 - [Packages & Modules](packages-modules.md) -- Package structure fundamentals
-- [Manage Dependencies](manage-dependencies.md) -- Version locking and updates
+- [Manage Dependencies](dependencies.md) -- Version locking and updates
 - [Style Guide](style-guide.md) -- Consistent code style across packages

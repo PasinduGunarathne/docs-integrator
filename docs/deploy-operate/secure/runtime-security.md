@@ -272,4 +272,4 @@ spec:
 
 - [Secrets & Encryption](secrets-encryption.md) -- Manage secrets and encryption
 - [Authentication](authentication.md) -- Configure authentication for services
-- [API Security](api-security.md) -- Secure your API endpoints
+- [API Security](api-security-rate-limiting.md) -- Secure your API endpoints

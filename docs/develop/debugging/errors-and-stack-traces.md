@@ -216,6 +216,6 @@ If you see a compiler crash, try simplifying your code to identify the minimal c
 
 ## What's next
 
-- [Editor Debugging](editor-debugging.md) -- Set breakpoints and step through your code to find the root cause
+- [Editor Debugging](editor.md) -- Set breakpoints and step through your code to find the root cause
 - [Error Handling](../design-logic/error-handling.md) -- Learn how to handle errors gracefully in your integration code
-- [Strand Dump Analysis](strand-dumps.md) -- Diagnose concurrency issues when your service hangs
+- [Strand Dump Analysis](strand-dump-analysis.md) -- Diagnose concurrency issues when your service hangs

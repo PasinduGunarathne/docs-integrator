@@ -250,5 +250,5 @@ function deliverMessage(string payload) returns error? {
 ## Related patterns
 
 - [Idempotent Receiver](idempotent-receiver.md) -- Essential companion pattern for handling duplicate deliveries
-- [Circuit Breaker & Retry](circuit-breaker.md) -- Controls retry behavior and prevents overwhelming failing services
+- [Circuit Breaker & Retry](circuit-breaker-retry.md) -- Controls retry behavior and prevents overwhelming failing services
 - [Saga / Compensation](saga-compensation.md) -- Coordinates multi-step transactions with guaranteed completion

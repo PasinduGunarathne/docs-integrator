@@ -243,6 +243,6 @@ fi
 
 ## What's next
 
-- [Migration Tools](../migration-tools/overview.md) -- Migrate from other integration platforms
+- [Migration Tools](../migration-tools/migration-tools.md) -- Migrate from other integration platforms
 - [Static Code Analysis](/docs/develop/organize-code/static-code-analysis) -- Configure analysis in your project workflow
 - [Error Handling](/docs/develop/design-logic/error-handling) -- Fix error handling issues flagged by the scanner

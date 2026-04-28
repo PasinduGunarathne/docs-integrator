@@ -196,6 +196,6 @@ public function main() returns error? {
 
 ## See also
 
-- [bal Command Reference](bal-commands.md) -- All bal subcommands
+- [bal Command Reference](bal-command-reference.md) -- All bal subcommands
 - [EDI Data Transformation](/docs/develop/transform/edi) -- Working with EDI data
 - [Data Formats Reference](/docs/reference/data-formats) -- All supported data formats

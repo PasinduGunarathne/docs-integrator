@@ -380,4 +380,4 @@ The expression editor supports:
 
 ## What's next
 
-- [AI-Assisted Data Mapping](ai-assisted-mapping.md) -- AI suggestions for transformations
+- [AI-Assisted Data Mapping](ai-assisted-data-mapping.md) -- AI suggestions for transformations

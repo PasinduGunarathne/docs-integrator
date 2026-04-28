@@ -249,6 +249,6 @@ function generateAndSendSummary() returns error? {
 
 ## What's next
 
-- [Google Sheets to Salesforce Contacts](google-sheets-salesforce.md) -- Sync spreadsheet rows to CRM contacts
+- [Google Sheets to Salesforce Contacts](google-sheets-salesforce-contacts.md) -- Sync spreadsheet rows to CRM contacts
 - [HubSpot to Google Contacts](hubspot-google-contacts.md) -- Sync CRM contacts across platforms
 - [Connectors Reference](../../connectors/overview) -- Explore all available connectors

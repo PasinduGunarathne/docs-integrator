@@ -97,5 +97,5 @@ TicketClassification result = check classifierAgent.run("I can't connect to the 
 ## What's next
 
 - [What are Tools?](what-are-tools.md) -- Understand how agents interact with external systems
-- [What is AI Agent Memory?](what-is-agent-memory.md) -- How agents maintain conversation context
+- [What is AI Agent Memory?](what-is-ai-agent-memory.md) -- How agents maintain conversation context
 - [Creating an AI Agent](/docs/genai/develop/agents/creating-agent) -- Build your first agent

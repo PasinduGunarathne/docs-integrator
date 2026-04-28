@@ -84,4 +84,4 @@ When you retry the file, those rows run again. To stay safe, make your handler i
 
 - [FTP / SFTP](ftp-sftp.md) — service, listener, and file-handler reference
 - [CSV fault tolerance](csv-fault-tolerance.md) — skip malformed rows and keep the stream going
-- [File dependency and trigger conditions](file-dependency-triggers.md) — control when files are processed
+- [File dependency and trigger conditions](dependency-and-trigger-conditions.md) — control when files are processed

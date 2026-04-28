@@ -228,6 +228,6 @@ function syncProducts() returns error? {
 
 ## What's next
 
-- [Kafka to Salesforce Price Book](kafka-salesforce-pricebook.md) -- Stream pricing events to Salesforce
-- [Google Sheets to Salesforce Contacts](google-sheets-salesforce.md) -- Sync spreadsheet data to CRM contacts
+- [Kafka to Salesforce Price Book](kafka-salesforce-price-book.md) -- Stream pricing events to Salesforce
+- [Google Sheets to Salesforce Contacts](google-sheets-salesforce-contacts.md) -- Sync spreadsheet data to CRM contacts
 - [Connectors Reference](../../connectors/overview) -- Explore all available connectors

@@ -6,7 +6,7 @@ title: Content Filtering
 
 Content filtering prevents your AI integrations from generating or passing through harmful, inappropriate, or off-topic content. This is especially important for customer-facing agents where uncontrolled output can damage brand reputation or violate compliance requirements.
 
-Content filters work alongside [input/output guardrails](input-output-guardrails.md) but focus specifically on the semantic content of messages rather than structural validation.
+Content filters work alongside [input/output guardrails](inputoutput.md) but focus specifically on the semantic content of messages rather than structural validation.
 
 ## Built-In content filters
 
@@ -238,7 +238,7 @@ function logFilterActivity(guardrails:FilterResult result, string direction) {
 
 ## What's next
 
-- [Input/Output Guardrails](input-output-guardrails.md) -- Structural validation for AI inputs and outputs
+- [Input/Output Guardrails](inputoutput.md) -- Structural validation for AI inputs and outputs
 - [Token & Cost Management](token-cost-management.md) -- Control LLM usage and spending
 - [AI Usage Guidelines](ai-usage-guidelines.md) -- Data handling and compliance policies
 - [Responsible AI](responsible-ai.md) -- Ethical AI practices for integrations

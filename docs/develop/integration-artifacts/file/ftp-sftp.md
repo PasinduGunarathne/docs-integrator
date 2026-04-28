@@ -635,7 +635,7 @@ service on primaryListener, backupListener {
 }
 ```
 
-For the general concept, see [Services and listeners](/docs/get-started/key-concepts#services-and-listeners). For the language-level details, see [Integration-specific features](../../../reference/language/integration-features.md).
+For the general concept, see [Services and listeners](/docs/get-started/key-concepts#services-and-listeners). For the language-level details, see [Integration-specific features](../../../reference/language/integration-specific-features.md).
 
 ## Attaching listeners to services
 
@@ -768,8 +768,8 @@ service on ftpListener {
 |---|---|---|---|
 | `path` | `string` | `"/"` | Directory on the remote server to monitor for new files. |
 | `fileNamePattern` | `string?` | — | Regex to filter which files trigger handlers. Only matching files are processed. |
-| `fileAgeFilter` | `FileAgeFilter?` | — | Age bounds to skip files that are too new (still uploading) or too old (stale). See [File dependency and trigger conditions](file-dependency-triggers.md). |
-| `fileDependencyConditions` | `FileDependencyCondition[]?` | — | Conditions that block processing until related files exist. See [File dependency and trigger conditions](file-dependency-triggers.md). |
+| `fileAgeFilter` | `FileAgeFilter?` | — | Age bounds to skip files that are too new (still uploading) or too old (stale). See [File dependency and trigger conditions](dependency-and-trigger-conditions.md). |
+| `fileDependencyConditions` | `FileDependencyCondition[]?` | — | Conditions that block processing until related files exist. See [File dependency and trigger conditions](dependency-and-trigger-conditions.md). |
 
 The **Attached Listeners** list in the left nav pane shows every listener this service is attached to. Click a listener name to edit that listener's configuration inline on the right. To attach another listener, click **+ Attach Listener** at the bottom of the panel — see [Attaching listeners to services](#attaching-listeners-to-services).
 
@@ -794,8 +794,8 @@ The listener controls **how** to connect — protocol, host, authentication, pol
 | **Sftp Compression** | SSH compression algorithms to negotiate with the server (SFTP only). | — |
 | **Sftp Ssh Known Hosts** | Path to an SSH `known_hosts` file (SFTP only). | — |
 | **Csv Fail Safe** | Fail-safe options for CSV content processing. Malformed records are skipped and written to a side file in the working directory. | — |
-| **Retry Config** | Retry configuration for transient failures during polling or file retrieval. For the retry-with-backoff mechanics and field reference, see [`ftp:RetryConfig`](https://central.ballerina.io/ballerina/ftp/latest#RetryConfig); for the broader pattern, see the [Circuit breaker tutorial](../../../tutorials/patterns/circuit-breaker.md). | — |
-| **Coordination** | Distributed coordination for multi-instance deployments. See [High availability](high-availability.md). | — |
+| **Retry Config** | Retry configuration for transient failures during polling or file retrieval. For the retry-with-backoff mechanics and field reference, see [`ftp:RetryConfig`](https://central.ballerina.io/ballerina/ftp/latest#RetryConfig); for the broader pattern, see the [Circuit breaker tutorial](../../../tutorials/patterns/circuit-breaker-retry.md). | — |
+| **Coordination** | Distributed coordination for multi-instance deployments. See [High availability](high-availability-and-coordination.md). | — |
 
 Listener configuration maps to the `ftp:ListenerConfiguration` record passed when constructing the listener:
 
@@ -823,12 +823,12 @@ listener ftp:Listener ftpListener = new (
 | `connectTimeout` | `decimal` | `30.0` | Connection timeout in seconds. |
 | `socketConfig` | `ftp:SocketConfig?` | — | Socket timeout configuration. See [`ftp:SocketConfig` reference](https://central.ballerina.io/ballerina/ftp/latest#SocketConfig). |
 | `fileTransferMode` | `ftp:FileTransferMode` | `BINARY` | File transfer mode (`BINARY` or `ASCII`). Use `ASCII` only for text-only files on servers that require line-ending conversion. |
-| `retryConfig` | `ftp:RetryConfig?` | — | Retry configuration for failed polling attempts. See [`ftp:RetryConfig`](https://central.ballerina.io/ballerina/ftp/latest#RetryConfig) and the [Circuit breaker tutorial](../../../tutorials/patterns/circuit-breaker.md). |
-| `coordination` | `ftp:CoordinationConfig?` | — | Distributed coordination for multi-instance deployments. See [High availability](high-availability.md). |
+| `retryConfig` | `ftp:RetryConfig?` | — | Retry configuration for failed polling attempts. See [`ftp:RetryConfig`](https://central.ballerina.io/ballerina/ftp/latest#RetryConfig) and the [Circuit breaker tutorial](../../../tutorials/patterns/circuit-breaker-retry.md). |
+| `coordination` | `ftp:CoordinationConfig?` | — | Distributed coordination for multi-instance deployments. See [High availability](high-availability-and-coordination.md). |
 
 ## What's next
 
 - [Local files](local-files.md) — monitor a local directory instead of a remote server
 - [Connections](../supporting/connections.md) — reuse FTP connection credentials across services
 - [Data Mapper](../supporting/data-mapper.md) — transform incoming file payloads between formats
-- [FTP file processing tutorial](../../../tutorials/walkthroughs/edi-ftp-processing.md) — end-to-end walkthrough for EDI file processing over FTP
+- [FTP file processing tutorial](../../../tutorials/walkthroughs/process-edi-documents-from-ftp.md) — end-to-end walkthrough for EDI file processing over FTP

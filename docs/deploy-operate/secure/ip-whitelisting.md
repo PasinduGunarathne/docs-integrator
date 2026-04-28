@@ -102,4 +102,4 @@ Configure IP allowlists at the load balancer level (AWS ALB, Azure Application G
 ## What's next
 
 - [Authentication](authentication.md) — Add authentication on top of IP filtering
-- [API Security](api-security.md) — Rate limiting and request validation
+- [API Security](api-security-rate-limiting.md) — Rate limiting and request validation

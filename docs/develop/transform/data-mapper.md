@@ -186,5 +186,5 @@ Every visual mapping produces a Ballerina expression-bodied function. You can sw
 
 ## What's next
 
-- [AI-Assisted Data Mapping](ai-assisted-mapping.md) -- Let AI suggest mappings
-- [JSON Processing](json.md) -- JSON-specific transformations
+- [AI-Assisted Data Mapping](ai-assisted-data-mapping.md) -- Let AI suggest mappings
+- [JSON Processing](json-processing.md) -- JSON-specific transformations

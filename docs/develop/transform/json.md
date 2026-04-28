@@ -202,7 +202,7 @@ Restructure JSON data by converting to records, transforming, and converting bac
 
 2. **Add a Variable step for parsing** — In the flow designer, add a **Variable** step, set the type to `SourceContact`, and set the expression to `check jsondata:parseAsType(input)`.
 
-3. **Map fields visually** — To transform the parsed record into the target type, use the [Visual Data Mapper](data-mapper.md). Map `first_name` and `last_name` to `fullName` (with concatenation), and `email_address` to `email`.
+3. **Map fields visually** — To transform the parsed record into the target type, use the [Visual Data Mapper](visual-data-mapper.md). Map `first_name` and `last_name` to `fullName` (with concatenation), and `email_address` to `email`.
 
    ![Flow designer showing the jsondata parseAsType variable step and data mapper transformation](/img/develop/transform/json/json-transform-flow.png)
 
@@ -283,5 +283,5 @@ For large payloads, use `jsondata:parseStream()` to process byte streams without
 
 ## What's next
 
-- [XML Processing](xml.md) -- Work with XML data
-- [Type System & Records](type-system.md) -- Type-safe data handling
+- [XML Processing](xml-processing.md) -- Work with XML data
+- [Type System & Records](type-system-records.md) -- Type-safe data handling

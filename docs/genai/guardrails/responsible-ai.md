@@ -234,6 +234,6 @@ resource function post chat(@http:Payload ChatRequest request) returns ChatRespo
 ## What's next
 
 - [AI Usage Guidelines](ai-usage-guidelines.md) -- Organizational policies for AI deployments
-- [Input/Output Guardrails](input-output-guardrails.md) -- Enforce responsible AI in code
+- [Input/Output Guardrails](inputoutput.md) -- Enforce responsible AI in code
 - [Content Filtering](content-filtering.md) -- Block harmful content
 - [Conversation Logging](/docs/genai/agent-observability/conversation-logging) -- Audit AI interactions

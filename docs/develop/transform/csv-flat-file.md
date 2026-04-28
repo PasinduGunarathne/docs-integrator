@@ -397,4 +397,4 @@ Use `csv:parseStream()` or `csv:parseToStream()` for memory-efficient processing
 
 ## What's next
 
-- [EDI Processing](edi.md) -- Enterprise data interchange formats
+- [EDI Processing](edi-processing.md) -- Enterprise data interchange formats

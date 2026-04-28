@@ -286,6 +286,6 @@ function syncContacts() returns error? {
 
 ## What's next
 
-- [Shopify to Outlook Welcome Email](shopify-outlook-email.md) -- Send welcome emails on new customer signups
-- [Google Sheets to Salesforce Contacts](google-sheets-salesforce.md) -- Sync spreadsheet rows to CRM
+- [Shopify to Outlook Welcome Email](shopify-outlook-welcome-email.md) -- Send welcome emails on new customer signups
+- [Google Sheets to Salesforce Contacts](google-sheets-salesforce-contacts.md) -- Sync spreadsheet rows to CRM
 - [Connectors Reference](../../connectors/overview) -- Explore all available connectors

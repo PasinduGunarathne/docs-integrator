@@ -291,6 +291,6 @@ service /api on httpListener {
 
 ## What's next
 
-- [Secrets & Encryption](../../deploy-operate/secure/secrets-encryption.md) — Protect API keys, database passwords, and other sensitive configuration values
-- [Managing Configurations](../../deploy-operate/deploy/managing-configurations.md) — Apply per-environment configuration at runtime and deploy time
-- [Connections](connections.md) — Use configurable variables to parameterize connections
+- [Functions](functions.md) — Organize configurable logic into reusable functions
+- [Connections](managing-connections.md) — Use configurable variables to parameterize connections
+- [Error Handling](error-handling.md) — Handle missing or invalid configuration gracefully

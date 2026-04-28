@@ -136,6 +136,6 @@ upstream integration_backend {
 
 ## What's next
 
-- [VM-Based Deployment](vm-based.md) -- Deploy as executable JARs
+- [VM-Based Deployment](vm-based-deployment.md) -- Deploy as executable JARs
 - [Managing Configurations](managing-configurations.md) -- Environment-specific config management
-- [GraalVM Native Image](graalvm.md) -- Compile to native executables
+- [GraalVM Native Image](graalvm-native-images.md) -- Compile to native executables

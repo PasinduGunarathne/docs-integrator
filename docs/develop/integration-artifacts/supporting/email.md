@@ -298,5 +298,5 @@ imapPassword = "app-password"
 ## What's next
 
 - [Automation](../automation/automation.md) -- Schedule email-related tasks
-- [HTTP Service](../service/http-service.md) -- Expose email processing as an HTTP API
+- [HTTP Service](../service/http.md) -- Expose email processing as an HTTP API
 - [Error Handling](/docs/develop/design-logic/error-handling) -- Handle email delivery failures

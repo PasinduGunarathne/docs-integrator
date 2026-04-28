@@ -336,5 +336,5 @@ You now have a RAG-powered knowledge base that:
 
 - [Chunking & Embedding](/docs/genai/rag/chunking-embedding) -- Optimize chunking strategies
 - [Vector Databases](/docs/genai/rag/vector-databases) -- Compare vector store options
-- [AI Customer Support Agent](ai-customer-support.md) -- Combine RAG with a support agent
+- [AI Customer Support Agent](ai-customer-support-agent.md) -- Combine RAG with a support agent
 - [Multi-Agent Workflow](multi-agent-workflow.md) -- Add RAG to a multi-agent system

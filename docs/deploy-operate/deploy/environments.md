@@ -233,6 +233,6 @@ Use a single Kubernetes Service with a shared label (`app: integrator`) so both 
 
 ## What's next
 
-- [Scaling & High Availability](scaling-ha.md) -- Configure scaling and resilience
+- [Scaling & High Availability](scaling-high-availability.md) -- Configure scaling and resilience
 - [Secrets & Encryption](../secure/secrets-encryption.md) -- Secure your configuration values
 - [CI/CD Pipelines](../cicd/github-actions.md) -- Automate environment promotions

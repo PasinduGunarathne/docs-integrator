@@ -506,5 +506,5 @@ function getProductsFromUpstream() returns SourceProduct[]|error {
 ## What's next
 
 - [Expressions & Functions](expressions-functions.md) -- Built-in functions for string, date, math operations
-- [Type System & Records](type-system.md) -- Define structured types for query results
-- [Visual Data Mapper](data-mapper.md) -- Drag-and-drop data transformation
+- [Type System & Records](type-system-records.md) -- Define structured types for query results
+- [Visual Data Mapper](visual-data-mapper.md) -- Drag-and-drop data transformation

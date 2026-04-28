@@ -275,4 +275,4 @@ function processPayment(json payload) returns OrderResult|error {
 
 - [Guaranteed Delivery](guaranteed-delivery.md) -- Idempotent receiver is the essential companion to guaranteed delivery
 - [Message Filter](message-filter.md) -- Filters messages before processing; idempotent receiver filters duplicates specifically
-- [Circuit Breaker & Retry](circuit-breaker.md) -- Retry logic commonly produces the duplicates that idempotent receiver handles
+- [Circuit Breaker & Retry](circuit-breaker-retry.md) -- Retry logic commonly produces the duplicates that idempotent receiver handles

@@ -189,5 +189,5 @@ service /orders on new http:Listener(8090) {
 ## Related patterns
 
 - [API Gateway & Orchestration](api-gateway-orchestration.md) -- Sagas are often coordinated by a gateway or orchestration service.
-- [Circuit Breaker & Retry](circuit-breaker.md) -- Apply circuit breakers to individual saga steps to detect persistent failures quickly.
+- [Circuit Breaker & Retry](circuit-breaker-retry.md) -- Apply circuit breakers to individual saga steps to detect persistent failures quickly.
 - [Publish-Subscribe](publish-subscribe.md) -- In choreography-based sagas, services communicate via pub/sub events.

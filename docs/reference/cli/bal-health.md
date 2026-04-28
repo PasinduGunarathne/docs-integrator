@@ -194,6 +194,6 @@ service /fhir/r4 on new http:Listener(9090) {
 
 ## See also
 
-- [bal Command Reference](bal-commands.md) -- All bal subcommands
+- [bal Command Reference](bal-command-reference.md) -- All bal subcommands
 - [Healthcare HL7/FHIR Tutorial](/docs/tutorials/healthcare-hl7-fhir) -- End-to-end healthcare integration
 - [Data Formats Reference](/docs/reference/data-formats) -- All supported data formats including FHIR and HL7

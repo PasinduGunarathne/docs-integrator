@@ -202,5 +202,5 @@ service /api/v1 on new http:Listener(8080) {
 
 ## See also
 
-- [bal Command Reference](bal-commands.md) -- All bal subcommands
+- [bal Command Reference](bal-command-reference.md) -- All bal subcommands
 - [Ballerina by Example](/docs/reference/by-example) -- Runnable examples

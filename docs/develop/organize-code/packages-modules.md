@@ -268,6 +268,6 @@ public enum OrderStatus {
 
 ## What's next
 
-- [Package References & Imports](package-references.md) -- Import external packages
-- [Manage Dependencies](manage-dependencies.md) -- Lock and update dependency versions
+- [Package References & Imports](package-references-imports.md) -- Import external packages
+- [Manage Dependencies](dependencies.md) -- Lock and update dependency versions
 - [Workspaces](workspaces.md) -- Work with multiple packages together

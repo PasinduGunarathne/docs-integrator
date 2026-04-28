@@ -211,6 +211,6 @@ Use this as a starting point for your organization's AI usage policy:
 ## What's next
 
 - [Responsible AI](responsible-ai.md) -- Ethical practices for AI integrations
-- [Input/Output Guardrails](input-output-guardrails.md) -- Enforce policies in code
+- [Input/Output Guardrails](inputoutput.md) -- Enforce policies in code
 - [Content Filtering](content-filtering.md) -- Filter inappropriate AI content
 - [Conversation Logging](/docs/genai/agent-observability/conversation-logging) -- Implement audit logging

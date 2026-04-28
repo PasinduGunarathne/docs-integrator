@@ -122,5 +122,5 @@ service /api on secureListener { }
 
 ## What's next
 
-- [API Security & Rate Limiting](api-security.md) — Rate limiting and input validation
+- [API Security & Rate Limiting](api-security-rate-limiting.md) — Rate limiting and input validation
 - [Secrets & Encryption](secrets-encryption.md) — Manage credentials securely

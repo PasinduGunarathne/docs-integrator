@@ -291,6 +291,6 @@ The agent will naturally ask for confirmation because the description instructs 
 ## What's next
 
 - [Natural Functions](natural-functions.md) — Use LLMs as typed function calls
-- [Multi-Agent Orchestration](multi-agent-orchestration.md) — Agents that call other agents
+- [Multi-Agent Orchestration](multi-orchestration.md) — Agents that call other agents
 - [Agent Architecture & Concepts](architecture-concepts.md) — Understand the agent reasoning loop
 - [Input/Output Guardrails](/docs/genai/guardrails/input-output-guardrails) — Validate tool inputs and outputs

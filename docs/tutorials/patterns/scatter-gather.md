@@ -194,4 +194,4 @@ function searchEndpoint(SearchEndpoint ep, string query) returns SearchResult? {
 
 - [API Gateway & Orchestration](api-gateway-orchestration.md) -- For sequential multi-service calls with dependencies.
 - [Publish-Subscribe](publish-subscribe.md) -- For fire-and-forget fan-out without waiting for responses.
-- [Circuit Breaker & Retry](circuit-breaker.md) -- Apply to individual scatter branches to handle backend failures.
+- [Circuit Breaker & Retry](circuit-breaker-retry.md) -- Apply to individual scatter branches to handle backend failures.

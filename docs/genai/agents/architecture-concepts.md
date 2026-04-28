@@ -194,7 +194,7 @@ Agents in WSO2 Integrator run within the Ballerina runtime, which provides:
 
 ## What's next
 
-- [Chat Agents](chat-agents.md) — Build interactive conversational agents
+- [Chat Agents](build-chat.md) — Build interactive conversational agents
 - [Tool Binding](tool-binding.md) — Advanced tool patterns and function calling
-- [Memory Configuration](memory-configuration.md) — Customize conversation history management
-- [Multi-Agent Orchestration](multi-agent-orchestration.md) — Coordinate multiple agents
+- [Memory Configuration](configure-memory.md) — Customize conversation history management
+- [Multi-Agent Orchestration](multi-orchestration.md) — Coordinate multiple agents

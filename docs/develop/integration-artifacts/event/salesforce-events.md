@@ -182,4 +182,4 @@ The CDC channel the service subscribes to is determined by the service path in B
 - [Kafka](kafka.md) — consume messages from Apache Kafka topics
 - [Azure Service Bus](azure-service-bus.md) — consume messages from Azure Service Bus queues
 - [Connections](../supporting/connections.md) — reuse Salesforce credentials across services
-- [Salesforce connector reference](../../../connectors/catalog/crm-sales/salesforce/overview.md) — full connector API reference and trigger reference
+- [Salesforce connector reference](../../../connectors/catalog/crm-sales/salesforce/connector-overview.md) — full connector API reference and trigger reference

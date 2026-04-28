@@ -193,4 +193,4 @@ po:PurchaseOrder order = check po:fromEdiString(ediContent);
 
 ## What's next
 
-- [Type System & Records](type-system.md) -- Define EDI record types
+- [Type System & Records](type-system-records.md) -- Define EDI record types

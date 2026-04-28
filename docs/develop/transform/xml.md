@@ -219,7 +219,7 @@ Use the `ballerina/data.xmldata` module to convert XML into typed Ballerina reco
 
    ![Flow designer showing the xmldata parseAsType variable step and mapOrder transformation in the processXml resource](/img/develop/transform/xml/flow-xml-parse-step.png)
 
-3. **Map fields visually** — To transform the parsed record into another type, use the [Visual Data Mapper](data-mapper.md).
+3. **Map fields visually** — To transform the parsed record into another type, use the [Visual Data Mapper](visual-data-mapper.md).
 
    ![Data Mapper showing PurchaseOrder input fields on the left and OrderSummary output fields on the right](/img/develop/transform/xml/data-mapper-xml-to-record.png)
 
@@ -311,7 +311,7 @@ Convert between XML and JSON using `xmldata:toJson()` and `xmldata:fromJson()`.
 
    ![Flow designer showing the XML parse, mapOrder, and toJson return steps in sequence](/img/develop/transform/xml/flow-xml-parse-step.png)
 
-3. **Map fields visually** — To map fields between the parsed XML record and a target record before converting to JSON, use the [Visual Data Mapper](data-mapper.md).
+3. **Map fields visually** — To map fields between the parsed XML record and a target record before converting to JSON, use the [Visual Data Mapper](visual-data-mapper.md).
 
 ```ballerina
 import ballerina/data.xmldata;
@@ -343,4 +343,4 @@ public function main() returns error? {
 
 ## What's next
 
-- [CSV & Flat File Processing](csv-flat-file.md) -- Tabular data formats
+- [CSV & Flat File Processing](csv-flat-file-processing.md) -- Tabular data formats

@@ -66,6 +66,6 @@ These limitations are why WSO2 Integrator pairs LLMs with tools, RAG, and guardr
 
 ## What's next
 
-- [What is a Natural Function?](what-is-natural-function.md) -- The simplest way to use an LLM in code
+- [What is a Natural Function?](what-is-a-natural-function.md) -- The simplest way to use an LLM in code
 - [What is an AI Agent?](what-is-ai-agent.md) -- LLMs combined with tools and memory
 - [Configuring LLM Providers](/docs/genai/develop/direct-llm/configuring-providers) -- Detailed provider setup

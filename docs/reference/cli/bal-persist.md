@@ -228,6 +228,6 @@ bal persist push --datastore mysql --module db
 
 ## See also
 
-- [bal Command Reference](bal-commands.md) -- All bal subcommands
+- [bal Command Reference](bal-command-reference.md) -- All bal subcommands
 - [Ballerina.toml Reference](/docs/reference/config/ballerina-toml) -- Project configuration
 - [Databases Connector Guide](/docs/connectors/catalog/database) -- Database connectivity

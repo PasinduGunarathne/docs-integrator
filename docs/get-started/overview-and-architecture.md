@@ -56,6 +56,6 @@ Under the hood, every integration is a Ballerina program. This means:
 
 ## Next steps
 
-- [Why WSO2 Integrator](why-wso2-integrator.md) : How it compares to alternatives
+- [Why WSO2 Integrator](why.md) : How it compares to alternatives
 - [Key Concepts](key-concepts.md) : Learn the vocabulary
 - [Install WSO2 Integrator](install.md) : Get set up

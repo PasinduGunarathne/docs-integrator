@@ -270,7 +270,7 @@ service /api/usage on new http:Listener(8091) {
 
 ## What's next
 
-- [Input/Output Guardrails](input-output-guardrails.md) -- Validate AI inputs and outputs
+- [Input/Output Guardrails](inputoutput.md) -- Validate AI inputs and outputs
 - [Content Filtering](content-filtering.md) -- Filter inappropriate content
 - [Managing Context Windows](/docs/genai/llm-connectivity/managing-context-windows) -- Optimize context to reduce token usage
 - [Performance Metrics](/docs/genai/agent-observability/performance-metrics) -- Monitor agent performance alongside costs
