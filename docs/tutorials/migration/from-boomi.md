@@ -6,7 +6,7 @@ title: Coming from Boomi
 
 A guide for developers migrating integrations from Dell Boomi to WSO2 Integrator.
 
-## Concept Mapping
+## Concept mapping
 
 | In Boomi | In WSO2 Integrator | Notes |
 |---|---|---|
@@ -27,17 +27,17 @@ A guide for developers migrating integrations from Dell Boomi to WSO2 Integrator
 | Process Reporting | Integration Control Plane (ICP) | Centralized monitoring dashboard for all deployed integrations |
 | AtomSphere API | Management REST API | Manage deployments and configurations programmatically |
 
-## Key Differences
+## Key differences
 
-### Development Experience
+### Development experience
 
 Boomi uses a fully browser-based visual designer. WSO2 Integrator uses VS Code with a visual designer that is bidirectionally synced with Ballerina code. You can switch between the visual canvas and the code editor at any time -- changes in one are instantly reflected in the other.
 
-### Data Handling
+### Data handling
 
 In Boomi, data flows as "documents" through a process and must be explicitly split, combined, or transformed at each shape. In WSO2 Integrator, data is represented as **typed Ballerina records** that flow through function calls. The type system catches schema mismatches at compile time rather than at runtime.
 
-### Error Handling
+### Error handling
 
 Boomi uses Try/Catch shapes and error documents. WSO2 Integrator uses Ballerina's `do`/`on fail` blocks with typed errors. Every error has a distinct type, so you can handle specific failures differently:
 
@@ -80,23 +80,23 @@ Boomi deploys to Atoms (local runtimes) or the Boomi Cloud. WSO2 Integrator proj
 
 No proprietary runtime agent is required.
 
-## Step-by-Step Migration
+## Step-by-Step migration
 
-### 1. Inventory Your Boomi Processes
+### 1. inventory your boomi processes
 
 List all Boomi processes grouped by type:
 - **API processes** (triggered by HTTP) --> will become WSO2 Integrator **services**
 - **Scheduled processes** --> will become **automations**
 - **Listener processes** (triggered by events) --> will become **event handlers**
 
-### 2. Map Connectors
+### 2. map connectors
 
 For each Boomi connector used, find the equivalent WSO2 Integrator connector:
 - Most common connectors (Salesforce, databases, Kafka, FTP, HTTP) have direct equivalents.
 - For connectors without a direct match, use the generic HTTP connector or write a custom Ballerina client.
 - Check the [Connectors](/docs/connectors/overview) page for the full list.
 
-### 3. Migrate Data Maps
+### 3. migrate data maps
 
 For each Boomi Map shape:
 1. Open the WSO2 Integrator Visual Data Mapper.
@@ -104,7 +104,7 @@ For each Boomi Map shape:
 3. Draw the field mappings visually.
 4. Replace Boomi map functions with Ballerina expressions.
 
-### 4. Convert Process Logic
+### 4. convert process logic
 
 For each Boomi process, create a corresponding WSO2 Integrator project:
 
@@ -118,22 +118,22 @@ For each Boomi process, create a corresponding WSO2 Integrator project:
    - Try/Catch --> `do`/`on fail`
 5. **Test** using the built-in Try-It tool or `bal test`.
 
-### 5. Set Up Deployment
+### 5. set up deployment
 
 Replace your Boomi Atom/Molecule with one of these deployment targets:
 - For development: `bal run` locally
 - For production: deploy to WSO2 Devant, Kubernetes, or a VM
 
-## Common Gotchas
+## Common gotchas
 
 - **No implicit document splitting**: Boomi automatically splits batch documents. In Ballerina, iterate over arrays explicitly with `foreach` or query expressions.
 - **Typed errors**: Boomi errors are generic documents. Ballerina errors are typed -- check function signatures for the specific error types they return.
 - **No process properties at runtime**: Boomi process properties persist across executions. In WSO2 Integrator, use a database or cache for cross-execution state.
 - **File-based configuration**: Boomi stores connection credentials in the AtomSphere UI. WSO2 Integrator uses `Config.toml` files or environment variables -- make sure to exclude credentials from version control.
 
-## Before/After Examples
+## Before/After examples
 
-### HTTP API Process
+### HTTP API process
 
 **Boomi**: HTTP Listener shape --> Map shape --> Database Connector shape --> Return shape
 
@@ -164,7 +164,7 @@ service /api on new http:Listener(8090) {
 }
 ```
 
-### Scheduled Sync Process
+### Scheduled sync process
 
 **Boomi**: Scheduler shape --> Salesforce Query shape --> Map shape --> Database Insert shape
 

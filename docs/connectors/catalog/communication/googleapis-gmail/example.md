@@ -70,7 +70,7 @@ Select **Save** to persist the connection. The **Connections** section in the si
 
 ## Configuring the Gmail sendMessage operation
 
-### Step 5: Add an Automation entry point
+### Step 5: Add an automation entry point
 
 1. In the sidebar, hover over **Entry Points** and select **Add Entry Point** (**+**).
 2. Select **Automation** from the artifacts panel.

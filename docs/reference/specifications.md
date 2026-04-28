@@ -6,7 +6,7 @@ title: Ballerina Specifications
 
 Ballerina is defined by a set of formal specifications that govern the language semantics, standard library behavior, and platform requirements. These specifications serve as the authoritative reference for language implementors, library authors, and developers who need precise behavioral definitions.
 
-## Language Specification
+## Language specification
 
 The Ballerina Language Specification defines the syntax, type system, semantics, and execution model of the Ballerina programming language.
 
@@ -17,7 +17,7 @@ The Ballerina Language Specification defines the syntax, type system, semantics,
 | Status | Active, updated with each Swan Lake release |
 | Format | HTML |
 
-### Specification Sections
+### Specification sections
 
 | Section | Topics Covered |
 |---------|---------------|
@@ -32,7 +32,7 @@ The Ballerina Language Specification defines the syntax, type system, semantics,
 | Object Types | Object definitions, methods, constructors |
 | Other Types | Stream, future, typedesc, handle |
 
-### Language Specification Versions
+### Language specification versions
 
 | Version | Swan Lake Release | Key Changes |
 |---------|-------------------|-------------|
@@ -42,11 +42,11 @@ The Ballerina Language Specification defines the syntax, type system, semantics,
 | 2022R3 | Swan Lake Update 3 | Intersection types for errors, resource methods for client objects |
 | 2022R1 | Swan Lake GA | Initial Swan Lake specification |
 
-## Standard Library Specifications
+## Standard library specifications
 
 Each standard library module has its own specification defining the module's API contract, behavior, and error semantics.
 
-### Core Library Specifications
+### Core library specifications
 
 | Module | Specification | Description |
 |--------|--------------|-------------|
@@ -65,7 +65,7 @@ Each standard library module has its own specification defining the module's API
 | `ballerina/lang.runtime` | [Spec](https://ballerina.io/spec/lang/master/#lang.runtime) | Runtime management operations |
 | `ballerina/lang.transaction` | [Spec](https://ballerina.io/spec/lang/master/#lang.transaction) | Transaction management |
 
-### Network Library Specifications
+### Network library specifications
 
 | Module | Specification | Key Topics |
 |--------|--------------|------------|
@@ -79,7 +79,7 @@ Each standard library module has its own specification defining the module's API
 | `ballerina/email` | [Spec](https://github.com/ballerina-platform/module-ballerina-email/blob/master/docs/spec/spec.md) | SMTP, POP3, IMAP protocols |
 | `ballerina/ftp` | [Spec](https://github.com/ballerina-platform/module-ballerina-ftp/blob/master/docs/spec/spec.md) | FTP/SFTP client and listener |
 
-### Data Library Specifications
+### Data library specifications
 
 | Module | Specification | Key Topics |
 |--------|--------------|------------|
@@ -88,7 +88,7 @@ Each standard library module has its own specification defining the module's API
 | `ballerina/persist` | [Spec](https://github.com/ballerina-platform/module-ballerina-persist/blob/master/docs/spec/spec.md) | Data persistence layer, entity modeling |
 | `ballerina/constraint` | [Spec](https://github.com/ballerina-platform/module-ballerina-constraint/blob/master/docs/spec/spec.md) | Data validation constraints |
 
-## Platform Specification
+## Platform specification
 
 The Ballerina Platform Specification defines the build system, package management, and runtime environment.
 
@@ -100,7 +100,7 @@ The Ballerina Platform Specification defines the build system, package managemen
 | Runtime | JVM-based (Java 17+) |
 | Native compilation | GraalVM native image (experimental) |
 
-### Platform Components
+### Platform components
 
 | Component | Specification Area | Description |
 |-----------|-------------------|-------------|
@@ -111,7 +111,7 @@ The Ballerina Platform Specification defines the build system, package managemen
 | Concurrency Model | Strand-based execution | Cooperative concurrency on JVM threads |
 | Transaction Manager | Two-phase commit protocol | Distributed transaction coordination |
 
-## Specification Versioning
+## Specification versioning
 
 Ballerina specifications follow a versioning scheme tied to Swan Lake releases.
 
@@ -121,7 +121,7 @@ Ballerina specifications follow a versioning scheme tied to Swan Lake releases.
 | Distribution | `YYYY.N.N` | `2201.9.2` | Year, minor version, patch version |
 | Module spec | Semantic versioning | `2.11.2` | Major.minor.patch per module |
 
-## Where to Find Specifications
+## Where to find specifications
 
 | Resource | URL |
 |----------|-----|
@@ -131,7 +131,7 @@ Ballerina specifications follow a versioning scheme tied to Swan Lake releases.
 | Platform specification | [ballerina.io/spec/](https://ballerina.io/spec/) |
 | Swan Lake release notes | [ballerina.io/downloads/swan-lake-release-notes/](https://ballerina.io/downloads/swan-lake-release-notes/) |
 
-## See Also
+## See also
 
 - [Ballerina by Example](by-example.md) -- Runnable code examples
 - [Ballerina API Documentation](api/ballerina-api-docs.md) -- Module API docs

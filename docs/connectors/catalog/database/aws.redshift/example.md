@@ -26,7 +26,7 @@ flowchart LR
 
 ## Adding the AWS Redshift connector
 
-### Step 1: Open the Add Connection panel
+### Step 1: Open the add connection panel
 
 In the left sidebar, hover over **Connections** to reveal the toolbar and select the **Add Connection** (**+**) button to open the connector palette.
 
@@ -34,7 +34,7 @@ In the left sidebar, hover over **Connections** to reveal the toolbar and select
 
 ### Step 2: Select the AWS Redshift connector
 
-1. Enter `redshift` in the search field to filter the connectors.
+1. Enter `Redshift` in the search field to filter the connectors.
 2. Select the **AWS Redshift** connector card to open the connection configuration form.
 
 ## Configuring the AWS Redshift connection

@@ -36,9 +36,9 @@ java -version
 native-image --version
 ```
 
-## Building a Native Image
+## Building a native image
 
-### Basic Build
+### Basic build
 
 ```bash
 bal build --graalvm
@@ -52,13 +52,13 @@ target/
     my_integration    # Native executable (no JVM required to run)
 ```
 
-### Run the Native Binary
+### Run the native binary
 
 ```bash
 ./target/bin/my_integration
 ```
 
-### Build with Docker Isolation
+### Build with Docker isolation
 
 Build inside a Docker container for consistent, reproducible builds:
 
@@ -68,9 +68,9 @@ bal build --graalvm --cloud=docker
 
 This generates a minimal Docker image containing only the native binary.
 
-## Configuration for Native Image
+## Configuration for native image
 
-### Reflection Configuration
+### Reflection configuration
 
 Some libraries require reflection metadata. Add a `reflect-config.json` in your project:
 
@@ -96,7 +96,7 @@ version = "1.0.0"
 graalvmBuildOptions = "-H:ReflectionConfigurationFiles=reflect-config.json"
 ```
 
-### Build Options
+### Build options
 
 | Option | Description |
 |--------|-------------|
@@ -113,9 +113,9 @@ Set additional options in `Ballerina.toml`:
 graalvmBuildOptions = "--no-fallback --initialize-at-build-time -march=native"
 ```
 
-## Deploying Native Images
+## Deploying native images
 
-### Standalone Binary on VM
+### Standalone binary on VM
 
 Copy the binary directly -- no JVM installation needed:
 
@@ -143,7 +143,7 @@ Environment=BAL_CONFIG_FILES=/opt/integrations/Config.toml
 WantedBy=multi-user.target
 ```
 
-### Minimal Docker Image
+### Minimal Docker image
 
 Use a `distroless` or `scratch` base image for the smallest possible container:
 
@@ -163,7 +163,7 @@ docker build -t my-integration:native .
 docker run -p 9090:9090 my-integration:native
 ```
 
-### AWS Lambda with Native Image
+### AWS lambda with native image
 
 ```bash
 bal build --graalvm --cloud=aws_lambda
@@ -189,7 +189,7 @@ Deploy the generated ZIP -- cold start drops from seconds to under 100ms.
 - **Debugging** is more limited compared to JVM-based execution.
 - Some Ballerina libraries may not yet have full GraalVM compatibility -- check the [Ballerina library documentation](https://lib.ballerina.io) for native image support status.
 
-## What's Next
+## What's next
 
 - [Serverless Deployment](serverless.md) -- Deploy native images as Lambda functions
 - [VM-Based Deployment](vm-based.md) -- Run native binaries on virtual machines

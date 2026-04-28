@@ -8,7 +8,7 @@ This page walks you through building a complete, production-ready RAG service th
 
 By the end, you will have a service that exposes endpoints for document ingestion and natural language queries against your knowledge base.
 
-## Project Setup
+## Project setup
 
 ```ballerina
 // Ballerina.toml
@@ -54,9 +54,9 @@ configurable int retrievalTopK = 5;
 configurable float similarityThreshold = 0.7;
 ```
 
-## Core Components
+## Core components
 
-### Embedding Client
+### Embedding client
 
 ```ballerina
 // embedding.bal
@@ -82,7 +82,7 @@ function generateEmbedding(string text) returns float[]|error {
 }
 ```
 
-### Vector Store
+### Vector store
 
 ```ballerina
 // vector_store.bal
@@ -150,7 +150,7 @@ type RetrievedChunk record {|
 |};
 ```
 
-### Chunking Engine
+### Chunking engine
 
 ```ballerina
 // chunking.bal
@@ -180,7 +180,7 @@ function chunkDocument(string content, string sourceId) returns DocumentChunk[]|
 }
 ```
 
-### Generation Engine
+### Generation engine
 
 ```ballerina
 // generation.bal
@@ -240,7 +240,7 @@ type GeneratedAnswer record {|
 |};
 ```
 
-## HTTP Service
+## HTTP service
 
 ```ballerina
 // service.bal
@@ -344,7 +344,7 @@ type QueryResponse record {|
 |};
 ```
 
-## Testing the Service
+## Testing the service
 
 ```bash
 # Start ChromaDB
@@ -367,7 +367,7 @@ curl -X POST http://localhost:8090/rag/query \
   -d '{"question": "How long do I have to return an item and when will I get my refund?"}'
 ```
 
-## What's Next
+## What's next
 
 - [Input/Output Guardrails](/docs/genai/guardrails/input-output-guardrails) — Add validation to your RAG service
 - [Performance Metrics](/docs/genai/agent-observability/performance-metrics) — Monitor retrieval and generation latency

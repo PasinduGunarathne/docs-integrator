@@ -29,7 +29,7 @@ Set up a new WSO2 Integrator project by following the [project creation guide](.
 
 ## Adding the Snowflake connector
 
-### Step 1: Open the Add Connection palette
+### Step 1: Open the add connection palette
 
 On the low-code canvas, click **+ Add Connection** (or the **＋** icon in the Connections section of the left sidebar) to open the Add Connection palette, which shows a searchable grid of available connectors.
 
@@ -65,7 +65,7 @@ Click **Configurations** in the left panel of WSO2 Integrator (at the bottom of 
 - **user** — string — your Snowflake username
 - **password** — string — your Snowflake account password
 
-## Configuring the Snowflake Query operation
+## Configuring the Snowflake query operation
 
 ### Step 6: Add an automation entry point and open the flow editor
 
@@ -77,7 +77,7 @@ In the Add Step panel, locate **snowflakeClient** under the Connections section 
 
 ![Snowflake connection node expanded showing all available operations before selection](/img/connectors/catalog/database/snowflake/snowflake_screenshot_04_operations_panel.png)
 
-### Step 8: Select and configure the Query operation
+### Step 8: Select and configure the query operation
 
 Click **Query** to open the Query operation configuration form and fill in the fields as follows, then click **Save** to confirm.
 

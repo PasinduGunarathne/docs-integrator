@@ -4,7 +4,7 @@ title: Healthcare HL7/FHIR Integration
 
 # Healthcare HL7/FHIR Integration
 
-## What You'll Build
+## What you'll build
 
 A healthcare integration service that receives HL7v2 ADT (Admit-Discharge-Transfer) messages from a hospital information system, transforms them into FHIR R4 Patient and Encounter resources, and publishes the FHIR resources to a FHIR server.
 
@@ -22,7 +22,7 @@ flowchart LR
     Service ----> Audit
 ```
 
-## What You'll Learn
+## What you'll learn
 
 - Receiving and parsing HL7v2 messages over TCP
 - Extracting patient demographics from PID segments
@@ -38,9 +38,9 @@ flowchart LR
 
 **Time estimate:** 30--45 minutes
 
-## Step-by-Step Walkthrough
+## Step-by-Step walkthrough
 
-### Step 1: Create the Project
+### Step 1: Create the project
 
 1. Open VS Code and run **WSO2 Integrator: Create New Project**.
 2. Name the project `healthcare-hl7-fhir`.
@@ -64,7 +64,7 @@ enabled = true
 logDir = "./audit-logs"
 ```
 
-### Step 2: Define the FHIR Types
+### Step 2: Define the FHIR types
 
 Create `types.bal` with FHIR-compatible record types:
 
@@ -147,7 +147,7 @@ type FhirBundleRequest record {|
 |};
 ```
 
-### Step 3: Build the HL7 Parser
+### Step 3: Build the HL7 parser
 
 Create `hl7_parser.bal` to extract data from HL7v2 segments:
 
@@ -235,7 +235,7 @@ function formatHl7Date(string hl7Date) returns string {
 }
 ```
 
-### Step 4: Build the FHIR Mapper
+### Step 4: Build the FHIR mapper
 
 Create `fhir_mapper.bal` to convert parsed HL7 data to FHIR resources:
 
@@ -308,7 +308,7 @@ function buildFhirBundle(FhirPatient patient, FhirEncounter encounter) returns F
 }
 ```
 
-### Step 5: Create the TCP Service
+### Step 5: Create the TCP service
 
 Wire everything together in `main.bal`:
 
@@ -395,7 +395,7 @@ function writeAuditLog(ParsedHl7Message msg, int statusCode) returns error? {
 }
 ```
 
-### Step 6: Test It
+### Step 6: Test it
 
 1. Start the service:
 
@@ -421,7 +421,7 @@ curl http://localhost:8080/fhir/Patient?identifier=PAT001
 bal test
 ```
 
-## Extend It
+## Extend it
 
 - **Support additional HL7 message types** such as ORU (lab results) or ORM (orders).
 - **Add FHIR validation** using the `ballerinax/health.fhir.r4` module before posting.
@@ -429,7 +429,7 @@ bal test
 - **Add a dead-letter queue** for messages that fail to transform or post.
 - **Implement HL7 batching** for bulk historical data migrations.
 
-## Full Source Code
+## Full source code
 
 Find the complete working project on GitHub:
 [wso2/integrator-samples/healthcare-hl7-fhir](https://github.com/wso2/integrator-samples/tree/main/healthcare-hl7-fhir)

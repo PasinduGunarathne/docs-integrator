@@ -6,7 +6,7 @@ title: Salesforce Events
 
 Salesforce event integrations subscribe to Change Data Capture (CDC) channels and trigger handler functions as records are created, updated, deleted, or restored in your Salesforce org. Use them for real-time CRM synchronization, audit logging, and event-driven workflows that react to Salesforce record changes without polling.
 
-## Creating a Salesforce Events service
+## Creating a Salesforce events service
 
 1. Click **+ Add Artifact** in the canvas or click **+** next to **Entry Points** in the sidebar.
 2. In the **Artifacts** panel, select **Salesforce Events** under **Event Integration**.

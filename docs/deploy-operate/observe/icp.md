@@ -19,7 +19,7 @@ Key capabilities:
 - **Health status** -- See the health of each instance
 - **Deployment history** -- Track when services were deployed or updated
 
-### Configuring the Integration Node with ICP
+### Configuring the integration node with ICP
 
 ICP allows you to connect BI and MI runtimes to the ICP server for centralized management and monitoring.
 This guide will walk you through the steps to connect your integration runtime to the ICP server.
@@ -77,3 +77,9 @@ import wso2/icp.runtime.bridge as _;
 5. Click on an integration to view integration artifacts.
 
    ![ICP Integration Artifacts](/img/deploy-operate/observe/icp-artifacts.png)
+
+## What's next
+
+- [Logging](logging.md) -- Configure structured logging
+- [Metrics](metrics.md) -- Prometheus metrics and Grafana dashboards
+- [Distributed Tracing](tracing.md) -- Trace requests across services

@@ -8,7 +8,7 @@ The Model Context Protocol (MCP) is an open standard that lets AI assistants dis
 
 This page covers how to create an MCP server, define tools, expose resources, configure transports, and set up the server for production use.
 
-## Minimal MCP Server
+## Minimal MCP server
 
 The simplest MCP server declares a service configuration and registers one or more tools.
 
@@ -33,7 +33,7 @@ isolated function getOrderStatus(string orderId) returns json|error {
 
 By default, the server uses `stdio` transport, which is compatible with local MCP clients like Claude Desktop.
 
-### The @mcp:ServiceConfig Annotation
+### The @MCP:ServiceConfig annotation
 
 The `@mcp:ServiceConfig` annotation defines server-level metadata that MCP clients use during capability negotiation.
 
@@ -54,9 +54,9 @@ service on new mcp:Listener() {
 }
 ```
 
-## Choosing a Transport
+## Choosing a transport
 
-### stdio Transport
+### Stdio transport
 
 The default transport. The MCP client launches the server as a subprocess and communicates over standard I/O. Best for local development and desktop AI clients.
 
@@ -65,7 +65,7 @@ service on new mcp:Listener() {
 }
 ```
 
-### SSE Transport
+### SSE transport
 
 Server-Sent Events transport for remote clients. The server runs as an HTTP service that clients connect to via SSE.
 
@@ -74,7 +74,7 @@ service on new mcp:Listener(new mcp:SseTransport(8090)) {
 }
 ```
 
-### Streamable HTTP Transport
+### Streamable HTTP transport
 
 A newer transport that uses standard HTTP with streaming support. Suitable for web-based AI assistants and cloud deployments.
 
@@ -89,11 +89,11 @@ service on new mcp:Listener(new mcp:StreamableHttpTransport(8090)) {
 | **SSE** | Remote clients, web apps | Web-based AI assistants |
 | **Streamable HTTP** | Cloud deployments, modern clients | Cloud-hosted agents |
 
-## Defining Tools
+## Defining tools
 
 Tools are functions that AI assistants can call with parameters and receive structured results.
 
-### Basic Tool
+### Basic tool
 
 ```ballerina
 @mcp:Tool {
@@ -105,7 +105,7 @@ isolated function getCustomer(string customerId) returns json|error {
 }
 ```
 
-### Tool with Annotated Parameters
+### Tool with annotated parameters
 
 Add descriptions to each parameter so AI assistants understand what values to provide.
 
@@ -128,7 +128,7 @@ isolated function searchProducts(
 }
 ```
 
-### Tool with Typed Return Values
+### Tool with typed return values
 
 Return Ballerina records for structured, schema-aware output.
 
@@ -158,7 +158,7 @@ isolated function getOrderDetails(string orderId) returns OrderStatus|error {
 }
 ```
 
-### Write-Action Tools
+### Write-Action tools
 
 For tools that modify data, include clear descriptions about side effects so AI assistants can inform users before executing.
 
@@ -177,11 +177,11 @@ isolated function createSupportTicket(
 }
 ```
 
-## Defining Resources
+## Defining resources
 
 Resources expose read-only data that AI assistants can access for context without calling a tool.
 
-### Static Resource
+### Static resource
 
 ```ballerina
 @mcp:Resource {
@@ -195,7 +195,7 @@ isolated function getProductCategories() returns json|error {
 }
 ```
 
-### Dynamic Resource with URI Template
+### Dynamic resource with URI template
 
 ```ballerina
 @mcp:Resource {
@@ -209,7 +209,7 @@ isolated function getCustomerProfile(string customerId) returns json|error {
 }
 ```
 
-## Defining Prompts
+## Defining prompts
 
 Prompts are reusable prompt templates that AI assistants can offer to users for common tasks.
 
@@ -235,7 +235,7 @@ Please:
 }
 ```
 
-## Error Handling
+## Error handling
 
 Return informative error messages so AI assistants can reason about failures and suggest alternatives.
 
@@ -257,7 +257,7 @@ isolated function getInvoice(string invoiceId) returns json|error {
 }
 ```
 
-## Limiting Output Size
+## Limiting output size
 
 Trim large responses to prevent exceeding context window limits on the client side.
 
@@ -281,9 +281,9 @@ isolated function queryAnalytics(string sqlQuery) returns json|error {
 }
 ```
 
-## Configuring for Claude Desktop
+## Configuring for Claude desktop
 
-### stdio Transport
+### Stdio transport
 
 Add the server to your Claude Desktop configuration file.
 
@@ -298,7 +298,7 @@ Add the server to your Claude Desktop configuration file.
 }
 ```
 
-### SSE Transport
+### SSE transport
 
 ```json
 {
@@ -310,7 +310,7 @@ Add the server to your Claude Desktop configuration file.
 }
 ```
 
-## What's Next
+## What's next
 
 - [Building AI Agents with MCP Servers](/docs/genai/develop/mcp/agents-with-mcp) -- Connect agents to MCP tools
 - [Exposing MCP Servers](/docs/genai/mcp/exposing-mcp-servers) -- Detailed server patterns

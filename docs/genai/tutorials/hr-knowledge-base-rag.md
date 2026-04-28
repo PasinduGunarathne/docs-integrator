@@ -38,7 +38,7 @@ flowchart TD
     Agent ----> DirAPI
 ```
 
-## Step 1: Create the Project
+## Step 1: Create the project
 
 Create a new WSO2 Integrator project and add the required dependencies.
 
@@ -66,7 +66,7 @@ org = "ballerinax"
 name = "postgresql.driver"
 ```
 
-## Step 2: Set Up Configuration
+## Step 2: Set up configuration
 
 ```toml
 # Config.toml
@@ -88,7 +88,7 @@ configurable string dbPassword = ?;
 configurable string dbName = ?;
 ```
 
-## Step 3: Set Up the Vector Database
+## Step 3: Set up the vector database
 
 Before running the application, create the pgvector extension and documents table in PostgreSQL.
 
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS hr_documents (
 CREATE INDEX ON hr_documents USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
 ```
 
-## Step 4: Define Data Types
+## Step 4: Define data types
 
 ```ballerina
 // types.bal
@@ -155,7 +155,7 @@ type EmployeeInfo record {|
 |};
 ```
 
-## Step 5: Build the Embedding and Chunking Pipeline
+## Step 5: Build the embedding and chunking pipeline
 
 ```ballerina
 // embeddings.bal
@@ -220,7 +220,7 @@ function ingestHrDocument(string filePath, string category) returns HrDocumentCh
 }
 ```
 
-## Step 6: Build the Vector Store Client
+## Step 6: Build the vector store client
 
 ```ballerina
 // vectorstore.bal
@@ -277,7 +277,7 @@ function searchSimilar(string query, int topK = 5, string? category = ()) return
 }
 ```
 
-## Step 7: Define Agent Tools
+## Step 7: Define agent tools
 
 Each tool provides the agent with a capability to access HR systems and the knowledge base.
 
@@ -345,7 +345,7 @@ isolated function submitLeaveRequest(
 }
 ```
 
-## Step 8: Create the Agent
+## Step 8: Create the agent
 
 ```ballerina
 // agent.bal
@@ -383,7 +383,7 @@ Guidelines:
 );
 ```
 
-## Step 9: Expose as an HTTP Service
+## Step 9: Expose as an HTTP service
 
 ```ballerina
 // service.bal
@@ -434,7 +434,7 @@ service /hr on new http:Listener(8090) {
 }
 ```
 
-## Step 10: Run and Test
+## Step 10: Run and test
 
 1. Start the service:
    ```bash
@@ -477,7 +477,7 @@ service /hr on new http:Listener(8090) {
      -d '{"message": "What dental coverage does the company health plan include?", "sessionId": "<session-id>"}'
    ```
 
-## What You Built
+## What you built
 
 You now have an HR knowledge base agent that:
 - Ingests HR policy documents into a pgvector database using OpenAI embeddings
@@ -487,7 +487,7 @@ You now have an HR knowledge base agent that:
 - Maintains conversation context across multiple turns
 - Protects sensitive employee information
 
-## What's Next
+## What's next
 
 - [RAG Knowledge Base](rag-knowledge-base.md) -- Explore advanced RAG techniques
 - [Chunking & Embedding](/docs/genai/rag/chunking-embedding) -- Optimize chunking strategies for policy documents

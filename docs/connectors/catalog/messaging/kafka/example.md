@@ -1,12 +1,12 @@
 # Example
 
-## Table of Contents
+## Table of contents
 
 - [Kafka Producer Example](#kafka-producer-example)
 - [Kafka Consumer Example](#kafka-consumer-example)
 - [Kafka Trigger Example](#kafka-trigger-example)
 
-## Kafka Producer Example
+## Kafka producer example
 
 ### What you'll build
 
@@ -28,22 +28,22 @@ flowchart LR
 
 - A running Kafka broker with the bootstrap servers address ready
 
-### Setting up the Kafka Producer integration
+### Setting up the Kafka producer integration
 
 > **New to WSO2 Integrator?** Follow the [Create a New Integration](../../../../develop/create-integrations/create-new-integration.md) guide to set up your integration first, then return here to add the connector.
 
-### Adding the Kafka Producer connector
+### Adding the Kafka producer connector
 
 Select **Add Connection** from the low-code canvas to open the connector palette.
 
 ![Kafka Producer connector palette open with search field before any selection](/img/connectors/catalog/messaging/kafka/kafka_producer_screenshots_01_palette.png)
 
-#### Step 1: Search for and select the Kafka Producer connector
+#### Step 1: Search for and select the Kafka producer connector
 
 1. Enter `kafka` in the search box.
 2. Select **Kafka Producer** from the results to open the **Configure Kafka Producer** form.
 
-### Configuring the Kafka Producer connection
+### Configuring the Kafka producer connection
 
 #### Step 2: Bind connection parameters to configurable variables
 
@@ -67,9 +67,9 @@ Select **Save** on the connection form. The canvas updates to show the `kafkaPro
 
 - **kafkaBootstrapServers** (string) : The bootstrap servers address of your running Kafka broker (for example, `broker-host:9092`)
 
-### Configuring the Kafka Producer Send operation
+### Configuring the Kafka producer send operation
 
-#### Step 5: Add an Automation entry point
+#### Step 5: Add an automation entry point
 
 1. In the left panel under **Entry Points**, select **+** (**Add Entry Point**).
 2. Select **Automation** from the entry point type list.
@@ -77,7 +77,7 @@ Select **Save** on the connection form. The canvas updates to show the `kafkaPro
 
 The Automation flow opens on the canvas with a **Start** node and an **Error Handler** node.
 
-#### Step 6: Select and configure the Send operation
+#### Step 6: Select and configure the send operation
 
 Select the **+** drop zone between **Start** and **Error Handler** on the canvas to open the **Add Step** panel. Expand the **kafkaProducer** connection to reveal all available operations.
 
@@ -113,7 +113,7 @@ The following example shows how to use the Ballerina `kafka` connector to produc
 - [**Banking transaction processor**](https://github.com/ballerina-platform/module-ballerinax-kafka/tree/master/examples/banking-transaction-system): A banking transaction processor that processes banking transactions using Kafka. It illustrates how banking transactions can be published and consumed in real time, while also integrating with Confluent Schema Registry to manage message schemas between the producer and consumer.
 
 ---
-## Kafka Consumer Example
+## Kafka consumer example
 
 ### What you'll build
 
@@ -141,7 +141,7 @@ flowchart LR
 
 ### Adding the Kafka connector
 
-#### Step 1: Open the Add connection palette
+#### Step 1: Open the add connection palette
 
 Select **Connections** in the project tree, then select the **+** icon next to **Connections** to open the **Add Connection** palette.
 
@@ -178,13 +178,13 @@ In the left panel, select **Configurations**, then set a value for each configur
 - **kafkaGroupId** (string) : The consumer group ID for this integration (for example, `my-consumer-group`)
 - **kafkaClientId** (string) : A unique client identifier for this consumer (for example, `my-kafka-client`)
 
-### Configuring the Kafka Poll operation
+### Configuring the Kafka poll operation
 
-#### Step 6: Add an Automation entry point
+#### Step 6: Add an automation entry point
 
 In the WSO2 Integrator panel, expand **Entry Points**, then select **+ Add Entry Point** and choose **Automation**. An entry point named `main` is created and the Automation flow canvas opens.
 
-#### Step 7: Select and configure the Poll operation
+#### Step 7: Select and configure the poll operation
 
 Select the **+** button on the flow connector between **Start** and the placeholder node to open the node panel. Under **Connections**, select **kafkaConsumer** to expand its operations list, then select **Poll**.
 

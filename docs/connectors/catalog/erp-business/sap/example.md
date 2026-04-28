@@ -62,14 +62,14 @@ Select **Save** to create the connection. The `sapClient` connection appears in 
 
 - **sapUrl** (string) : The base URL of the SAP system
 
-## Configuring the SAP Post operation
+## Configuring the SAP post operation
 
-### Step 5: Add an Automation entry point
+### Step 5: Add an automation entry point
 
 1. In the WSO2 Integrator side panel, select **Add Artifact**.
 2. Select **Automation** as the entry point type.
 
-### Step 6: Select and configure the Post operation
+### Step 6: Select and configure the post operation
 
 Expand the **sapClient** connection node in the right-side panel to view available operations, then select **Post**.
 

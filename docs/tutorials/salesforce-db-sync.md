@@ -4,7 +4,7 @@ title: Salesforce \u2194 Database Sync
 
 # Salesforce ↔ Database Sync
 
-## What You'll Build
+## What you'll build
 
 A bidirectional sync integration that keeps Salesforce contacts in sync with a PostgreSQL database. The integration listens for Salesforce Change Data Capture (CDC) events for real-time outbound sync and runs a scheduled poll for inbound sync from the database back to Salesforce.
 
@@ -21,7 +21,7 @@ flowchart LR
     DB -.- CR
 ```
 
-## What You'll Learn
+## What you'll learn
 
 - Salesforce connector configuration and CDC event subscription
 - Database connector usage with parameterized queries
@@ -38,9 +38,9 @@ flowchart LR
 
 **Time estimate:** 30--45 minutes
 
-## Step-by-Step Walkthrough
+## Step-by-Step walkthrough
 
-### Step 1: Create the Project
+### Step 1: Create the project
 
 1. Open VS Code and run **WSO2 Integrator: Create New Project**.
 2. Name the project `salesforce-db-sync`.
@@ -83,7 +83,7 @@ CREATE TABLE contacts (
 );
 ```
 
-### Step 2: Define the Data Types
+### Step 2: Define the data types
 
 Create `types.bal`:
 
@@ -129,7 +129,7 @@ type SyncResult record {|
 |};
 ```
 
-### Step 3: Build the Salesforce-to-Database Sync (Outbound)
+### Step 3: Build the Salesforce-to-Database sync (Outbound)
 
 Create `outbound_sync.bal` to handle CDC events:
 
@@ -237,7 +237,7 @@ function handleSfDelete(json cdcEvent) returns error? {
 }
 ```
 
-### Step 4: Build the Database-to-Salesforce Sync (Inbound)
+### Step 4: Build the Database-to-Salesforce sync (Inbound)
 
 Create `inbound_sync.bal` for scheduled polling:
 
@@ -321,7 +321,7 @@ function upsertToSalesforce(DbContact contact) returns error? {
 }
 ```
 
-### Step 5: Add the HTTP Management Endpoint
+### Step 5: Add the HTTP management endpoint
 
 Create `main.bal` with status and manual trigger endpoints:
 
@@ -350,7 +350,7 @@ service /sync on new http:Listener(8090) {
 }
 ```
 
-### Step 6: Handle Errors
+### Step 6: Handle errors
 
 Add retry logic in `error_handler.bal`:
 
@@ -378,7 +378,7 @@ function retryWithBackoff(function () returns error? fn, int maxRetries = 3) ret
 }
 ```
 
-### Step 7: Test It
+### Step 7: Test it
 
 1. Start the sync service:
 
@@ -415,7 +415,7 @@ curl http://localhost:8090/sync/status
 bal test
 ```
 
-## Extend It
+## Extend it
 
 - **Add conflict resolution strategies** beyond last-write-wins (e.g., field-level merge).
 - **Sync additional Salesforce objects** such as Accounts, Opportunities, or Leads.
@@ -423,7 +423,7 @@ bal test
 - **Publish sync metrics** to the Integration Control Plane for monitoring.
 - **Add data validation** to reject malformed records before syncing.
 
-## Full Source Code
+## Full source code
 
 Find the complete working project on GitHub:
 [wso2/integrator-samples/salesforce-db-sync](https://github.com/wso2/integrator-samples/tree/main/salesforce-db-sync)

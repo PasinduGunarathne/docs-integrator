@@ -6,7 +6,7 @@ title: Project Views
 
 WSO2 Integrator provides three project views to organize and manage your integrations at different levels. Each view surfaces different capabilities and is optimized for a specific workflow.
 
-## Workspace View
+## Workspace view
 
 The **Workspace View** gives you an overview of all integration packages in a workspace. Use it to:
 
@@ -17,7 +17,7 @@ The **Workspace View** gives you an overview of all integration packages in a wo
 
 Available in WSO2 Integrator 1.5.0+ with Ballerina 2201.13.0+.
 
-### Creating a Workspace
+### Creating a workspace
 
 1. Open the WSO2 Integrator sidebar.
 2. Click **Create New Integration**.
@@ -25,11 +25,11 @@ Available in WSO2 Integrator 1.5.0+ with Ballerina 2201.13.0+.
 4. Enable **Create Workspace** and set a workspace name.
 5. Click **Create Integration**.
 
-### Adding Integrations to a Workspace
+### Adding integrations to a workspace
 
 Click the **+** button in the workspace panel to add a new integration package, or convert a standalone integration to a workspace by adding another integration alongside it.
 
-## Integration View
+## Integration view
 
 The **Integration View** is the primary development interface. It shows:
 
@@ -44,7 +44,7 @@ The **Integration View** is the primary development interface. It shows:
 
 This is the default view when you open a single integration project.
 
-## Library View
+## Library view
 
 The **Library View** shows reusable modules that are shared across integrations. Use it when building shared libraries that multiple integrations depend on:
 
@@ -55,11 +55,11 @@ The **Library View** shows reusable modules that are shared across integrations.
 
 Libraries are created with `bal new my-library -t lib` and published to Ballerina Central for organization-wide reuse.
 
-## Switching Between Views
+## Switching between views
 
 Use the view selector in the WSO2 Integrator sidebar to switch between Workspace, Integration, and Library views depending on your current task.
 
-## What's Next
+## What's next
 
 - [Create Integrations](/docs/develop/create-integrations/overview) -- Create new integration packages
 - [Organize Code](/docs/develop/organize-code/packages-modules) -- Structure packages and modules

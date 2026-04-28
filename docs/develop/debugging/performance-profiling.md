@@ -2,7 +2,7 @@
 title: Performance Profiling
 ---
 
-# Performance profiling
+# Performance Profiling
 
 Identify and eliminate performance bottlenecks in your integrations using the Ballerina profiler. The profiler monitors runtime operations and function calls, then generates an interactive flame graph that shows where execution time is spent — so you can optimize what actually matters.
 

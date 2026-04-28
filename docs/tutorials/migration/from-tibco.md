@@ -6,7 +6,7 @@ title: Coming from TIBCO
 
 A guide for developers migrating integrations from TIBCO BusinessWorks to WSO2 Integrator.
 
-## Concept Mapping
+## Concept mapping
 
 | In TIBCO BusinessWorks | In WSO2 Integrator | Notes |
 |---|---|---|
@@ -23,7 +23,7 @@ A guide for developers migrating integrations from TIBCO BusinessWorks to WSO2 I
 | Engine | Ballerina runtime | JVM-based runtime |
 | Administrator | VS Code + ICP | Development IDE + monitoring |
 
-## Key Differences
+## Key differences
 
 | Aspect | TIBCO BusinessWorks | WSO2 Integrator |
 |---|---|---|
@@ -35,7 +35,7 @@ A guide for developers migrating integrations from TIBCO BusinessWorks to WSO2 I
 | **Version Control** | Limited XML diff support | Standard Git workflows |
 | **Low-Code** | Palette-based drag-and-drop | Visual designer + pro-code |
 
-## Migration with the TIBCO Migration Tool
+## Migration with the TIBCO migration tool
 
 WSO2 Integrator includes an automated migration tool:
 
@@ -49,7 +49,7 @@ The tool:
 3. Maps connections to WSO2 Integrator connectors
 4. Generates a migration report with coverage details
 
-### Supported Activity Mappings
+### Supported activity mappings
 
 | TIBCO Activity | WSO2 Integrator Equivalent |
 |---|---|
@@ -64,9 +64,9 @@ The tool:
 | Assign | Variable assignment |
 | Checkpoint | Transaction boundary |
 
-## Before / After Examples
+## Before / after examples
 
-### TIBCO: HTTP Service with Database Query
+### TIBCO: HTTP service with database query
 
 **TIBCO (Process Definition):**
 ```
@@ -94,7 +94,7 @@ service /api on new http:Listener(8090) {
 }
 ```
 
-## Step-by-Step Migration
+## Step-by-Step migration
 
 1. **Export** your TIBCO project from Business Studio.
 2. **Run the migration tool** to generate Ballerina code.
@@ -103,7 +103,7 @@ service /api on new http:Listener(8090) {
 5. **Test** using the built-in Try-It tool and unit tests.
 6. **Deploy** using Docker, Kubernetes, or as a standalone JAR.
 
-## What's Next
+## What's next
 
 - [Coming from WSO2 MI](from-wso2-mi.md) -- For existing WSO2 MI users
 - [Coming from MuleSoft](from-mulesoft.md) -- MuleSoft migration guide

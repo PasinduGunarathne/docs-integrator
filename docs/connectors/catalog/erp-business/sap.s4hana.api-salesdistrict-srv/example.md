@@ -20,11 +20,11 @@ flowchart LR
 
 - SAP S/4HANA system access with valid credentials (hostname, username, and password)
 
-## Setting up the SAP S/4HANA Sales District Service API integration
+## Setting up the SAP S/4HANA sales district service API integration
 
 > **New to WSO2 Integrator?** Follow the [Create a New Integration](../../../../develop/create-integrations/create-new-integration.md) guide to set up your integration first, then return here to add the connector.
 
-## Adding the SAP S/4HANA Sales District Service API connector
+## Adding the SAP S/4HANA sales district service API connector
 
 ### Step 1: Open the connector palette
 
@@ -36,7 +36,7 @@ Select **Add Connection** in the WSO2 Integrator sidebar to open the connector s
 
 Search for `api_salesdistrict_srv` and select **Api_salesdistrict_srv** from the results to open the connection form.
 
-## Configuring the SAP S/4HANA Sales District Service API connection
+## Configuring the SAP S/4HANA sales district service API connection
 
 ### Step 3: Fill in the connection parameters
 
@@ -62,9 +62,9 @@ In the left panel, select **Configurations**. Set a value for each configurable 
 - **sapUsername** (string) : The username for SAP authentication
 - **sapPassword** (string) : The password for SAP authentication
 
-## Configuring the SAP S/4HANA Sales District Service API listA_SalesDistricts operation
+## Configuring the SAP S/4HANA sales district service API listA_SalesDistricts operation
 
-### Step 6: Add an Automation entry point
+### Step 6: Add an automation entry point
 
 Select **Add Artifact** on the project overview, then select **Automation** from the artifact types, and select **Create** to add the automation entry point. This creates a `main` function that serves as the entry point for your integration.
 

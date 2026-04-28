@@ -27,7 +27,7 @@ flowchart LR
 
 ## Adding the SCIM connector
 
-### Step 1: Open the Add Connection palette
+### Step 1: Open the add connection palette
 
 Select **+ Add Connection** in the Connections section of the low-code canvas sidebar to open the connector search palette.
 ![SCIM connector palette open showing the search field and connector list](/img/connectors/catalog/security-identity/scim/scim_screenshot_01_palette.png)
@@ -66,7 +66,7 @@ Select **Save Connection** to persist the SCIM connection. The connector entry a
 
 ## Configuring the SCIM createUser operation
 
-### Step 6: Add an Automation entry point
+### Step 6: Add an automation entry point
 
 1. On the low-code canvas, hover over **Entry Points** in the sidebar and select **Add Entry Point**.
 2. Select **Automation** in the artifact selection panel.

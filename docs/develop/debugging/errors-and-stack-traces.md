@@ -105,7 +105,7 @@ These originate from the Ballerina runtime itself (`{ballerina}` prefix).
 | `{ballerina}StackOverflow` | Infinite recursion | Recursive function without a proper base case | Review recursive functions for missing or incorrect base cases |
 | `{ballerina}IllegalStateException` | Operation on a closed or invalid resource | Using a client or channel after `close()` | Ensure resources are not used after closing |
 
-### Example: diagnosing a TypeCastError
+### Example: Diagnosing a TypeCastError
 
 ```
 error: {ballerina}TypeCastError {"message":"incompatible types: 'string' cannot be cast to 'int'"}

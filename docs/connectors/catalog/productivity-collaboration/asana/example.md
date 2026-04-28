@@ -58,15 +58,15 @@ Select **Save Connection** to persist the Asana connection configuration. The `a
 
 - **asanaToken** (string) : Your Asana Personal Access Token from `https://app.asana.com/0/my-apps`
 
-## Configuring the Asana Get multiple workspaces operation
+## Configuring the Asana get multiple workspaces operation
 
-### Step 6: Add an Automation entry point
+### Step 6: Add an automation entry point
 
 1. In the low-code canvas, select **Add Artifact** in the Design section.
 2. Select **Automation** in the artifact selection panel.
 3. Accept the default schedule settings and select **Create** to add the automation to the canvas.
 
-### Step 7: Expand the Asana connection and select the Get multiple workspaces operation
+### Step 7: Expand the Asana connection and select the get multiple workspaces operation
 
 1. In the automation flow body on the canvas, select the **+** (Add Step) button between the Start and Error Handler nodes to open the step-addition panel.
 2. Under **Connections** in the step panel, select the **asanaClient** connection node to expand it and reveal all available Asana API operations.

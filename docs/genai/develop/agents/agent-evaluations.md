@@ -8,7 +8,7 @@ Agent evaluations measure how well your AI agent performs its intended tasks. Un
 
 Regular evaluations catch regressions early, validate prompt changes, and give you confidence that your agent performs reliably in production.
 
-## Evaluation Dimensions
+## Evaluation dimensions
 
 Agent evaluations typically measure several quality dimensions:
 
@@ -20,9 +20,9 @@ Agent evaluations typically measure several quality dimensions:
 | **Groundedness** | Is the answer grounded in tool results? | Agent does not fabricate data |
 | **Safety** | Does the agent refuse unsafe requests? | Agent refuses to share personal data |
 
-## Writing Evaluation Tests
+## Writing evaluation tests
 
-### Basic Agent Test
+### Basic agent test
 
 Test that the agent produces correct responses for known inputs.
 
@@ -51,7 +51,7 @@ function testOrderStatusQuery() returns error? {
 }
 ```
 
-### Testing Tool Selection
+### Testing tool selection
 
 Verify that the agent calls the correct tools for different types of queries.
 
@@ -96,7 +96,7 @@ function testToolSelection() returns error? {
 }
 ```
 
-### Testing Safety Boundaries
+### Testing safety boundaries
 
 Verify that the agent refuses to perform actions outside its defined scope.
 
@@ -122,7 +122,7 @@ function testSafetyBoundaries() returns error? {
 }
 ```
 
-## Evaluation Datasets
+## Evaluation datasets
 
 Create structured test datasets to evaluate agent behavior systematically.
 
@@ -160,7 +160,7 @@ EvalCase[] evalDataset = [
 ];
 ```
 
-### Running Evaluations Against a Dataset
+### Running evaluations against a dataset
 
 ```ballerina
 type EvalResult record {|
@@ -213,7 +213,7 @@ function runEvaluation(agent:ChatAgent agent, EvalCase[] dataset) returns EvalRe
 }
 ```
 
-## LLM-as-Judge Evaluation
+## LLM-as-Judge evaluation
 
 Use a separate LLM to evaluate the quality of agent responses. This is useful for subjective dimensions like helpfulness, tone, and completeness.
 
@@ -258,7 +258,7 @@ function testResponseQuality() returns error? {
 }
 ```
 
-## Continuous Evaluation
+## Continuous evaluation
 
 Run evaluations as part of your CI/CD pipeline to catch regressions when prompts, tools, or model configurations change.
 
@@ -285,7 +285,7 @@ function testAgentEvaluationSuite() returns error? {
 }
 ```
 
-## What's Next
+## What's next
 
 - [AI Agent Observability](/docs/genai/develop/agents/agent-observability) -- Monitor agents in production
 - [Creating an AI Agent](/docs/genai/develop/agents/creating-agent) -- Build your first agent

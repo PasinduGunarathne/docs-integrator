@@ -16,7 +16,7 @@ WSO2 Devant provides a fully managed observability experience for integrations d
 | Alerting | Threshold-based alerts for latency, error rate, and throughput |
 | Diagnostics | Memory, CPU, and thread diagnostics per deployment |
 
-## Enabling Observability in Devant
+## Enabling observability in Devant
 
 Observability is enabled by default for all integrations deployed to WSO2 Devant. No additional configuration is required.
 
@@ -32,9 +32,9 @@ tracingEnabled = true
 loggingEnabled = true
 ```
 
-## Viewing Metrics
+## Viewing metrics
 
-### Request Metrics Dashboard
+### Request metrics dashboard
 
 Access the metrics dashboard from the Devant console:
 
@@ -42,7 +42,7 @@ Access the metrics dashboard from the Devant console:
 2. Select the **Observability** tab.
 3. View request rate, latency percentiles (p50, p95, p99), and error rates.
 
-### Available Metrics
+### Available metrics
 
 | Metric | Description |
 |--------|-------------|
@@ -52,7 +52,7 @@ Access the metrics dashboard from the Devant console:
 | Throughput | Data volume processed |
 | Active Connections | Current connection count |
 
-## Viewing Logs
+## Viewing logs
 
 Stream logs in real time from the Devant console:
 
@@ -60,7 +60,7 @@ Stream logs in real time from the Devant console:
 2. Select the **Logs** tab.
 3. Filter by log level (DEBUG, INFO, WARN, ERROR).
 
-### Structured Log Format
+### Structured log format
 
 Logs emitted by your integration are automatically parsed as structured JSON:
 
@@ -72,7 +72,7 @@ log:printInfo("Order processed", orderId = orderId, amount = totalAmount);
 
 This produces searchable log entries with `orderId` and `amount` as filterable fields in the Devant console.
 
-## Distributed Tracing
+## Distributed tracing
 
 Devant automatically instruments your integrations for distributed tracing:
 
@@ -95,7 +95,7 @@ Configure alerts from the Devant console:
 3. Set the condition (e.g., error rate > 5% for 5 minutes).
 4. Configure the notification channel (email, Slack, PagerDuty).
 
-### Example Alert Rules
+### Example alert rules
 
 | Alert | Condition | Action |
 |-------|-----------|--------|
@@ -112,7 +112,7 @@ Access runtime diagnostics for troubleshooting:
 - **Heap Summary**: View memory allocation breakdown.
 - **CPU Profile**: Identify hot code paths.
 
-## What's Next
+## What's next
 
 - [Prometheus](prometheus.md) -- Set up self-managed metrics collection
 - [Grafana](grafana.md) -- Build custom dashboards for on-premise deployments

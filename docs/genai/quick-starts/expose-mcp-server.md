@@ -13,14 +13,14 @@ The Model Context Protocol is an open standard that lets AI assistants interact 
 - [WSO2 Integrator VS Code extension installed](/docs/get-started/install)
 - An existing integration or API you want to expose (this guide creates a simple one)
 
-## What You'll Build
+## What you'll build
 
 An MCP server that exposes:
 - A tool to query customer data from a database
 - A tool to create support tickets
 - A resource for retrieving company policies
 
-## Step 1: Set Up Dependencies
+## Step 1: Set up dependencies
 
 ```ballerina
 // Ballerina.toml
@@ -35,7 +35,7 @@ name = "mcp"
 version = "1.0.0"
 ```
 
-## Step 2: Define MCP Tools
+## Step 2: Define MCP tools
 
 Annotate your integration functions as MCP tools with descriptions that help AI assistants understand when to use them.
 
@@ -100,7 +100,7 @@ isolated function searchKnowledgeBase(string query) returns json|error {
 }
 ```
 
-## Step 3: Define MCP Resources
+## Step 3: Define MCP resources
 
 Resources provide read-only data that AI assistants can access for context.
 
@@ -122,7 +122,7 @@ isolated function getReturnPolicy() returns string|error {
 }
 ```
 
-## Step 4: Start the MCP Server
+## Step 4: Start the MCP server
 
 Create the MCP server and register all tools and resources.
 
@@ -146,7 +146,7 @@ public function main() returns error? {
 }
 ```
 
-## Step 5: Configure for an MCP Client
+## Step 5: Configure for an MCP client
 
 Build the project and configure it for use with an MCP client like Claude Desktop.
 
@@ -170,7 +170,7 @@ Add the server to your MCP client configuration. For Claude Desktop, edit `claud
 }
 ```
 
-## Step 6: Test the MCP Server
+## Step 6: Test the MCP server
 
 Once configured, your MCP client can discover and use the tools. In Claude Desktop, you can ask:
 
@@ -180,7 +180,7 @@ Once configured, your MCP client can discover and use the tools. In Claude Deskt
 
 The AI assistant will call your MCP tools to retrieve real data and perform actions through your existing integrations.
 
-### Test with SSE Transport
+### Test with SSE transport
 
 For remote or web-based MCP clients, you can also expose the server over HTTP with Server-Sent Events:
 
@@ -201,7 +201,7 @@ public function main() returns error? {
 }
 ```
 
-## How It Works
+## How it works
 
 The MCP server acts as a bridge between AI assistants and your enterprise systems:
 
@@ -210,7 +210,7 @@ The MCP server acts as a bridge between AI assistants and your enterprise system
 3. **Execution** — Your integration code runs (database queries, API calls, etc.) and returns results
 4. **Response** — The assistant incorporates the real data into its response to the user
 
-## What's Next
+## What's next
 
 - [MCP Overview](/docs/genai/mcp/overview) — Deep dive into the Model Context Protocol
 - [MCP Security](/docs/genai/mcp/mcp-security) — Add authentication and authorization

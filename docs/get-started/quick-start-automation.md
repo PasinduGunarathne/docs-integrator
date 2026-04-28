@@ -75,7 +75,7 @@ Automations are ideal for data synchronization, report generation, and routine m
     }}
 />
 
-## Scheduling Automations
+## Scheduling automations
 
 For production use, configure a cron schedule to trigger the automation periodically:
 
@@ -93,7 +93,7 @@ service on timer {
 }
 ```
 
-## Next steps
+## What's next
 
 - [Quick start: AI agent](quick-start-ai-agent.md) -- Build an intelligent agent
 - [Quick start: Integration as API](quick-start-api.md) -- Build an HTTP service

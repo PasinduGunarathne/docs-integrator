@@ -8,7 +8,7 @@ Document ingestion is the process of loading, parsing, chunking, embedding, and 
 
 This page covers how to build ingestion pipelines for different document types and sources in WSO2 Integrator.
 
-## Ingestion Pipeline Architecture
+## Ingestion pipeline architecture
 
 Every ingestion pipeline follows the same core stages:
 
@@ -27,7 +27,7 @@ final rag:IngestionPipeline pipeline = check new ({
 });
 ```
 
-## Ingesting Text Files
+## Ingesting text files
 
 The simplest ingestion: read text files and push them into the pipeline.
 
@@ -86,7 +86,7 @@ function ingestPdf(string filePath) returns error? {
 }
 ```
 
-## Ingesting HTML and Web Content
+## Ingesting HTML and web content
 
 Crawl web pages, strip HTML, and ingest the content.
 
@@ -130,7 +130,7 @@ function ingestFromSitemap(string sitemapUrl) returns error? {
 }
 ```
 
-## Ingesting Database Records
+## Ingesting database records
 
 Pull records from a database and index them for semantic search.
 
@@ -169,7 +169,7 @@ type ProductRecord record {|
 |};
 ```
 
-## Ingesting from Event Streams
+## Ingesting from event streams
 
 Process documents from Kafka or other message brokers in real time.
 
@@ -218,7 +218,7 @@ function parseDocument(string content, string docType) returns string|error {
 }
 ```
 
-## Incremental Ingestion
+## Incremental ingestion
 
 Update your knowledge base without re-ingesting everything. Track what has been ingested and only process changes.
 
@@ -253,7 +253,7 @@ function incrementalIngest() returns error? {
 }
 ```
 
-## Scheduled Ingestion
+## Scheduled ingestion
 
 Run ingestion on a schedule using Ballerina's task scheduling.
 
@@ -278,7 +278,7 @@ class IngestionJob {
 }
 ```
 
-## What's Next
+## What's next
 
 - [Chunking & Embedding](chunking-embedding.md) — Optimize how documents are split and vectorized
 - [Vector Databases](vector-databases.md) — Configure your vector storage backend

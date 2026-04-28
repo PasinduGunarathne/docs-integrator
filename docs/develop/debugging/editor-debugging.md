@@ -6,7 +6,7 @@ title: Editor Debugging
 
 Debug your integrations step-by-step in WSO2 Integrator. Set breakpoints on any line, inspect variables and payloads in real time, and step through data transformations to understand exactly how your integration processes data.
 
-## Setting Up the Debugger
+## Setting up the debugger
 
 WSO2 Integrator includes built-in debugging support. No additional configuration is required for basic debugging.
 
@@ -25,9 +25,9 @@ The debugger supports three session types:
 - **Test debugging** -- debugging test cases
 - **Remote debugging** -- attaching to running integrations (see [Remote Debugging](remote-debugging.md))
 
-## Setting Breakpoints
+## Setting breakpoints
 
-### Line Breakpoints
+### Line breakpoints
 
 Set breakpoints on flow nodes to pause execution at specific steps:
 
@@ -57,7 +57,7 @@ service /api on new http:Listener(9090) {
 }
 ```
 
-### Conditional Breakpoints
+### Conditional breakpoints
 
 Right-click a breakpoint and select **Edit Breakpoint** to add a condition. The debugger only pauses when the condition evaluates to `true`.
 
@@ -68,7 +68,7 @@ Example conditions:
 - `customer.tier == "premium"` -- pause only for premium customers
 - `items.length() > 10` -- pause when processing large orders
 
-### Logpoint Breakpoints
+### Logpoint breakpoints
 
 Logpoints print a message to the debug console without stopping execution. Right-click the gutter and select **Add Logpoint**.
 
@@ -76,7 +76,7 @@ Logpoints print a message to the debug console without stopping execution. Right
 
 Format: `Processing order {orderData.id} with {items.length()} items`
 
-## Stepping Through Code
+## Stepping through code
 
 Once paused at a breakpoint, use the debug toolbar controls:
 
@@ -91,7 +91,7 @@ Once paused at a breakpoint, use the debug toolbar controls:
 
 ![Artifacts panel showing HTTP Service under Integration as API](/img/develop/debugging/editor-debugging/debug-toolbar.png)
 
-### Step Through Example
+### Step through example
 
 When paused at a breakpoint, the active node is highlighted in the flow diagram. Use the debug toolbar to step through the flow:
 
@@ -119,7 +119,7 @@ public function processOrder(Order order) returns OrderResult|error {
 }
 ```
 
-## Inspecting Variables
+## Inspecting variables
 
 When paused at a breakpoint, the **Variables** panel appears alongside the flow diagram. Click any node in the flow to see the variables in scope at that point.
 
@@ -130,7 +130,7 @@ Expand records and maps to inspect nested fields. JSON and XML payloads display 
 
 ![Artifacts panel showing HTTP Service under Integration as API](/img/develop/debugging/editor-debugging/variable-section.png)
 
-### Variables Panel
+### Variables panel
 
 The Variables panel shows all in-scope variables with their current values, organized into:
 
@@ -139,11 +139,11 @@ The Variables panel shows all in-scope variables with their current values, orga
 
 Expand records and maps to inspect nested fields. JSON and XML payloads display their full structure.
 
-### Hover Inspection
+### Hover inspection
 
 Hover over any variable in the editor to see its current value in a tooltip.
 
-### Watch Expressions
+### Watch expressions
 
 Add custom expressions to the Watch panel to monitor specific values.
 
@@ -155,9 +155,9 @@ Useful watch expressions for integrations:
 - `total * 1.08` -- compute derived values
 - `response.statusCode` -- check HTTP response status
 
-## Debug Configuration
+## Debug configuration
 
-### launch.json
+### Launch.json
 
 For advanced scenarios, create a `launch.json` configuration.
 
@@ -186,11 +186,11 @@ For advanced scenarios, create a `launch.json` configuration.
 }
 ```
 
-### Debugging Tests
+### Debugging tests
 
 Debug a specific test by clicking the debug icon next to its `@test:Config` annotation, or configure a test debug launch as shown above.
 
-## Debug Console
+## Debug console
 
 Use the Debug Console to evaluate expressions while paused at a breakpoint.
 
@@ -208,7 +208,7 @@ Type any Ballerina expression to evaluate it:
 true
 ```
 
-## Troubleshooting the Debugger
+## Troubleshooting the debugger
 
 | Issue | Solution |
 |-------|----------|
@@ -218,7 +218,7 @@ true
 | Slow startup | Close unused extensions during debug sessions |
 | Cannot inspect external library code | Step Into only works for your project code, not imported modules |
 
-## Best Practices
+## Best practices
 
 - **Set breakpoints strategically** -- focus on data transformation boundaries and error-prone areas
 - **Use conditional breakpoints** to avoid pausing on every iteration of a loop
@@ -226,7 +226,7 @@ true
 - **Watch payload shapes** to catch type mismatches early in the pipeline
 - **Debug tests first** -- it is easier to reproduce issues in a controlled test environment
 
-## What's Next
+## What's next
 
 - [Remote Debugging](remote-debugging.md) -- Debug services running in containers or remote servers
 - [Strand Dump Analysis](strand-dumps.md) -- Diagnose concurrency issues

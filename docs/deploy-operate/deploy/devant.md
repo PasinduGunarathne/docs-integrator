@@ -36,7 +36,7 @@ curl -fsSL https://cli.devant.wso2.com/install.sh | bash
 devant version
 ```
 
-## Connecting Your Project to Devant
+## Connecting your project to Devant
 
 Log in to Devant and link your project:
 
@@ -73,7 +73,7 @@ devant component create order-service --type service
 devant component link order-service
 ```
 
-## Push-to-Deploy Workflow
+## Push-to-Deploy workflow
 
 Deploy your integration with a single command:
 
@@ -109,7 +109,7 @@ devant logs --follow
 devant deployments list
 ```
 
-## Managing Deployments
+## Managing deployments
 
 The Devant console and CLI provide tools for managing running deployments.
 
@@ -123,7 +123,7 @@ devant scale --replicas 3
 devant scale --min 1 --max 5
 ```
 
-### Rolling Back
+### Rolling back
 
 ```bash
 # List deployment history
@@ -133,7 +133,7 @@ devant deployments list
 devant rollback --deployment dep-abc123
 ```
 
-### Stopping and Restarting
+### Stopping and restarting
 
 ```bash
 # Stop the running deployment
@@ -143,7 +143,7 @@ devant stop
 devant start
 ```
 
-### Viewing Logs and Metrics
+### Viewing logs and metrics
 
 The Devant console provides a web-based dashboard for viewing logs, metrics, and traces. You can also access these from the CLI:
 
@@ -158,7 +158,7 @@ devant metrics
 devant console
 ```
 
-## Devant-Specific Configuration
+## Devant-Specific configuration
 
 ### Cloud.toml for Devant
 
@@ -191,7 +191,7 @@ key_ref = "DB_PASSWORD"
 secret_name = "app-secrets"
 ```
 
-### Environment-Specific Overrides
+### Environment-Specific overrides
 
 Store environment-specific `Config.toml` files and upload them to Devant:
 
@@ -206,7 +206,7 @@ devant config set --env staging --key myModule.apiUrl --value "https://staging-a
 devant secret set --env production --key dbPassword --value "s3cret"
 ```
 
-## Git-Based Deployment
+## Git-Based deployment
 
 Connect your GitHub or GitLab repository to Devant for automatic deployments on push:
 
@@ -217,7 +217,7 @@ Connect your GitHub or GitLab repository to Devant for automatic deployments on 
 
 Devant triggers a build and deployment whenever a push is detected on the configured branch.
 
-## What's Next
+## What's next
 
 - [Run Locally](local.md) -- Develop and test before deploying
 - [Environments](environments.md) -- Manage Dev, Test, and Prod configurations

@@ -61,7 +61,7 @@ If your Kafka cluster requires authentication, configure SASL credentials:
 
 Managed Kafka services (Confluent Cloud, Amazon MSK, Azure Event Hubs) provide their own authentication setup. Consult your provider's documentation for connection details.
 
-## Step 4: Configure sSL/TLS (optional)
+## Step 4: Configure SSL/TLS (optional)
 
 For encrypted connections:
 

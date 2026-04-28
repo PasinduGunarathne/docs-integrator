@@ -13,7 +13,7 @@ Automatically create or update Salesforce contacts whenever a new row is added t
 - Salesforce developer account with a connected app and OAuth 2.0 credentials
 - A Google Sheets spreadsheet with columns for contact fields (e.g., First Name, Last Name, Email, Phone)
 
-## Quick Run
+## Quick run
 
 ```bash
 # Clone the samples repository
@@ -47,9 +47,9 @@ refreshToken = "<SF_REFRESH_TOKEN>"
 baseUrl = "https://your-instance.salesforce.com"
 ```
 
-## Code Walkthrough
+## Code walkthrough
 
-### Project Structure
+### Project structure
 
 ```
 google-sheets-to-salesforce-contacts/
@@ -60,7 +60,7 @@ google-sheets-to-salesforce-contacts/
 └── types.bal
 ```
 
-### Defining the Data Types
+### Defining the data types
 
 The `types.bal` file defines records that map spreadsheet columns to Salesforce contact fields:
 
@@ -84,7 +84,7 @@ type SalesforceContact record {|
 |};
 ```
 
-### Listening for New Rows and Creating Contacts
+### Listening for new rows and creating contacts
 
 The `main.bal` file sets up a scheduled job that polls the spreadsheet for new rows and creates corresponding contacts in Salesforce:
 
@@ -155,20 +155,20 @@ function transform(SheetContactRow row) returns SalesforceContact => {
 };
 ```
 
-### Key Points
+### Key points
 
 - **Polling approach**: The integration uses `task:scheduleJobRecurByFrequency` to poll for new rows at a configurable interval.
 - **Incremental processing**: A `processedRowCount` tracker ensures only newly added rows are synced, avoiding duplicate contact creation.
 - **Data transformation**: The `transform` function maps spreadsheet column names to Salesforce field names.
 
-## Customization Notes
+## Customization notes
 
 - **Change the polling interval**: Modify the frequency parameter in `task:scheduleJobRecurByFrequency` (value is in seconds).
 - **Map additional fields**: Extend the `SheetContactRow` and `SalesforceContact` records to include fields like address, title, or department.
 - **Upsert instead of create**: Replace `sfClient->create` with `sfClient->upsert` using an external ID field to avoid duplicate contacts when the same email is added again.
 - **Add error notifications**: Integrate with Slack or email to send alerts when a sync operation fails.
 
-## What's Next
+## What's next
 
 - [Gmail to Salesforce Leads](gmail-salesforce-leads.md) -- Parse incoming emails and create leads with AI
 - [MySQL to Salesforce Products](mysql-salesforce-products.md) -- Sync database records to Salesforce

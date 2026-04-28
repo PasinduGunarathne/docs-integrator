@@ -6,13 +6,13 @@ title: RAG Querying
 
 The query pipeline is the runtime half of your RAG system. When a user asks a question, the pipeline embeds the query, searches for relevant chunks, assembles context, and generates a grounded answer. This page covers how to build a production-ready query pipeline end-to-end.
 
-## Query Pipeline Overview
+## Query pipeline overview
 
 ```
 User Question --> Embed Query --> Vector Search --> Top-K Chunks --> LLM + Context --> Answer
 ```
 
-## Complete RAG Service
+## Complete RAG service
 
 ### Configuration
 
@@ -118,7 +118,7 @@ type GeneratedAnswer record {|
 |};
 ```
 
-### HTTP Service
+### HTTP service
 
 ```ballerina
 import ballerina/http;
@@ -165,7 +165,7 @@ service /rag on new http:Listener(8090) {
 }
 ```
 
-## Testing the Pipeline
+## Testing the pipeline
 
 ```bash
 # Ingest a document
@@ -179,7 +179,7 @@ curl -X POST http://localhost:8090/rag/query \
   -d '{"question": "What is the return policy?"}'
 ```
 
-## What's Next
+## What's next
 
 - [Chunking Documents](/docs/genai/develop/rag/chunking-documents) -- Chunking strategies for RAG
 - [Generating Embeddings](/docs/genai/develop/rag/generating-embeddings) -- Embedding model selection

@@ -28,7 +28,7 @@ flowchart LR
 
 ## Adding the Guidewire InsuranceNow connector
 
-### Step 1: Open the Add connection panel
+### Step 1: Open the add connection panel
 
 Select the **+** button in the **Connections** section of the WSO2 Integrator side panel to open the Add Connection palette.
 
@@ -62,7 +62,7 @@ Select **Save Connection** to persist the configuration. The `insnowClient` conn
 
 ## Configuring the Guidewire InsuranceNow get operation
 
-### Step 5: Add an Automation entry point
+### Step 5: Add an automation entry point
 
 1. Select **Add Artifact** in the design view.
 2. Select **Automation** from the artifact types.

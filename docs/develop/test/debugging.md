@@ -4,11 +4,11 @@ title: Debugging in VS Code
 
 Debug your integrations and tests step-by-step in VS Code using the WSO2 Integrator extension. Set breakpoints, inspect variables, and trace execution flow to diagnose issues quickly.
 
-## Setting Breakpoints
+## Setting breakpoints
 
 Click in the gutter to the left of any line number to set a breakpoint. A red dot appears, indicating that execution will pause at that line.
 
-### Breakpoints in Integration Code
+### Breakpoints in integration code
 
 Set breakpoints in your service resource functions, transformation logic, or connector calls to inspect data at runtime.
 
@@ -26,7 +26,7 @@ service /api on new http:Listener(9090) {
 }
 ```
 
-### Breakpoints in Test Code
+### Breakpoints in test code
 
 Breakpoints work in test files exactly the same way. Set them inside `@test:Config` functions to debug failing assertions.
 
@@ -41,7 +41,7 @@ function testOrderProcessing() returns error? {
 }
 ```
 
-### Conditional Breakpoints
+### Conditional breakpoints
 
 Right-click a breakpoint and select **Edit Breakpoint** to add a condition. The debugger only pauses when the condition evaluates to `true`. For example, enter `orderId == "ORD-005"` to pause only for a specific order.
 
@@ -49,23 +49,23 @@ Right-click a breakpoint and select **Edit Breakpoint** to add a condition. The 
 
 Instead of pausing execution, a logpoint prints a message to the debug console. Right-click in the gutter, select **Add Logpoint**, and enter a message template such as `Order received: {payload.toJsonString()}`. This avoids modifying source code with temporary log statements.
 
-## Starting a Debug Session
+## Starting a debug session
 
-### Debug an Integration
+### Debug an integration
 
 1. Open your Ballerina source file in VS Code.
 2. Set breakpoints at the lines you want to inspect.
 3. Click the **Debug** CodeLens above the `service` or `main` function, or press `F5`.
 4. The service starts in debug mode. Send requests via the [Try-It tool](try-it.md) or an external client to hit your breakpoints.
 
-### Debug a Test
+### Debug a test
 
 1. Open a test file in the `tests/` directory.
 2. Set breakpoints inside your test function.
 3. Click the **Debug** icon next to the `@test:Config` annotation, or open the Testing panel and click the debug button.
 4. The test runs and pauses at your breakpoints.
 
-### Debug Configuration in launch.json
+### Debug configuration in launch.json
 
 VS Code stores debug configurations in `.vscode/launch.json`. The WSO2 Integrator extension auto-generates configurations, but you can customize them.
 
@@ -91,7 +91,7 @@ VS Code stores debug configurations in `.vscode/launch.json`. The WSO2 Integrato
 }
 ```
 
-## Stepping Through Execution
+## Stepping through execution
 
 Once the debugger pauses at a breakpoint, use the debug toolbar controls:
 
@@ -106,9 +106,9 @@ Once the debugger pauses at a breakpoint, use the debug toolbar controls:
 
 Use **Step Into** to trace execution into your helper functions and transformations. Use **Step Over** to skip standard library calls you do not need to inspect.
 
-## Inspecting Variables and Payloads
+## Inspecting variables and payloads
 
-### Variables Panel
+### Variables panel
 
 The **Variables** panel in the Debug sidebar shows all variables in the current scope, organized into:
 
@@ -117,7 +117,7 @@ The **Variables** panel in the Debug sidebar shows all variables in the current 
 
 Expand complex types (records, JSON, arrays) to drill into nested fields. This is particularly useful for inspecting HTTP request payloads and transformation results.
 
-### Watch Expressions
+### Watch expressions
 
 Add expressions to the **Watch** panel to monitor specific values across debug steps. For example:
 
@@ -125,11 +125,11 @@ Add expressions to the **Watch** panel to monitor specific values across debug s
 - `orders.length()` -- monitor the size of a collection.
 - `result is error` -- check whether a result is an error type.
 
-### Debug Console
+### Debug console
 
 Use the **Debug Console** to evaluate Ballerina expressions interactively while paused at a breakpoint. Type any expression to inspect values or test logic without modifying your code.
 
-## Remote Debugging
+## Remote debugging
 
 Attach the VS Code debugger to a Ballerina service running in a remote environment or a separate terminal session.
 
@@ -153,7 +153,7 @@ Attach the VS Code debugger to a Ballerina service running in a remote environme
 
 3. Start the **Ballerina Remote Debug** configuration from the Run and Debug panel. The debugger connects and pauses at your breakpoints.
 
-## Log-Based Debugging
+## Log-Based debugging
 
 When interactive debugging is not practical (such as in CI environments or production), use strategic logging.
 
@@ -189,7 +189,7 @@ level = "DEBUG"
 | Variables show as "unavailable" | Step forward one line -- some values are only available after their assignment |
 | Test breakpoints skipped | Use the debug icon next to the test, not the regular run button |
 
-## What's Next
+## What's next
 
 - [Built-in Try-It Tool](try-it.md) -- Send requests to your service while debugging
 - [Code Coverage](code-coverage.md) -- Identify untested code paths

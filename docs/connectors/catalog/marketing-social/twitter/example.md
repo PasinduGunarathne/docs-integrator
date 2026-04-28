@@ -34,7 +34,7 @@ flowchart LR
 
 ## Adding the Twitter connector
 
-### Step 1: Open the Add Connection palette
+### Step 1: Open the add connection palette
 
 In the WSO2 Integrator sidebar, hover over the **Connections** section and select **Add Connection** (the **+** icon) to open the Add Connection palette.
 
@@ -72,9 +72,9 @@ Select **Save** to persist the connection. The `twitterClient` connection appear
 
 ---
 
-## Configuring the Twitter Creation of a Post operation
+## Configuring the Twitter creation of a post operation
 
-### Step 6: Add an Automation entry point
+### Step 6: Add an automation entry point
 
 1. In the sidebar, hover over **Entry Points** and select **Add Entry Point**.
 2. Select **Automation** from the Artifacts panel.
@@ -82,7 +82,7 @@ Select **Save** to persist the connection. The `twitterClient` connection appear
 
 The canvas switches to the Automation flow view showing **Start → (empty placeholder) → Error Handler → End**.
 
-### Step 7: Select and configure the Creation of a Post operation
+### Step 7: Select and configure the creation of a post operation
 
 1. Select the **+** (Add Step) button between the **Start** and **Error Handler** nodes on the canvas.
 2. Under **Connections**, select **twitterClient** to expand it and reveal all available Twitter API operations.

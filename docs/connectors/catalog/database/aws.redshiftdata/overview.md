@@ -1,10 +1,10 @@
-# AWS Redshift Data Connector Overview
+# AWS Redshift data connector overview
 
 Amazon Redshift is a fully-managed data warehouse service provided by AWS, designed to efficiently analyze large datasets with high performance and scalability. The Ballerina `ballerinax/aws.redshiftdata` connector (v1.1.0) provides programmatic access to Amazon Redshift through the Data API, enabling you to execute SQL statements, retrieve results, and manage queries without persistent database connections or JDBC drivers.
 
 ## Key features
 
-- Execute SQL statements (DML and DDL) asynchronously via the Redshift Data API
+- Execute SQL statements (DML and DDL) asynchronously via the Redshift data API
 - Batch execution of up to 40 SQL statements in a single request
 - Stream query results as typed Ballerina records using `getResultAsStream`
 - Poll and monitor statement execution status with `describe`
@@ -24,7 +24,7 @@ See the **[Action Reference](action-reference.md)** for the full list of operati
 
 ## Documentation
 
-* **[Setup Guide](setup-guide.md)**: This guide walks you through setting up your AWS account and Amazon Redshift environment to obtain the credentials and configuration required to use the AWS Redshift Data connector.
+* **[Setup Guide](setup-guide.md)**: This guide walks you through setting up your AWS account and Amazon Redshift environment to obtain the credentials and configuration required to use the AWS Redshift data connector.
 
 * **[Action Reference](action-reference.md)**: Full reference for all clients — operations, parameters, return types, and sample code.
 
@@ -34,6 +34,6 @@ As an open source project, WSO2 welcomes contributions from the community.
 
 To contribute to the code for this connector, please create a pull request in the following repository.
 
-* [AWS Redshift Data Connector GitHub repository](https://github.com/ballerina-platform/module-ballerinax-aws.redshiftdata)
+* [AWS Redshift data connector GitHub repository](https://github.com/ballerina-platform/module-ballerinax-aws.redshiftdata)
 
 Check the issue tracker for open issues that interest you. We look forward to receiving your contributions.

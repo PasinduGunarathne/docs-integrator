@@ -6,7 +6,7 @@ title: Supported Protocols
 
 WSO2 Integrator, powered by Ballerina, provides native support for a wide range of communication protocols used in integration scenarios. Each protocol is implemented as a Ballerina module with type-safe clients, listeners, and services.
 
-## HTTP and Web Protocols
+## HTTP and web protocols
 
 | Protocol | Module | Description | Key Features |
 |----------|--------|-------------|--------------|
@@ -17,7 +17,7 @@ WSO2 Integrator, powered by Ballerina, provides native support for a wide range 
 | GraphQL | `ballerina/graphql` | GraphQL query language protocol | Queries, mutations, subscriptions, schema introspection |
 | gRPC | `ballerina/grpc` | Google Remote Procedure Call | Unary, server streaming, client streaming, bidirectional streaming |
 
-### HTTP Example
+### HTTP example
 
 ```ballerina
 import ballerina/http;
@@ -35,7 +35,7 @@ http:Client http2Client = check new ("https://api.example.com", {
 });
 ```
 
-## Messaging Protocols
+## Messaging protocols
 
 | Protocol | Module | Description | Key Features |
 |----------|--------|-------------|--------------|
@@ -47,7 +47,7 @@ http:Client http2Client = check new ("https://api.example.com", {
 | JMS | `ballerinax/java.jms` | Java Message Service | Queues, topics, durable subscribers, message selectors |
 | Azure Service Bus | `ballerinax/asb` | Azure cloud messaging | Queues, topics, sessions, dead-letter queues |
 
-### Kafka Example
+### Kafka example
 
 ```ballerina
 import ballerinax/kafka;
@@ -68,14 +68,14 @@ kafka:Consumer consumer = check new ("localhost:9092", {
 kafka:ConsumerRecord[] records = check consumer->poll(1);
 ```
 
-## Transport Protocols
+## Transport protocols
 
 | Protocol | Module | Description | Key Features |
 |----------|--------|-------------|--------------|
 | TCP | `ballerina/tcp` | Transmission Control Protocol | Raw socket communication, byte-level I/O |
 | UDP | `ballerina/udp` | User Datagram Protocol | Connectionless communication, broadcast/multicast |
 
-### TCP Example
+### TCP example
 
 ```ballerina
 import ballerina/tcp;
@@ -96,14 +96,14 @@ service class EchoService {
 }
 ```
 
-## File Transfer Protocols
+## File transfer protocols
 
 | Protocol | Module | Description | Key Features |
 |----------|--------|-------------|--------------|
 | FTP | `ballerina/ftp` | File Transfer Protocol | Upload, download, list, directory operations |
 | SFTP | `ballerina/ftp` | SSH File Transfer Protocol | Encrypted file transfer, key-based authentication |
 
-### FTP Example
+### FTP example
 
 ```ballerina
 import ballerina/ftp;
@@ -138,7 +138,7 @@ service on ftpListener {
 }
 ```
 
-## Email Protocols
+## Email protocols
 
 | Protocol | Module | Description | Key Features |
 |----------|--------|-------------|--------------|
@@ -146,7 +146,7 @@ service on ftpListener {
 | POP3 | `ballerina/email` | Post Office Protocol v3 | Receive and download emails |
 | IMAP4 | `ballerina/email` | Internet Message Access Protocol | Read, search, and manage emails on server |
 
-### Email Example
+### Email example
 
 ```ballerina
 import ballerina/email;
@@ -177,7 +177,7 @@ service "emailObserver" on imapListener {
 }
 ```
 
-## Protocol Comparison
+## Protocol comparison
 
 | Protocol | Pattern | Delivery Guarantee | Ordering | Use Case |
 |----------|---------|-------------------|----------|----------|
@@ -193,7 +193,7 @@ service "emailObserver" on imapListener {
 | TCP | Stream | Reliable, ordered | Yes | Custom binary protocols |
 | UDP | Datagram | Unreliable | None | Discovery, broadcast |
 
-## See Also
+## See also
 
 - [Ballerina API Documentation](api/ballerina-api-docs.md) -- Full API docs for all modules
 - [Connectors Catalog](/docs/connectors/catalog) -- Protocol connector guides

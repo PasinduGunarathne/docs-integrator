@@ -26,7 +26,7 @@ flowchart LR
 
 ## Adding the OracleDB connector
 
-### Step 1: Open the Add Connection palette
+### Step 1: Open the add connection palette
 
 On the canvas, click **+ Add Connection** (or the **+** button in the Connections panel) to open the Add Connection palette, which shows available connectors.
 

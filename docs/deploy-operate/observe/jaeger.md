@@ -14,7 +14,7 @@ Jaeger is an open-source distributed tracing platform that helps you monitor and
 | Ballerina | Built with `--observability-included` |
 | Network | Integration must reach the Jaeger agent or collector |
 
-## Step 1 -- Start Jaeger
+## Step 1 -- start Jaeger
 
 Run the Jaeger all-in-one image for development:
 
@@ -38,7 +38,7 @@ docker run -d --name jaeger \
 | 4317 | gRPC | OpenTelemetry collector (OTLP) |
 | 4318 | HTTP | OpenTelemetry collector (OTLP) |
 
-## Step 2 -- Configure Ballerina for Jaeger
+## Step 2 -- configure Ballerina for Jaeger
 
 Build with observability:
 
@@ -62,7 +62,7 @@ reporterFlushInterval = 1000
 reporterBufferSize = 100
 ```
 
-### Configuration Options
+### Configuration options
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
@@ -73,7 +73,7 @@ reporterBufferSize = 100
 | `reporterFlushInterval` | int | `1000` | Flush interval in milliseconds |
 | `reporterBufferSize` | int | `100` | Maximum spans buffered |
 
-### Sampling Strategies
+### Sampling strategies
 
 | Strategy | Parameter | Description |
 |----------|-----------|-------------|
@@ -89,7 +89,7 @@ samplerType = "probabilistic"
 samplerParam = 0.1   # Sample 10% of traces
 ```
 
-## Step 3 -- View Traces
+## Step 3 -- view traces
 
 Open the Jaeger UI at `http://localhost:16686`:
 
@@ -97,7 +97,7 @@ Open the Jaeger UI at `http://localhost:16686`:
 2. Click **Find Traces**.
 3. Click a trace to view the span details.
 
-### Trace Structure
+### Trace structure
 
 A typical integration trace includes:
 
@@ -114,7 +114,7 @@ Each span captures:
 - **Tags** (HTTP status, error, component)
 - **Logs** (events within the span)
 
-## Adding Custom Spans
+## Adding custom spans
 
 Instrument specific operations in your Ballerina code:
 
@@ -139,7 +139,7 @@ function processOrder(json order) returns json|error {
 }
 ```
 
-### Adding Tags to Spans
+### Adding tags to spans
 
 ```ballerina
 import ballerina/observe;
@@ -156,7 +156,7 @@ function processOrder(json order) returns json|error {
 }
 ```
 
-## Kubernetes Deployment
+## Kubernetes deployment
 
 Deploy Jaeger as a sidecar or a centralized collector in Kubernetes:
 
@@ -182,7 +182,7 @@ spec:
               protocol: UDP
 ```
 
-## What's Next
+## What's next
 
 - [Zipkin](zipkin.md) -- Alternative distributed tracing with Zipkin
 - [Grafana](grafana.md) -- Visualize trace data alongside metrics

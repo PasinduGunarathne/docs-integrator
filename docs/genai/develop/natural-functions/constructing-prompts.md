@@ -6,9 +6,9 @@ title: Constructing Prompts for Natural Functions
 
 The description you write for a natural function or natural expression is the prompt that the LLM sees. A well-crafted description is the difference between a reliable integration component and unpredictable output.
 
-## Writing Effective Descriptions
+## Writing effective descriptions
 
-### Be Specific About Output Structure
+### Be specific about output structure
 
 ```ballerina
 // Weak: vague instruction
@@ -23,7 +23,7 @@ The description you write for a natural function or natural expression is the pr
 isolated function analyzeInvoice(Invoice invoice) returns InvoiceAnalysis|error = external;
 ```
 
-### Define Classification Criteria
+### Define classification criteria
 
 ```ballerina
 @ai:NaturalFunction {
@@ -32,7 +32,7 @@ isolated function analyzeInvoice(Invoice invoice) returns InvoiceAnalysis|error 
 isolated function classifyTicket(string ticketText) returns TicketClassification|error = external;
 ```
 
-### Include Output Constraints
+### Include output constraints
 
 ```ballerina
 @ai:NaturalFunction {
@@ -41,7 +41,7 @@ isolated function classifyTicket(string ticketText) returns TicketClassification
 isolated function generateCustomerSummary(OrderIssue issue) returns string|error = external;
 ```
 
-## Chain-of-Thought for Complex Tasks
+## Chain-of-Thought for complex tasks
 
 For multi-step reasoning, instruct the model to think step by step.
 
@@ -52,7 +52,7 @@ For multi-step reasoning, instruct the model to think step by step.
 isolated function analyzeComplaint(string complaint) returns ComplaintResolution|error = external;
 ```
 
-## Natural Expression Prompts
+## Natural expression prompts
 
 Natural expressions use the same prompting principles in an inline format.
 
@@ -82,7 +82,7 @@ boolean isUrgent = check ai:natural<boolean>(
 );
 ```
 
-### Multiple Context Values
+### Multiple context values
 
 ```ballerina
 string response = check ai:natural<string>(
@@ -91,7 +91,7 @@ string response = check ai:natural<string>(
 );
 ```
 
-## Prompt Templates
+## Prompt templates
 
 Create reusable prompt builders for common patterns.
 
@@ -114,7 +114,7 @@ Return only the category name, nothing else.`;
 isolated function classifyTicket(string text) returns string|error = external;
 ```
 
-## Testing Prompts
+## Testing prompts
 
 Validate that your prompts produce consistent, correct results.
 
@@ -134,7 +134,7 @@ function testTicketClassification() returns error? {
 }
 ```
 
-## What's Next
+## What's next
 
 - [Defining Natural Functions](/docs/genai/develop/natural-functions/defining) -- Create natural function signatures
 - [Handling Natural Function Responses](/docs/genai/develop/natural-functions/handling-responses) -- Use outputs in services and pipelines

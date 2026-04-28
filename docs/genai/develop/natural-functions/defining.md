@@ -8,7 +8,7 @@ Natural functions let you call an LLM as if it were a regular typed Ballerina fu
 
 This is the simplest way to add LLM intelligence to your integrations without building a full agent.
 
-## What Are Natural Functions?
+## What are natural functions?
 
 A natural function is a Ballerina function where:
 - The **function signature** defines the input and output types
@@ -52,7 +52,7 @@ isolated function translate(
 string french = check translate("Hello, how are you?", "French");
 ```
 
-## Text to Structured Type
+## Text to structured type
 
 ```ballerina
 type ContactInfo record {|
@@ -73,7 +73,7 @@ ContactInfo contact = check extractContact(
 );
 ```
 
-## Structured Input and Output
+## Structured input and output
 
 ```ballerina
 type Invoice record {|
@@ -100,7 +100,7 @@ type InvoiceSummary record {|
 isolated function analyzeInvoice(Invoice invoice) returns InvoiceSummary|error = external;
 ```
 
-## Enum and Union Types
+## Enum and union types
 
 Natural functions work with Ballerina's type system for constrained outputs.
 
@@ -120,9 +120,9 @@ type TicketClassification record {|
 isolated function classifyTicket(string ticketText) returns TicketClassification|error = external;
 ```
 
-## Configuring the Underlying Model
+## Configuring the underlying model
 
-### Per-Function Model Override
+### Per-Function model override
 
 ```ballerina
 @ai:NaturalFunction {
@@ -136,7 +136,7 @@ isolated function classifyTicket(string ticketText) returns TicketClassification
 isolated function summarize(string document) returns string|error = external;
 ```
 
-### Global Model Configuration
+### Global model configuration
 
 Set a default model for all natural functions in a module.
 
@@ -149,7 +149,7 @@ apiKey = "sk-your-key-here"
 temperature = 0.2
 ```
 
-## Natural Functions vs. Agents
+## Natural functions vs. agents
 
 | Feature | Natural Functions | Agents |
 |---------|-------------------|--------|
@@ -162,7 +162,7 @@ temperature = 0.2
 
 Use natural functions when you need a simple LLM-powered transformation. Use agents when you need reasoning, tool calling, or multi-turn interaction.
 
-## What's Next
+## What's next
 
 - [Constructing Prompts for Natural Functions](/docs/genai/develop/natural-functions/constructing-prompts) -- Optimize your function descriptions
 - [Handling Natural Function Responses](/docs/genai/develop/natural-functions/handling-responses) -- Use natural functions in services and pipelines

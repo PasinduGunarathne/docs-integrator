@@ -22,23 +22,23 @@ flowchart LR
 - OAuth2 credentials: Client ID, Client Secret, Refresh Token, and Refresh URL (`https://oauth2.googleapis.com/token`)
 - The target Google Spreadsheet ID (found in the spreadsheet's URL)
 
-## Setting up the Google Sheets integration
+## Setting up the Google sheets integration
 
 > **New to WSO2 Integrator?** Follow the [Create a New Integration](../../../../develop/create-integrations/create-new-integration.md) guide to set up your integration first, then return here to add the connector.
 
-## Adding the Google Sheets connector
+## Adding the Google sheets connector
 
-### Step 1: Open the Add connection panel
+### Step 1: Open the add connection panel
 
 Select **+** next to **Connections** in the WSO2 Integrator sidebar to open the **Add Connection** palette.
 
 ![Google Sheets connector palette open with search field before any selection](/img/connectors/catalog/productivity-collaboration/googleapis.sheets/googleapis_sheets_screenshot_01_palette.png)
 
-### Step 2: Select the Google Sheets connector card
+### Step 2: Select the Google sheets connector card
 
 Search for `sheets` or locate **Google Sheets** in the grid, then select the **Sheets** connector card to open the **Configure Sheets** form.
 
-## Configuring the Google Sheets connection
+## Configuring the Google sheets connection
 
 ### Step 3: Bind all OAuth2 connection parameters to configurable variables
 
@@ -66,9 +66,9 @@ In the left panel, select **Configurations**. Set a value for each configurable 
 - **sheetsRefreshToken** (string) : Your OAuth2 Refresh Token
 - **sheetsRefreshUrl** (string) : The token endpoint URL (`https://oauth2.googleapis.com/token`)
 
-## Configuring the Google Sheets appendRowToSheet operation
+## Configuring the Google sheets appendRowToSheet operation
 
-### Step 6: Add an Automation entry point
+### Step 6: Add an automation entry point
 
 1. Select **+ Add Artifact** in the Design view.
 2. Under the **Automation** section, select the **Automation** card.

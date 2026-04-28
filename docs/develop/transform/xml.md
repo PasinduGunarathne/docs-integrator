@@ -6,7 +6,7 @@ title: XML Processing
 
 Work with XML data -- common in enterprise and legacy system integrations. Ballerina provides `xml` as a first-class type with native literal syntax, navigation, iteration, and conversion capabilities.
 
-## XML Literals and Construction
+## XML literals and construction
 
 Create XML values directly in Ballerina code using backtick templates. The `xml` type covers elements, text nodes, comments, and processing instructions.
 
@@ -120,7 +120,7 @@ public function main() {
 }
 ```
 
-## XML Namespaces
+## XML namespaces
 
 Handle namespaced XML using `xmlns` declarations in Ballerina.
 
@@ -145,7 +145,7 @@ public function main() {
 }
 ```
 
-## Iterating Over XML
+## Iterating over XML
 
 Use `foreach` or query expressions to process XML sequences.
 
@@ -188,7 +188,7 @@ public function main() {
 }
 ```
 
-## XML Mutation
+## XML mutation
 
 Modify XML structures by setting children or attributes.
 
@@ -334,13 +334,13 @@ public function main() returns error? {
 }
 ```
 
-## Best Practices
+## Best practices
 
 - **Use typed records** for XML processing whenever the schema is known -- this catches mapping errors at compile time
 - **Prefer `data.xmldata` over manual navigation** for complex documents to reduce boilerplate
 - **Handle namespaces explicitly** -- declare `xmlns` bindings at the top of functions that work with namespaced XML
 - **Use query expressions** for filtering and transforming XML sequences instead of manual loops
 
-## What's Next
+## What's next
 
 - [CSV & Flat File Processing](csv-flat-file.md) -- Tabular data formats

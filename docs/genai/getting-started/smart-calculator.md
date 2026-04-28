@@ -13,7 +13,7 @@ This quick start demonstrates the core agent pattern: the LLM reasons about the 
 - [WSO2 Integrator set up for AI](setup.md)
 - An API key for an LLM provider (OpenAI, Anthropic, or Google)
 
-## Step 1: Define Calculator Tools
+## Step 1: Define calculator tools
 
 Tools are Ballerina functions annotated with `@agent:Tool`. The annotation includes a description that tells the LLM when and how to use the tool.
 
@@ -68,7 +68,7 @@ isolated function divide(
 }
 ```
 
-## Step 2: Create the Agent
+## Step 2: Create the agent
 
 ```ballerina
 import ballerinax/ai.agent;
@@ -87,7 +87,7 @@ final agent:ChatAgent calculatorAgent = check new (
 );
 ```
 
-## Step 3: Expose as an HTTP Endpoint
+## Step 3: Expose as an HTTP endpoint
 
 ```ballerina
 import ballerina/http;
@@ -110,7 +110,7 @@ type ChatResponse record {|
 |};
 ```
 
-## Step 4: Run and Test
+## Step 4: Run and test
 
 1. Add your API key to `Config.toml`:
 
@@ -140,7 +140,7 @@ curl -X POST http://localhost:8090/calculator/chat \
 
 The agent will call `divide(150, 6)` to get 25, then call `add(25, 10)` to get 35, and explain the steps in its response.
 
-## How It Works
+## How it works
 
 The agent follows the **Reason-Act-Observe** loop:
 
@@ -151,7 +151,7 @@ The agent follows the **Reason-Act-Observe** loop:
 
 The LLM never performs arithmetic directly. It delegates all computation to the tools, ensuring accuracy.
 
-## What's Next
+## What's next
 
 - [Build a Sample Hotel Booking Agent](hotel-booking-agent.md) -- A more complete agent with memory and real-world tools
 - [What is an AI Agent?](/docs/genai/key-concepts/what-is-ai-agent) -- Understand the agent architecture

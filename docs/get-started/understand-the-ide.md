@@ -6,15 +6,15 @@ title: Understand the IDE
 
 A quick tour of the WSO2 Integrator VS Code extension and its key features.
 
-## Visual Designer
+## Visual designer
 
 The visual designer shows your integration as a flow diagram. Each node represents a step — receiving a request, calling a connector, transforming data, or returning a response.
 
-## Low-Code ↔ Pro-Code Switching
+## Low-Code ↔ Pro-Code switching
 
 Select the toggle button to switch between the visual designer and the Ballerina code editor. Changes made in either view are instantly synced to the other.
 
-## Key UI Elements
+## Key UI elements
 
 1. **Project Explorer** — Browse your integration artifacts, connectors, and resources
 2. **Artifact Panel** — Add new services, automations, event handlers, or AI agents
@@ -23,6 +23,6 @@ Select the toggle button to switch between the visual designer and the Ballerina
 5. **Try-It Tool** — Send test requests to running services
 6. **Data Mapper** — Open the visual data transformation tool
 
-## Next steps
+## What's next
 
 - [Build an API integration](quick-start-api.md) — Put the IDE to work

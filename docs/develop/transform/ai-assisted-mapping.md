@@ -6,7 +6,7 @@ title: AI-Assisted Data Mapping
 
 Let AI analyze your source and target schemas and suggest field mappings automatically. The WSO2 Integrator VS Code extension includes an **Auto Map** feature that uses an LLM to generate data mapping suggestions, reducing manual effort for routine transformations.
 
-## How AI Mapping Assistance Works
+## How AI mapping assistance works
 
 The AI mapping feature analyzes the field names, types, and structures of your source and target record types, then generates Ballerina mapping expressions. The process follows these steps:
 
@@ -15,7 +15,7 @@ The AI mapping feature analyzes the field names, types, and structures of your s
 3. **Expression generation** -- For each matched pair, the AI produces a Ballerina expression -- direct assignments for compatible types, or transformation expressions for type mismatches.
 4. **Code insertion** -- The suggested mappings are inserted into the data mapper as a Ballerina expression-bodied function that you can review and edit.
 
-## Launching Auto Map
+## Launching auto map
 
 To use AI-assisted mapping in the visual data mapper:
 
@@ -62,7 +62,7 @@ function transform(SourceContact src) returns CrmContact => {
 };
 ```
 
-## Reviewing and Accepting Suggestions
+## Reviewing and accepting suggestions
 
 After the AI generates mappings, each suggestion appears as a connection line in the visual mapper. Review them before accepting:
 
@@ -74,7 +74,7 @@ After the AI generates mappings, each suggestion appears as a connection line in
 
 All suggestions are preliminary until you save the file. The generated Ballerina code is always visible in the code editor, so you can verify the logic directly.
 
-## Manual Override and Refinement
+## Manual override and refinement
 
 You can combine AI suggestions with manual mappings:
 
@@ -101,7 +101,7 @@ function formatPhone(string raw) returns string {
 }
 ```
 
-## When AI Mapping Works Well
+## When AI mapping works well
 
 The AI mapper produces the best results in these scenarios:
 
@@ -120,13 +120,13 @@ Be aware of the following limitations:
 - **Array transformations** -- Complex array mappings with filtering, grouping, or aggregation typically need manual query expressions.
 - **Experimental feature** -- The Auto Map capability is under active development. Results improve as the underlying model evolves.
 
-## Best Practices
+## Best practices
 
 - **Start with Auto Map** for new transformations to get a baseline, then refine manually.
 - **Use descriptive field names** in your record types -- the AI matches more accurately when names are semantically meaningful.
 - **Review every suggestion** before saving -- never assume the AI mappings are correct without verification.
 - **Combine with the expression editor** for hybrid workflows where the AI handles simple fields and you handle complex logic.
 
-## What's Next
+## What's next
 
 - [Visual Data Mapper](data-mapper.md) -- Manual mapping for precision

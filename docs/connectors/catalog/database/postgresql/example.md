@@ -89,7 +89,7 @@ On the Automation canvas, click the **+** drop zone between **Start** and **Erro
 
 ![Automation flow with operations panel showing PostgreSQL operations](/img/connectors/catalog/database/postgresql/postgresql_screenshot_04_operations_panel.png)
 
-#### Step 8: Select and configure the Execute operation
+### Step 8: Select and configure the execute operation
 
 Select **Execute** to open the configuration form, then fill in the operation fields:
 

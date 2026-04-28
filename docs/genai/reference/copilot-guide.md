@@ -9,7 +9,7 @@ Ballerina Copilot is an AI-powered code assistant built into the WSO2 Integrator
 :::info This page is about AI helping YOU code
 Ballerina Copilot assists you while writing code (the "AI Split Rule" places it in the Develop category). For building AI-powered integrations (agents, RAG, MCP), see the [GenAI develop guides](/docs/genai/develop/direct-llm/configuring-providers).
 
-## Setting Up Copilot
+## Setting up copilot
 
 ### Prerequisites
 
@@ -39,11 +39,11 @@ Configure Copilot behavior in VS Code settings:
 
 ## Features
 
-### Inline Code Completion
+### Inline code completion
 
 As you type, Copilot suggests code completions based on context — your current file, imports, and project structure.
 
-### Natural Language to Code
+### Natural language to code
 
 Type a comment describing what you want, and Copilot generates the implementation.
 
@@ -54,11 +54,11 @@ Type a comment describing what you want, and Copilot generates the implementatio
 
 Copilot generates the complete service definition, database connection, and validation logic.
 
-### Data Mapper Suggestions
+### Data mapper suggestions
 
 When working with the Visual Data Mapper, Copilot suggests field mappings based on source and target type names and structures.
 
-### Test Generation
+### Test generation
 
 Generate unit tests for your integration functions using AI.
 
@@ -66,7 +66,7 @@ Generate unit tests for your integration functions using AI.
 2. Select **Generate Tests with Copilot**
 3. Review and customize the generated test cases
 
-### Refactoring Suggestions
+### Refactoring suggestions
 
 Copilot identifies code patterns that can be improved and suggests refactoring options such as:
 
@@ -75,7 +75,7 @@ Copilot identifies code patterns that can be improved and suggests refactoring o
 - Improving error handling patterns
 - Optimizing data transformations
 
-## Privacy and Data Handling
+## Privacy and data handling
 
 - Code context is sent to WSO2's AI service for processing
 - No code is stored permanently on WSO2 servers
@@ -91,7 +91,7 @@ Copilot identifies code patterns that can be improved and suggests refactoring o
 | Irrelevant suggestions | Ensure your file has proper imports and type definitions for better context |
 | Authentication errors | Re-sign in via the Copilot icon in the status bar |
 
-## What's Next
+## What's next
 
 - [AI Governance and Security](ai-governance.md) — Data handling and compliance
 - [Troubleshooting](troubleshooting.md) — Common issues and solutions

@@ -6,11 +6,11 @@ title: Process FTP Order Batches with Age Filter and File Dependency
 
 Build an FTP file processing service that watches a directory for order batch CSV files, waits for a `.final` marker file to confirm the upload is complete, and processes each order only within a safe age window.
 
-## What You'll Build
+## What you'll build
 
 An FTP listener that monitors the root directory for batch CSV files (e.g. `orders_42.csv`). Each batch has a corresponding marker file (`orders_42.final`) uploaded separately to signal that the CSV is fully written. The service waits until both files exist before processing, logs each order record, then deletes the processed files automatically.
 
-## What You'll Learn
+## What you'll learn
 
 - Configuring an FTP listener with authentication, polling interval, and `userDirIsRoot`
 - Using `fileNamePattern` to narrow which files trigger the listener
@@ -49,7 +49,7 @@ FTP Server (root /)
   ...  (files deleted via afterProcess: ftp:DELETE)
 ```
 
-## Step 1: Create the Ballerina Project
+## Step 1: Create the Ballerina project
 
 Create a new Ballerina project:
 
@@ -60,7 +60,7 @@ cd ftp-file-process
 
 This creates a project directory with a `Ballerina.toml` and a default `main.bal`. You will replace the generated files with the ones below.
 
-## Step 2: Define the Data Types
+## Step 2: Define the data types
 
 Create `types.bal` in the project root with the record type for order data:
 
@@ -76,7 +76,7 @@ type OrderRecord record {|
 |};
 ```
 
-## Step 3: Add Configurable Values
+## Step 3: Add configurable values
 
 Create `config.bal` in the project root to declare the FTP connection and age threshold values so they can be set per environment:
 
@@ -92,7 +92,7 @@ configurable decimal minAgeSeconds = 30;
 configurable decimal maxAgeSeconds = 3600;
 ```
 
-## Step 4: Build the FTP Listener and Service
+## Step 4: Build the FTP listener and service
 
 Replace the contents of `main.bal` with the listener and service:
 
@@ -140,7 +140,7 @@ service on ftpListener {
 }
 ```
 
-## Step 5: Prepare Sample Data
+## Step 5: Prepare sample data
 
 Create a `sample-data/` directory in the project root:
 
@@ -159,7 +159,7 @@ orderId,customerId,productId,quantity,unitPrice
 
 Create an empty `sample-data/orders_42.final` marker file. Once uploaded, it signals that the CSV upload is complete.
 
-## Step 6: Start the FTP Server
+## Step 6: Start the FTP server
 
 Create a `docker-compose.yml` in the project root:
 
@@ -182,7 +182,7 @@ Start the FTP server:
 docker-compose up -d
 ```
 
-## Step 7: Run and Test
+## Step 7: Run and test
 
 Start the Ballerina service:
 
@@ -234,7 +234,7 @@ Upload the files and wait more than 5 seconds before uploading the marker. The C
 
 If you upload both files and wait between 30 seconds and 1 hour, the listener will correctly pick them up on the next poll cycle and process them normally.
 
-## Extend It
+## Extend it
 
 - **Move processed files** — Use the `afterProcess` field in `@ftp:FunctionConfig` to move the files to a specific location
 - **Delete the marker file** — Call `ftpClient->delete(markerPath)` after processing to keep the watch directory clean

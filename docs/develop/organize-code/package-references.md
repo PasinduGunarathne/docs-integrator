@@ -6,7 +6,7 @@ title: Package References & Imports
 
 Use packages from Ballerina Central, the standard library, and your own local projects to extend your integrations with pre-built connectors, utilities, and shared code. This page covers import syntax, package resolution, and how to reference packages from different sources.
 
-## Import Syntax
+## Import syntax
 
 Every Ballerina import follows the pattern `org/package` or `org/package.module`.
 
@@ -31,11 +31,11 @@ import ballerinax/postgresql as pg;
 import ballerina/lang.value as val;
 ```
 
-## Standard Library Packages
+## Standard library packages
 
 The Ballerina standard library (`ballerina/` org) ships with the distribution and requires no additional dependency declaration.
 
-### Common Standard Library Packages
+### Common standard library packages
 
 | Package | Purpose |
 |---------|---------|
@@ -56,7 +56,7 @@ The Ballerina standard library (`ballerina/` org) ships with the distribution an
 | `ballerina/xmldata` | XML data processing |
 | `ballerina/constraint` | Data validation constraints |
 
-### Lang Library
+### Lang library
 
 The `ballerina/lang.*` packages provide operations on built-in types.
 
@@ -84,7 +84,7 @@ public function main() {
 }
 ```
 
-## Ballerina Central Packages
+## Ballerina central packages
 
 Packages from [Ballerina Central](https://central.ballerina.io/) are automatically downloaded when you build your project. Add them by importing in your code.
 
@@ -97,7 +97,7 @@ import ballerinax/openai.chat;
 
 On first build, Ballerina resolves the latest compatible version and records it in `Dependencies.toml`.
 
-### Searching for Packages
+### Searching for packages
 
 ```bash
 # Search Ballerina Central from the CLI
@@ -109,7 +109,7 @@ bal search postgresql
 bal search ballerinax/
 ```
 
-### Specifying a Version
+### Specifying a version
 
 Pin a specific version in `Ballerina.toml`.
 
@@ -130,11 +130,11 @@ name = "postgresql"
 version = "1.14.0"
 ```
 
-## Local Package References
+## Local package references
 
 Reference a package from your local file system during development.
 
-### Using Bal Pack + Local Repository
+### Using bal pack + local repository
 
 ```bash
 # In the shared-types package directory
@@ -151,7 +151,7 @@ Then import it like any other package:
 import myorg/shared_types;
 ```
 
-### Using Dependencies.toml for Local Path
+### Using dependencies.toml for local path
 
 For active development, reference a local path directly.
 
@@ -164,7 +164,7 @@ version = "1.0.0"
 repository = "local"
 ```
 
-## Importing Submodules
+## Importing submodules
 
 Packages can expose multiple modules. Import specific modules using dot notation.
 
@@ -178,7 +178,7 @@ import ballerinax/aws.sqs;
 import ballerinax/aws.ses;
 ```
 
-## Managing Import Aliases
+## Managing import aliases
 
 Use aliases to avoid naming conflicts or improve readability.
 
@@ -196,7 +196,7 @@ mysql:Client mysqlClient = check new (...);
 sfdc:Client sfdcClient = check new (...);
 ```
 
-## Unused Import Detection
+## Unused import detection
 
 The Ballerina compiler reports unused imports as errors. Remove any imports that your code does not use.
 
@@ -211,7 +211,7 @@ service /api on new http:Listener(9090) {
 }
 ```
 
-## Platform Dependencies (Java Interop)
+## Platform dependencies (Java interop)
 
 For packages that use Java libraries, declare platform dependencies in `Ballerina.toml`.
 
@@ -227,7 +227,7 @@ artifactId = "custom-lib"
 version = "2.0.0"
 ```
 
-## Best Practices
+## Best practices
 
 - **Use the standard library first** -- check if `ballerina/` packages meet your needs before adding external dependencies
 - **Pin dependency versions** in `Ballerina.toml` for production projects to ensure reproducible builds
@@ -235,7 +235,7 @@ version = "2.0.0"
 - **Remove unused imports** -- the compiler enforces this, keeping your code clean
 - **Search Central before building custom** -- many common connectors already exist on Ballerina Central
 
-## What's Next
+## What's next
 
 - [Manage Dependencies](manage-dependencies.md) -- Update, lock, and audit dependencies
 - [Packages & Modules](packages-modules.md) -- Create your own package structure

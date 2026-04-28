@@ -189,7 +189,7 @@ targetModule = "order_grpc"
 | `targetModule` | string | No | Destination module for the generated code. |
 | `options` | table | No | Tool-specific configuration options. |
 
-## Complete Example
+## Complete example
 
 ```toml
 [package]

@@ -70,7 +70,7 @@ Select **Save Connection**. The `snsClient` connection node appears on the desig
 
 ## Configuring the AWS SNS publish operation
 
-### Step 6: Add an Automation entry point
+### Step 6: Add an automation entry point
 
 1. In the WSO2 Integrator panel toolbar, select **Add Artifact**.
 2. Select **Automation** from the artifact type list.

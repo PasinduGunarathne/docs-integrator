@@ -6,7 +6,7 @@ title: Run Locally
 
 Run your WSO2 Integrator projects on your local machine during development and testing.
 
-## Running from VS Code
+## Running from VS code
 
 The WSO2 Integrator VS Code extension provides an integrated development experience with a built-in run button.
 
@@ -17,7 +17,7 @@ The WSO2 Integrator VS Code extension provides an integrated development experie
 
 The extension automatically detects `Config.toml` in your project root and applies it during local runs. It also supports breakpoint debugging -- set breakpoints in your Ballerina code and use the **Debug** button to start a debugging session.
 
-### Run Configuration
+### Run configuration
 
 VS Code launch configurations are stored in `.vscode/launch.json`:
 
@@ -60,7 +60,7 @@ BAL_CONFIG_FILES=config/dev-Config.toml bal run
 bal run target/bin/my_integration.jar
 ```
 
-### Command-Line Configuration Overrides
+### Command-Line configuration overrides
 
 Pass configuration values directly from the command line:
 
@@ -72,7 +72,7 @@ bal run -- -CmyModule.port=8080
 bal run -- -CmyModule.port=8080 -CmyModule.dbHost=localhost
 ```
 
-### Running with Environment Variables
+### Running with environment variables
 
 Set configurable values through environment variables:
 
@@ -85,7 +85,7 @@ bal run
 
 The naming convention for environment variables is `BAL_CONFIG_VAR__` with uppercase letters and underscores replacing dots.
 
-## JAR Distribution
+## JAR distribution
 
 For environments without the Ballerina toolchain, distribute the compiled JAR:
 
@@ -102,7 +102,7 @@ java -jar target/bin/my_integration.jar
 
 Ensure the target machine has Java 17 or later installed. The JAR is self-contained and includes all Ballerina dependencies.
 
-## Configuration for Local Development
+## Configuration for local development
 
 Create a `Config.toml` in your project root with development-appropriate values:
 
@@ -122,7 +122,7 @@ apiUrl = "https://sandbox.api.example.com"
 apiKey = "dev-api-key-12345"
 ```
 
-### Multiple Config Files
+### Multiple config files
 
 Maintain separate configuration files for different local scenarios:
 
@@ -141,7 +141,7 @@ Switch between them using the `BAL_CONFIG_FILES` environment variable:
 BAL_CONFIG_FILES=config/test-Config.toml bal run
 ```
 
-## Hot Reload and Iterative Development
+## Hot reload and iterative development
 
 Ballerina supports watch mode for automatic recompilation and restart when source files change:
 
@@ -152,7 +152,7 @@ bal run --watch
 
 In watch mode, the runtime monitors your `.bal` source files and `Config.toml`. When a change is detected, it recompiles the project and restarts the service automatically. This provides a rapid feedback loop during development.
 
-## Local Docker Compose for Multi-Service Setups
+## Local Docker compose for Multi-Service setups
 
 When your integration depends on external services (databases, message brokers, or other APIs), use Docker Compose to run the full stack locally.
 
@@ -218,7 +218,7 @@ Start the full stack:
 docker compose up -d
 ```
 
-## What's Next
+## What's next
 
 - [Deploy to Devant](devant.md) -- Deploy to the WSO2 managed cloud
 - [Environments](environments.md) -- Manage configuration across environments

@@ -21,13 +21,13 @@ flowchart LR
 - A running SAP S/4HANA system accessible over the network, with the Incoterms OData service (`api_sd_incoterms_srv`) enabled and exposed via a service URL.
 - Valid SAP credentials (username and password) with permission to call the Incoterms API.
 
-## Setting up the SAP S/4HANA Incoterms integration
+## Setting up the SAP S/4HANA incoterms integration
 
 > **New to WSO2 Integrator?** Follow the [Create a New Integration](../../../../develop/create-integrations/create-new-integration.md) guide to set up your integration first, then return here to add the connector.
 
-## Adding the SAP S/4HANA Incoterms connector
+## Adding the SAP S/4HANA incoterms connector
 
-### Step 1: Open the Add Connection palette
+### Step 1: Open the add connection palette
 
 Select the **+ Add Connection** button in the Connections section of the left sidebar to open the connector search palette.
 
@@ -39,9 +39,9 @@ Select the **+ Add Connection** button in the Connections section of the left si
 2. Locate the **`sap.s4hana.api_sd_incoterms_srv`** connector card in the results.
 3. Select the connector card to open the connection configuration form.
 
-## Configuring the SAP S/4HANA Incoterms connection
+## Configuring the SAP S/4HANA incoterms connection
 
-### Step 3: Bind SAP S/4HANA Incoterms connection parameters to configurables
+### Step 3: Bind SAP S/4HANA incoterms connection parameters to configurables
 
 For each non-boolean field visible in the connection configuration form, open its helper panel, navigate to the **Configurables** tab, select **+ New Configurable**, enter a descriptive camelCase variable name and type, and select **Save** to auto-inject the configurable reference into the field. Repeat for every non-boolean field shown under the default auth selection.
 
@@ -66,7 +66,7 @@ In the left panel of WSO2 Integrator, select **Configurations** (listed at the b
 - **sapUsername** (string) : Your SAP system username with permission to call the Incoterms API
 - **sapPassword** (string) : The password for the SAP system username
 
-## Configuring the SAP S/4HANA Incoterms listA_IncotermsClassifications operation
+## Configuring the SAP S/4HANA incoterms listA_IncotermsClassifications operation
 
 ### Step 6: Add an automation entry point
 

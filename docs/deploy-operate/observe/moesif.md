@@ -25,7 +25,7 @@ Moesif captures API request and response data, providing:
 | Usage Billing | Metered billing based on API consumption |
 | Debugging | Full request/response inspection |
 
-## Step 1 -- Add a Moesif Interceptor
+## Step 1 -- add a moesif interceptor
 
 Create an HTTP interceptor that sends request/response data to Moesif:
 
@@ -92,7 +92,7 @@ function sendToMoesif(json event) {
 }
 ```
 
-## Step 2 -- Attach the Interceptor to Your Service
+## Step 2 -- attach the interceptor to your service
 
 ```ballerina
 import ballerina/http;
@@ -113,7 +113,7 @@ service /api on ep {
 }
 ```
 
-## Step 3 -- Configure Moesif Application ID
+## Step 3 -- configure moesif application ID
 
 Add your Moesif Application ID to `Config.toml`:
 
@@ -121,7 +121,7 @@ Add your Moesif Application ID to `Config.toml`:
 moesifAppId = "your-moesif-application-id"
 ```
 
-## Step 4 -- Add User and Company Context
+## Step 4 -- add user and company context
 
 Enrich events with user and company identifiers for per-customer analytics:
 
@@ -138,7 +138,7 @@ json event = {
 };
 ```
 
-## Using Moesif with an API Gateway
+## Using moesif with an API gateway
 
 If you use an API gateway (Kong, Tyk, or AWS API Gateway), install the Moesif plugin at the gateway level instead of within the Ballerina service:
 
@@ -151,7 +151,7 @@ If you use an API gateway (Kong, Tyk, or AWS API Gateway), install the Moesif pl
 
 This approach captures all API traffic without modifying your integration code.
 
-## Viewing Analytics
+## Viewing analytics
 
 In the Moesif dashboard:
 
@@ -160,7 +160,7 @@ In the Moesif dashboard:
 3. **Users**: Track API usage per user or company.
 4. **Alerts**: Set up anomaly detection and threshold-based alerts.
 
-## What's Next
+## What's next
 
 - [Prometheus](prometheus.md) -- Self-managed metrics collection
 - [Observability Overview](overview.md) -- Full observability architecture

@@ -23,7 +23,7 @@ bal scan [options] [<ballerina-file-or-project>]
 | `--custom-rules-path` | — | No | — | Path to a directory containing custom rule packages |
 | `--list-rules` | — | No | `false` | List all available scan rules and exit |
 
-## Basic Usage
+## Basic usage
 
 ```bash
 # Scan the current project
@@ -36,9 +36,9 @@ bal scan service.bal
 bal scan --scan-report
 ```
 
-## Rules Configuration
+## Rules configuration
 
-### List Available Rules
+### List available rules
 
 ```bash
 $ bal scan --list-rules
@@ -57,7 +57,7 @@ ballerina:301      | Performance    | WARNING  | Synchronous call inside loop
 ballerina:302      | Performance    | INFO     | Missing connection pool configuration
 ```
 
-### Include Specific Rules
+### Include specific rules
 
 ```bash
 # Run only security rules
@@ -67,7 +67,7 @@ bal scan --include-rules ballerina:201,ballerina:202,ballerina:203
 bal scan --include-rules ballerina:1,ballerina:2,ballerina:3
 ```
 
-### Exclude Specific Rules
+### Exclude specific rules
 
 ```bash
 # Run all rules except unused variable warnings
@@ -77,7 +77,7 @@ bal scan --exclude-rules ballerina:1
 bal scan --exclude-rules ballerina:101,ballerina:103,ballerina:302
 ```
 
-## Rule Categories
+## Rule categories
 
 | Category | Rule ID Range | Description |
 |----------|--------------|-------------|
@@ -86,7 +86,7 @@ bal scan --exclude-rules ballerina:101,ballerina:103,ballerina:302
 | Security | `ballerina:200` - `ballerina:299` | Injection vulnerabilities, credential exposure, data leaks |
 | Performance | `ballerina:300` - `ballerina:399` | Synchronous bottlenecks, resource management, connection pooling |
 
-## Rule Severity Levels
+## Rule severity levels
 
 | Severity | Description | Exit code effect |
 |----------|-------------|-----------------|
@@ -94,11 +94,11 @@ bal scan --exclude-rules ballerina:101,ballerina:103,ballerina:302
 | `WARNING` | Issue that should be reviewed and addressed | Warning-only (configurable) |
 | `INFO` | Informational suggestion for improvement | No effect on exit code |
 
-## Custom Rules
+## Custom rules
 
 Create custom scan rules by implementing the Ballerina scan rule SPI.
 
-### Creating a Custom Rule Package
+### Creating a custom rule package
 
 1. Create a new Ballerina package:
 
@@ -132,7 +132,7 @@ public isolated function checkRetryConfig(scan:AnalysisContext ctx, scan:Node no
 bal pack
 ```
 
-### Using Custom Rules
+### Using custom rules
 
 ```bash
 # Scan with custom rules
@@ -144,7 +144,7 @@ bal scan --custom-rules-path ./custom_rules/target/bala/ --include-rules balleri
 
 ## Reports
 
-### Console Output
+### Console output
 
 By default, issues are printed to the console:
 
@@ -160,7 +160,7 @@ Scan Summary:
   Total:    3
 ```
 
-### HTML Report
+### HTML report
 
 Generate a detailed HTML report with `--scan-report`:
 
@@ -177,7 +177,7 @@ The report is generated at `target/report/scan-results.html` and includes:
 | Rule Coverage | Which rules were applied and their results |
 | Trend Data | Historical comparison (when platform-triggered) |
 
-### JSON Output
+### JSON output
 
 Scan results are also written to `target/report/scan-results.json` for CI/CD integration:
 
@@ -205,9 +205,9 @@ Scan results are also written to `target/report/scan-results.json` for CI/CD int
 }
 ```
 
-## CI/CD Integration
+## CI/CD integration
 
-### GitHub Actions Example
+### GitHub actions example
 
 ```yaml
 - name: Run Ballerina Scan
@@ -221,7 +221,7 @@ Scan results are also written to `target/report/scan-results.json` for CI/CD int
     path: target/report/scan-results.html
 ```
 
-### Exit Codes
+### Exit codes
 
 | Exit Code | Meaning |
 |-----------|---------|
@@ -229,7 +229,7 @@ Scan results are also written to `target/report/scan-results.json` for CI/CD int
 | `1` | One or more ERROR-level issues found |
 | `2` | Scan tool error (invalid configuration, file not found) |
 
-## See Also
+## See also
 
 - [bal Command Reference](bal-commands.md) -- All bal subcommands
 - [Unit Testing](/docs/develop/test/unit-testing) -- Testing Ballerina projects

@@ -6,7 +6,7 @@ title: Manage Dependencies
 
 Keep your integration dependencies up-to-date, secure, and reproducible. Ballerina uses `Dependencies.toml` as a lock file to pin exact versions, `Ballerina.toml` for version constraints, and Ballerina Central as the default package registry.
 
-## How Dependency Resolution Works
+## How dependency resolution works
 
 When you build a Ballerina package, the compiler:
 
@@ -66,7 +66,7 @@ version = "1.14.0"
 
 Do not manually edit `Dependencies.toml`. Use the CLI commands described below to manage dependencies.
 
-## Adding Dependencies
+## Adding dependencies
 
 Dependencies are added by importing them in your source code.
 
@@ -81,7 +81,7 @@ bal build
 # Dependencies.toml is updated automatically
 ```
 
-### Specifying Version Constraints
+### Specifying version constraints
 
 Add version constraints in `Ballerina.toml` to control which versions are acceptable.
 
@@ -104,9 +104,9 @@ name = "postgresql"
 version = "1.14.0"
 ```
 
-## Updating Dependencies
+## Updating dependencies
 
-### Update All Dependencies
+### Update all dependencies
 
 ```bash
 # Update all dependencies to their latest compatible versions
@@ -115,7 +115,7 @@ bal build --sticky=false
 # This regenerates Dependencies.toml with updated versions
 ```
 
-### Update a Specific Dependency
+### Update a specific dependency
 
 Change the version in `Ballerina.toml` and rebuild.
 
@@ -132,7 +132,7 @@ version = "4.3.0"   # Updated from 4.2.0
 bal build
 ```
 
-## Removing Dependencies
+## Removing dependencies
 
 Remove the `import` statement from your code and rebuild.
 
@@ -143,7 +143,7 @@ bal build
 # Dependencies.toml is regenerated without the removed package
 ```
 
-## Using the Local Repository
+## Using the local repository
 
 Push packages to the local repository for development and testing before publishing to Central.
 
@@ -168,7 +168,7 @@ version = "1.0.0"
 repository = "local"
 ```
 
-## Publishing to Ballerina Central
+## Publishing to Ballerina central
 
 Share your packages with the community or your organization by publishing to Central.
 
@@ -186,7 +186,7 @@ bal push
 # accesstoken = "your-token-from-central.ballerina.io"
 ```
 
-## Dependency Tree
+## Dependency tree
 
 View the complete dependency tree to understand transitive dependencies.
 
@@ -206,7 +206,7 @@ bal graph
 # └── ballerinax/postgresql:1.14.0
 ```
 
-## Offline Builds
+## Offline builds
 
 Build without network access using cached dependencies.
 
@@ -220,7 +220,7 @@ This is useful for:
 - Ensuring builds use only pre-approved packages
 - Faster builds when dependencies have not changed
 
-## Dependency Conflicts
+## Dependency conflicts
 
 When two dependencies require different versions of the same transitive dependency, Ballerina resolves to the latest compatible version.
 
@@ -236,7 +236,7 @@ Resolved: ballerina/log:2.10.0 (latest compatible)
 
 If automatic resolution fails, pin the conflicting dependency explicitly in `Ballerina.toml`.
 
-## Best Practices
+## Best practices
 
 - **Commit `Dependencies.toml`** to version control for reproducible builds
 - **Pin versions for production** -- use exact versions in `Ballerina.toml` for stability
@@ -245,7 +245,7 @@ If automatic resolution fails, pin the conflicting dependency explicitly in `Bal
 - **Use the local repository** for internal packages that should not be published to Central
 - **Run `bal graph`** to audit transitive dependencies before deploying
 
-## What's Next
+## What's next
 
 - [Package References & Imports](package-references.md) -- Import syntax and package sources
 - [Workspaces](workspaces.md) -- Multi-package development workflows

@@ -20,11 +20,11 @@ flowchart LR
 
 - SAP S/4HANA system credentials (username, password, and hostname)
 
-## Setting up the SAP S/4HANA Sales Area integration
+## Setting up the SAP S/4HANA sales area integration
 
 > **New to WSO2 Integrator?** Follow the [Create a New Integration](../../../../develop/create-integrations/create-new-integration.md) guide to set up your integration first, then return here to add the connector.
 
-## Adding the SAP S/4HANA Sales Area connector
+## Adding the SAP S/4HANA sales area connector
 
 ### Step 1: Open the connection palette
 
@@ -47,7 +47,7 @@ Select **Save Connection** to persist the connection. The new connection (for ex
 
 ![SAP S/4HANA Sales Area Connections panel showing salesarea0001Client entry after saving](/img/connectors/catalog/erp-business/sap.s4hana.salesarea-0001/sap_s4hana_salesarea0001_screenshot_03_connection_saved.png)
 
-## Configuring the SAP S/4HANA Sales Area connection
+## Configuring the SAP S/4HANA sales area connection
 
 ### Step 4: Set actual values for your configurables
 
@@ -58,7 +58,7 @@ Select **Save Connection** to persist the connection. The new connection (for ex
 - **sapUsername** (string) : Your SAP authentication username
 - **sapPassword** (string) : Your SAP authentication password
 
-## Configuring the SAP S/4HANA Sales Area list sales areas operation
+## Configuring the SAP S/4HANA sales area list sales areas operation
 
 ### Step 5: Add an automation entry point
 

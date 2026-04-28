@@ -21,23 +21,23 @@ flowchart LR
 - Access to an SAP S/4HANA system with the API Sales Quotation Service enabled
 - SAP authentication token and hostname
 
-## Setting up the SAP S/4HANA API Sales Quotation Service integration
+## Setting up the SAP S/4HANA API sales quotation service integration
 
 > **New to WSO2 Integrator?** Follow the [Create a New Integration](../../../../develop/create-integrations/create-new-integration.md) guide to set up your integration first, then return here to add the connector.
 
-## Adding the SAP S/4HANA API Sales Quotation Service connector
+## Adding the SAP S/4HANA API sales quotation service connector
 
-### Step 1: Open the Add Connection palette
+### Step 1: Open the add connection palette
 
 Select the **Add Connection** button (or **+** icon) next to **Connections** in the WSO2 Integrator sidebar to open the connector palette.
 
 ![SAP S/4HANA API Sales Quotation Service connector palette open with search field before any selection](/img/connectors/catalog/erp-business/sap.s4hana.api-sales-quotation-srv/sap_s4hana_apisalesquotationsrv_screenshot_01_palette.png)
 
-### Step 2: Select the SAP S/4HANA API Sales Quotation Service connector
+### Step 2: Select the SAP S/4HANA API sales quotation service connector
 
 Search for `sap.s4hana.api_sales_quotation_srv` in the search box and select the **SAP S/4HANA API Sales Quotation Srv** connector card to open the connection form.
 
-## Configuring the SAP S/4HANA API Sales Quotation Service connection
+## Configuring the SAP S/4HANA API sales quotation service connection
 
 ### Step 3: Fill in the connection parameters
 
@@ -63,9 +63,9 @@ Select **Save** to create the connection. The `apiSalesQuotationSrvClient` entry
 - **sapHostname** (string) : The hostname or URL of your SAP S/4HANA system
 - **sapAuthToken** (string) : The authentication token used to access the SAP S/4HANA API
 
-## Configuring the SAP S/4HANA API Sales Quotation Service listA_SalesQuotations operation
+## Configuring the SAP S/4HANA API sales quotation service listA_SalesQuotations operation
 
-### Step 6: Add an Automation entry point
+### Step 6: Add an automation entry point
 
 1. Select **Add Artifact** in the WSO2 Integrator sidebar.
 2. Select **Automation** from the artifact type options.

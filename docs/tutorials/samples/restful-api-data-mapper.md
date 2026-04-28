@@ -6,7 +6,7 @@ title: RESTful API with Visual Data Mapper
 
 Build a RESTful API that aggregates data from multiple backend services and uses the WSO2 Integrator visual data mapper to transform request and response payloads. This sample project demonstrates how to call external APIs, map fields between different schemas visually, and return a unified response -- all without writing transformation code by hand.
 
-## What You'll Learn
+## What you'll learn
 
 - Creating a RESTful API service that aggregates multiple backends
 - Using the visual data mapper in the WSO2 Integrator VS Code extension
@@ -22,7 +22,7 @@ Build a RESTful API that aggregates data from multiple backend services and uses
 
 **Time estimate:** 10-15 minutes to clone and run; 30-45 minutes for full code walkthrough
 
-## Clone and Run
+## Clone and run
 
 ```bash
 # Clone the samples repository
@@ -47,7 +47,7 @@ curl "http://localhost:9090/customers?name=John"
 curl http://localhost:9090/customers/C001/orders
 ```
 
-## Project Structure
+## Project structure
 
 ```
 restful-api-data-mapper/
@@ -65,9 +65,9 @@ restful-api-data-mapper/
     └── api_test.bal
 ```
 
-## Code Walkthrough
+## Code walkthrough
 
-### Defining Source and Target Types
+### Defining source and target types
 
 The `types.bal` file defines the types for the backend responses (source) and the API responses (target):
 
@@ -176,7 +176,7 @@ type OrderTotal record {|
 |};
 ```
 
-### Data Mapper Transformations
+### Data mapper transformations
 
 The transformation files contain the mapping functions. In the VS Code extension, these can be created and edited using the visual data mapper by clicking the **Map** icon above each function.
 
@@ -247,7 +247,7 @@ function transformOrder(BackendOrder backend, map products) returns CustomerOrde
 };
 ```
 
-### API Gateway Service
+### API gateway service
 
 The `main.bal` file exposes the unified API that calls backend services and applies transformations:
 
@@ -316,7 +316,7 @@ service /customers on new http:Listener(servicePort) {
 }
 ```
 
-### Mock Backend Services
+### Mock backend services
 
 The `backends/` directory contains mock services that simulate external APIs. These start automatically when you run `bal run`:
 
@@ -354,14 +354,14 @@ service /api/customers on new http:Listener(9091) {
 }
 ```
 
-### Key Points
+### Key points
 
 - **Visual data mapper**: The transformation functions can be edited using the drag-and-drop data mapper in the VS Code extension. Click the **Map** CodeLens above any transformation function to open the visual editor.
 - **Computed fields**: Transformations can include expressions such as string concatenation (`first_name + " " + last_name`), substring extraction, and status code mapping.
 - **Data aggregation**: The API gateway calls multiple backend services, aggregates the results, and applies transformations before returning a unified response.
 - **Self-contained sample**: Mock backend services are included, so you can run and test the entire flow locally without external dependencies.
 
-## What's Next
+## What's next
 
 - [Data Service with bal persist](data-service-persist.md) -- Build a full CRUD data service
 - [Event-Driven Microservices](event-driven-microservices.md) -- Build microservices with Kafka

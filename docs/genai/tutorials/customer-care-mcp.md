@@ -42,7 +42,7 @@ flowchart TD
     CRMServer ----> CRMDB
 ```
 
-## Step 1: Create the Project
+## Step 1: Create the project
 
 ```toml
 # Ballerina.toml
@@ -83,7 +83,7 @@ crmDbPassword = "password"
 crmDbName = "crm_db"
 ```
 
-## Step 2: Define Data Types
+## Step 2: Define data types
 
 ```ballerina
 // types.bal
@@ -141,7 +141,7 @@ type TrackingEvent record {|
 |};
 ```
 
-## Step 3: Create the Order MCP Server
+## Step 3: Create the order MCP server
 
 The order MCP server exposes order management capabilities as MCP tools.
 
@@ -230,7 +230,7 @@ service on new mcp:Listener(3001) {
 }
 ```
 
-## Step 4: Create the CRM MCP Server
+## Step 4: Create the CRM MCP server
 
 The CRM MCP server exposes customer relationship management capabilities.
 
@@ -340,7 +340,7 @@ service on new mcp:Listener(3002) {
 }
 ```
 
-## Step 5: Build the Agent with MCP Clients
+## Step 5: Build the agent with MCP clients
 
 Now build the agent that connects to both MCP servers and uses their tools to serve customers.
 
@@ -395,7 +395,7 @@ Guidelines:
 );
 ```
 
-## Step 6: Expose as an HTTP Chat Service
+## Step 6: Expose as an HTTP chat service
 
 ```ballerina
 // service.bal
@@ -429,7 +429,7 @@ service /care on new http:Listener(8090) {
 }
 ```
 
-## Step 7: Run and Test
+## Step 7: Run and test
 
 1. Start the MCP servers and the agent service:
    ```bash
@@ -466,7 +466,7 @@ service /care on new http:Listener(8090) {
      -d '{"message": "I want to cancel order ORD-11111 because I found a better price elsewhere.", "sessionId": "<session-id>", "customerId": "CUST-001"}'
    ```
 
-## What You Built
+## What you built
 
 You now have a customer care agent that:
 - Connects to order management and CRM systems through MCP servers
@@ -475,7 +475,7 @@ You now have a customer care agent that:
 - Maintains conversation context across multiple interactions
 - Uses standardized MCP protocol for clean separation between the agent and backend systems
 
-## What's Next
+## What's next
 
 - [MCP Overview](/docs/genai/mcp/overview) -- Learn more about the Model Context Protocol
 - [Exposing MCP Servers](/docs/genai/mcp/exposing-mcp-servers) -- Build more MCP servers for other systems

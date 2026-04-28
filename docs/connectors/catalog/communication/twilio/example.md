@@ -33,7 +33,7 @@ flowchart LR
 
 ### Adding the Twilio connector
 
-#### Step 1: Open the Add connection panel
+### Step 1: Open the add connection panel
 
 Select **Add Connection** (the `+` icon next to **Connections**) in the WSO2 Integrator panel to open the connector palette.
 
@@ -70,7 +70,7 @@ In the left panel, select **Configurations** to open the Configurations panel. S
 
 ### Configuring the Twilio createMessage operation
 
-#### Step 6: Add an Automation entry point
+### Step 6: Add an automation entry point
 
 In the integration overview, select **+ Add Artifact**, then select **Automation** from the artifact type list, and select **Create**. A new automation named `main` is added under **Entry Points** and the flow editor opens.
 

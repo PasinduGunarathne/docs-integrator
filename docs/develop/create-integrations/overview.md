@@ -6,7 +6,7 @@ title: Create Integrations
 
 Get started by creating a new integration project, opening an existing one, or exploring the built-in samples. WSO2 Integrator provides multiple ways to bootstrap your work so you can focus on building integration logic rather than project scaffolding.
 
-## Project Types
+## Project types
 
 WSO2 Integrator supports several project types, each tailored to a specific integration scenario:
 
@@ -29,7 +29,7 @@ The fastest way to start is through the creation wizard on the WSO2 Integrator h
 
 The wizard generates a complete Ballerina project with the correct directory structure, dependencies, and a starter template.
 
-## Project Structure
+## Project structure
 
 Every integration project follows the standard Ballerina project layout:
 
@@ -57,7 +57,7 @@ The `Ballerina.toml` file identifies the project and declares its dependencies.
 - [Explore Sample Integrations](explore-samples.md) -- Browse and learn from built-in examples
 - [Import External Integrations](migrate-3rd-party-integrations.md) -- Import projects from other tools or formats
 
-## What's Next
+## What's next
 
 - [Integration Artifacts](/docs/develop/integration-artifacts/overview) -- Learn about the different artifact types you can create
 - [Design Logic](/docs/develop/design-logic/overview) -- Build your integration logic visually or in code

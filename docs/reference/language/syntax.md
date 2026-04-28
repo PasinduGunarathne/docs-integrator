@@ -6,7 +6,7 @@ title: Ballerina Syntax Quick Reference
 
 A cheat sheet for integration developers — not a full language tutorial. For deep dives, see the [Ballerina documentation](https://ballerina.io/learn/).
 
-## Variables and Types
+## Variables and types
 
 ```ballerina
 // Primitive types
@@ -50,7 +50,7 @@ service /api on new http:Listener(8080) {
 }
 ```
 
-## Error Handling
+## Error handling
 
 ```ballerina
 do {
@@ -60,7 +60,7 @@ do {
 }
 ```
 
-## Control Flow
+## Control flow
 
 ```ballerina
 // If/else

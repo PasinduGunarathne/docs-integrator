@@ -26,7 +26,7 @@ flowchart LR
 
 ## Adding the Trello connector
 
-### Step 1: Open the Add Connection panel
+### Step 1: Open the add connection panel
 
 In the WSO2 Integrator sidebar, expand your project and select **Connections → + Add Connection** to open the connector palette.
 
@@ -64,7 +64,7 @@ Select **Save Connection** to persist the connection. Confirm that `trelloClient
 
 ## Configuring the Trello post operation
 
-### Step 6: Add an Automation entry point
+### Step 6: Add an automation entry point
 
 1. In the sidebar, select **Entry Points → + Add Entry Point**.
 2. Select **Automation** as the entry point type.

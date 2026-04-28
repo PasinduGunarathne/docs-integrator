@@ -16,9 +16,9 @@ WSO2 Integrator projects can be deployed as serverless functions, enabling event
 | Memory | 128 MB - 10 GB | 128 MB - 14 GB |
 | Language Runtime | Java 17+ | Java 17+ |
 
-## AWS Lambda
+## AWS lambda
 
-### Step 1 -- Create the Lambda Function
+### Step 1 -- create the lambda function
 
 Write a Ballerina function annotated with `@awslambda:Function`:
 
@@ -41,7 +41,7 @@ public function orderProcessor(awslambda:Context ctx,
 }
 ```
 
-### Step 2 -- Build for Lambda
+### Step 2 -- build for lambda
 
 ```bash
 bal build --cloud=aws_lambda
@@ -56,7 +56,7 @@ target/
     aws-ballerina-lambda.yaml  # SAM template
 ```
 
-### Step 3 -- Deploy with AWS SAM
+### Step 3 -- deploy with AWS SAM
 
 ```bash
 sam deploy \
@@ -79,7 +79,7 @@ aws lambda create-function \
   --timeout 30
 ```
 
-### Step 4 -- Add an API Gateway Trigger
+### Step 4 -- add an API gateway trigger
 
 ```bash
 aws apigatewayv2 create-api \
@@ -88,7 +88,7 @@ aws apigatewayv2 create-api \
   --target arn:aws:lambda:us-east-1:123456789:function:orderProcessor
 ```
 
-### Lambda Configuration
+### Lambda configuration
 
 Configure via environment variables in the Lambda console or template:
 
@@ -100,9 +100,9 @@ Environment:
     API_KEY: "{{resolve:secretsmanager:my-api-key}}"
 ```
 
-## Azure Functions
+## Azure functions
 
-### Step 1 -- Create the Azure Function
+### Step 1 -- create the Azure function
 
 ```ballerina
 import ballerinax/azure.functions;
@@ -121,7 +121,7 @@ public function httpTrigger(@functions:HTTPTrigger {}
 }
 ```
 
-### Step 2 -- Build for Azure Functions
+### Step 2 -- build for Azure functions
 
 ```bash
 bal build --cloud=azure_functions
@@ -138,7 +138,7 @@ target/
     host.json
 ```
 
-### Step 3 -- Deploy to Azure
+### Step 3 -- deploy to Azure
 
 ```bash
 # Create resources
@@ -159,7 +159,7 @@ az functionapp deployment source config-zip \
   --src target/azure_functions/my_integration.zip
 ```
 
-### Azure Configuration
+### Azure configuration
 
 Set application settings for environment-specific configuration:
 
@@ -170,9 +170,9 @@ az functionapp config appsettings set \
   --settings "DB_HOST=db.internal.example.com" "DB_PORT=5432"
 ```
 
-## Reducing Cold Start Times
+## Reducing cold start times
 
-### Use GraalVM Native Images
+### Use GraalVM native images
 
 Compile to a native binary to dramatically reduce cold start times:
 
@@ -182,7 +182,7 @@ bal build --graalvm --cloud=aws_lambda
 
 This produces a native executable that starts in under 100ms compared to 2-5 seconds for JVM-based deployments.
 
-### Provisioned Concurrency (AWS)
+### Provisioned concurrency (AWS)
 
 Keep warm instances ready to handle requests:
 
@@ -193,7 +193,7 @@ aws lambda put-provisioned-concurrency-config \
   --provisioned-concurrent-executions 5
 ```
 
-### Premium Plan (Azure)
+### Premium plan (Azure)
 
 Use the Premium plan for pre-warmed instances:
 
@@ -204,7 +204,7 @@ az functionapp plan create --name premium-plan \
   --sku EP1 --min-instances 1
 ```
 
-## Best Practices
+## Best practices
 
 | Practice | Recommendation |
 |----------|---------------|
@@ -215,7 +215,7 @@ az functionapp plan create --name premium-plan \
 | Observability | Enable X-Ray (AWS) or Application Insights (Azure) |
 | VPC Access | Configure VPC/VNet only when accessing private resources |
 
-## What's Next
+## What's next
 
 - [GraalVM Native Images](graalvm.md) -- Compile to native binaries for minimal cold start
 - [Managing Configurations](managing-configurations.md) -- Environment-specific configuration strategies

@@ -6,7 +6,7 @@ title: What is AI Agent Memory?
 
 Agent memory controls how your AI agent retains and manages conversation history. Without memory, every message is processed in isolation. With memory, the agent remembers what was said earlier in the conversation, enabling multi-turn interactions like follow-up questions and contextual references.
 
-## Why Memory Matters
+## Why memory matters
 
 Consider this conversation:
 
@@ -20,7 +20,7 @@ Agent: ???
 
 Without memory, the agent has no context for "And ORD-002?" -- it does not know the user was previously asking about order status. With memory, the agent understands this is a follow-up request for another order's status.
 
-## Memory Types
+## Memory types
 
 WSO2 Integrator provides several memory implementations:
 
@@ -32,7 +32,7 @@ WSO2 Integrator provides several memory implementations:
 | `PersistentChatMemory` | Stores history in an external database | Sessions that survive restarts |
 | None | Stateless, no history retained | Single-turn task processing |
 
-## Basic Configuration
+## Basic configuration
 
 ```ballerina
 import ballerinax/ai.agent;
@@ -45,7 +45,7 @@ final agent:ChatAgent myAgent = check new (
 );
 ```
 
-## Session Isolation
+## Session isolation
 
 Each session ID creates an independent conversation thread. Different users or conversations never share context.
 
@@ -56,7 +56,7 @@ string r2 = check agent.chat("Hello!", "user-bob");
 string r3 = check agent.chat("Follow up", "user-alice");  // Only sees Alice's history
 ```
 
-## Choosing the Right Memory
+## Choosing the right memory
 
 | Scenario | Recommended Memory |
 |----------|--------------------|
@@ -66,7 +66,7 @@ string r3 = check agent.chat("Follow up", "user-alice");  // Only sees Alice's h
 | Multi-day onboarding workflows | `PersistentChatMemory` |
 | Single-turn task processing | No memory |
 
-## What's Next
+## What's next
 
 - [What is MCP?](what-is-mcp.md) -- Model Context Protocol for external AI access
 - [What is RAG?](what-is-rag.md) -- Retrieval-augmented generation

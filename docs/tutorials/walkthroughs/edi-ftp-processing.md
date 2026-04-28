@@ -6,11 +6,11 @@ title: Process EDI Documents from FTP
 
 Build an integration that monitors an FTP server for incoming EDI files, parses them into structured data, validates the content, and pushes the results to a business application. EDI over FTP is a cornerstone of B2B integration in supply chain, retail, and logistics.
 
-## What You'll Build
+## What you'll build
 
 An automated pipeline that polls an SFTP server for incoming X12 850 Purchase Orders, parses them, validates mandatory fields, transforms them into a JSON format, and creates corresponding sales orders in a REST-based ERP system.
 
-## What You'll Learn
+## What you'll learn
 
 - Connecting to FTP/SFTP servers with Ballerina
 - Polling for new files on a schedule
@@ -51,14 +51,14 @@ flowchart LR
     Transform ----> ERP
 ```
 
-## Step 1: Create the Project
+## Step 1: Create the project
 
 ```bash
 bal new edi_ftp_processor
 cd edi_ftp_processor
 ```
 
-## Step 2: Define the Data Types
+## Step 2: Define the data types
 
 ```ballerina
 // types.bal
@@ -120,7 +120,7 @@ type ProcessingResult record {|
 |};
 ```
 
-## Step 3: Build the SFTP Poller
+## Step 3: Build the SFTP poller
 
 ```ballerina
 // sftp_poller.bal
@@ -219,7 +219,7 @@ function moveFile(string fileName, string targetDir) {
 }
 ```
 
-## Step 4: Build the EDI Parser
+## Step 4: Build the EDI parser
 
 ```ballerina
 // edi_parser.bal
@@ -316,7 +316,7 @@ function parseX12PurchaseOrder(string ediContent) returns PurchaseOrder|error {
 }
 ```
 
-## Step 5: Add Validation and Transformation
+## Step 5: Add validation and transformation
 
 ```ballerina
 // validate_transform.bal
@@ -379,7 +379,7 @@ function formatDate(string ediDate) returns string {
 }
 ```
 
-## Step 6: Build the ERP Client and Orchestrator
+## Step 6: Build the ERP client and orchestrator
 
 ```ballerina
 // erp_client.bal
@@ -438,7 +438,7 @@ function processEdiFile(string fileName) returns ProcessingResult|error {
 }
 ```
 
-## Step 7: Test the Pipeline
+## Step 7: Test the pipeline
 
 Start the service:
 
@@ -467,14 +467,14 @@ IEA*1*000000001~
 
 Check the service logs for processing status and verify the file was moved to the archive folder.
 
-## Extend It
+## Extend it
 
 - **Add acknowledgment generation** -- Send back an X12 997 Functional Acknowledgment
 - **Support multiple EDI document types** -- Handle 810 (Invoice), 856 (Ship Notice), and others
 - **Add EDIFACT support** -- Parse international EDIFACT documents alongside X12
 - **Add a monitoring dashboard** -- Track file processing rates and error counts
 
-## What's Next
+## What's next
 
 - [Data Formats & Standards Connectors](../../connectors/catalog) -- EDI, FHIR, and SOAP connectors
 - [EDI Transformation](../../develop/transform/edi.md) -- EDI data transformation reference

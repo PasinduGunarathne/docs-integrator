@@ -8,11 +8,11 @@ Observability gives you visibility into how your AI agents reason, which tools t
 
 WSO2 Integrator provides built-in observability for agents through tracing, conversation logging, and performance metrics that integrate with standard observability backends.
 
-## Enabling Agent Tracing
+## Enabling agent tracing
 
 Agent tracing captures each step of the agent's reasoning loop -- the LLM call, tool selection, tool execution, and response generation -- as spans in a distributed trace.
 
-### Basic Tracing Setup
+### Basic tracing setup
 
 ```ballerina
 import ballerinax/ai.agent;
@@ -44,7 +44,7 @@ agent.chat
   |-- llm.call (final response generation)
 ```
 
-### Configuring the Trace Exporter
+### Configuring the trace exporter
 
 Export traces to Jaeger, Zipkin, or any OpenTelemetry-compatible backend.
 
@@ -71,11 +71,11 @@ endpoint = "http://localhost:4317"
 protocol = "grpc"
 ```
 
-## Conversation Logging
+## Conversation logging
 
 Log the full conversation history for each session, including tool calls and responses, for auditing and debugging.
 
-### Structured Conversation Logs
+### Structured conversation logs
 
 ```ballerina
 import ballerina/log;
@@ -100,7 +100,7 @@ service /agent on new http:Listener(8090) {
 }
 ```
 
-### Logging Tool Calls
+### Logging tool calls
 
 Register a tool call listener to capture detailed information about each tool invocation.
 
@@ -128,7 +128,7 @@ final agent:ChatAgent loggedAgent = check new (
 );
 ```
 
-### Persisting Conversation Logs
+### Persisting conversation logs
 
 Store conversation logs in a database for long-term auditing.
 
@@ -149,11 +149,11 @@ function logConversationTurn(
 }
 ```
 
-## Performance Metrics
+## Performance metrics
 
 Track key metrics to understand agent performance and identify bottlenecks.
 
-### Built-In Metrics
+### Built-In metrics
 
 When `metricsEnabled` is set to `true`, the agent automatically publishes the following metrics:
 
@@ -167,7 +167,7 @@ When `metricsEnabled` is set to `true`, the agent automatically publishes the fo
 | `agent_iterations_total` | Histogram | Number of reasoning iterations per request |
 | `agent_errors_total` | Counter | Number of failed requests |
 
-### Custom Metrics
+### Custom metrics
 
 Add custom metrics for domain-specific monitoring.
 
@@ -193,7 +193,7 @@ isolated function createSupportTicket(string subject, string description) return
 }
 ```
 
-### Configuring the Metrics Exporter
+### Configuring the metrics exporter
 
 Export metrics to Prometheus.
 
@@ -210,7 +210,7 @@ host = "0.0.0.0"
 
 ## Dashboarding
 
-### Grafana Dashboard Queries
+### Grafana dashboard queries
 
 Use the exported metrics to build dashboards that show agent health at a glance.
 
@@ -232,9 +232,9 @@ rate(agent_errors_total[5m]) / rate(agent_requests_total[5m])
 rate(agent_iterations_total_sum[5m]) / rate(agent_iterations_total_count[5m])
 ```
 
-## Debugging Agent Behavior
+## Debugging agent behavior
 
-### Verbose Mode
+### Verbose mode
 
 Enable verbose logging to see the full prompt and response for each LLM call during development.
 
@@ -253,7 +253,7 @@ final agent:ChatAgent debugAgent = check new (
 
 Verbose logging outputs the complete system prompt, user message, tool calls, tool results, and final response at the `DEBUG` log level. Do not enable this in production, as it may log sensitive data.
 
-### Replay and Inspection
+### Replay and inspection
 
 Retrieve the full reasoning trace for a completed request.
 
@@ -269,7 +269,7 @@ foreach agent:TraceStep step in trace.steps {
 }
 ```
 
-## What's Next
+## What's next
 
 - [AI Agent Evaluations](/docs/genai/develop/agents/agent-evaluations) -- Test and measure agent quality
 - [Creating an AI Agent](/docs/genai/develop/agents/creating-agent) -- Build your first agent

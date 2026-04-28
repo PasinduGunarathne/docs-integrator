@@ -8,9 +8,9 @@ Once you have a working agent with tools and memory, you can tune its behavior w
 
 These configurations let you optimize agents for specific use cases, from deterministic data processing to creative content generation.
 
-## Model Parameters
+## Model parameters
 
-### Temperature and Sampling
+### Temperature and sampling
 
 Control how deterministic or creative the agent's responses are.
 
@@ -45,7 +45,7 @@ final agent:ChatAgent creativeAgent = check new (
 
 For most integration use cases, a temperature between 0.1 and 0.3 produces reliable, consistent results.
 
-### Maximum Iterations
+### Maximum iterations
 
 Limit the number of reason-act-observe loops the agent can perform per request. This prevents runaway chains where the agent keeps calling tools without converging on an answer.
 
@@ -60,7 +60,7 @@ final agent:ChatAgent boundedAgent = check new (
 
 If the agent reaches the iteration limit, it returns the best answer it has assembled so far along with a note that it could not complete all steps.
 
-### Timeout Configuration
+### Timeout configuration
 
 Set a maximum time for agent responses to prevent long-running requests from blocking your service.
 
@@ -73,11 +73,11 @@ final agent:ChatAgent timedAgent = check new (
 );
 ```
 
-## Tool Choice
+## Tool choice
 
 Control which tools the agent can use for a given request.
 
-### Auto Tool Choice
+### Auto tool choice
 
 The default behavior. The agent decides whether to call a tool or respond directly based on the user's message.
 
@@ -90,7 +90,7 @@ final agent:ChatAgent autoAgent = check new (
 );
 ```
 
-### Forced Tool Use
+### Forced tool use
 
 Force the agent to call a specific tool before responding. This is useful when you know the agent should always look up data before answering.
 
@@ -103,7 +103,7 @@ string response = check myAgent.chat(
 );
 ```
 
-### No Tool Use
+### No tool use
 
 Prevent the agent from calling any tools for a specific request. The agent responds using only its knowledge and conversation history.
 
@@ -115,7 +115,7 @@ string response = check myAgent.chat(
 );
 ```
 
-## Parallel Tool Calling
+## Parallel tool calling
 
 Allow the agent to call multiple tools simultaneously when they are independent. This reduces latency when the agent needs data from several sources.
 
@@ -130,9 +130,9 @@ final agent:ChatAgent parallelAgent = check new (
 
 When the user asks a question that requires data from multiple tools, the agent issues all tool calls at once rather than sequentially. For example, if the user asks about a customer's recent orders and open tickets, the agent calls `getOrderHistory` and `getTicketHistory` in parallel.
 
-## Multi-Agent Orchestration
+## Multi-Agent orchestration
 
-### Router Agent Pattern
+### Router agent pattern
 
 Use a top-level agent to route requests to specialized sub-agents based on the user's intent.
 
@@ -175,7 +175,7 @@ final agent:ChatAgent routerAgent = check new (
 );
 ```
 
-### Agent Handoff
+### Agent handoff
 
 Transfer a conversation from one agent to another while preserving context.
 
@@ -205,7 +205,7 @@ function handoff(
 }
 ```
 
-### Pipeline Agent Pattern
+### Pipeline agent pattern
 
 Chain agents sequentially where each agent's output feeds into the next.
 
@@ -222,7 +222,7 @@ function processDocument(string document) returns ProcessedResult|error {
 }
 ```
 
-## Exposing Agents as APIs
+## Exposing agents as APIs
 
 Expose an agent as a REST API with session management.
 
@@ -255,7 +255,7 @@ type MessageRequest record {|string message;|};
 type MessageResponse record {|string response;|};
 ```
 
-## What's Next
+## What's next
 
 - [Creating an AI Agent](/docs/genai/develop/agents/creating-agent) -- Build your first agent
 - [Adding Tools](/docs/genai/develop/agents/adding-tools) -- Define and register tools

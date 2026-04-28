@@ -747,7 +747,7 @@ bulk:Result[] results = check bulkClient->getBatchResults(job.id, batch.id);
 
 ---
 
-## Bulk V2 client
+## Bulk v2 client
 
 Bulk API v2 — simplified ingest and query jobs optimised for large-scale data loads.
 

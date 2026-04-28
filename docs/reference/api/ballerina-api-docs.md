@@ -6,9 +6,9 @@ title: Ballerina API Documentation
 
 Complete API documentation for all Ballerina standard library modules and extended modules is published on [Ballerina Central](https://central.ballerina.io). This page provides a categorized index of the most important modules used in integration development.
 
-## Standard Library Modules
+## Standard library modules
 
-### Network - Protocol Modules
+### Network - protocol modules
 
 | Module | Description | API Docs |
 |--------|-------------|----------|
@@ -23,7 +23,7 @@ Complete API documentation for all Ballerina standard library modules and extend
 | `ballerina/ftp` | FTP client and listener | [API Docs](https://central.ballerina.io/ballerina/ftp/latest) |
 | `ballerina/email` | SMTP, POP3, and IMAP email support | [API Docs](https://central.ballerina.io/ballerina/email/latest) |
 
-### Network - Messaging Modules
+### Network - messaging modules
 
 | Module | Description | API Docs |
 |--------|-------------|----------|
@@ -35,7 +35,7 @@ Complete API documentation for all Ballerina standard library modules and extend
 | `ballerinax/mqtt` | MQTT client and listener | [API Docs](https://central.ballerina.io/ballerinax/mqtt/latest) |
 | `ballerinax/asb` | Azure Service Bus client | [API Docs](https://central.ballerina.io/ballerinax/asb/latest) |
 
-### Database Modules
+### Database modules
 
 | Module | Description | API Docs |
 |--------|-------------|----------|
@@ -46,7 +46,7 @@ Complete API documentation for all Ballerina standard library modules and extend
 | `ballerinax/oracledb` | Oracle Database client | [API Docs](https://central.ballerina.io/ballerinax/oracledb/latest) |
 | `ballerina/persist` | Data persistence layer | [API Docs](https://central.ballerina.io/ballerina/persist/latest) |
 
-### Data Handling Modules
+### Data handling modules
 
 | Module | Description | API Docs |
 |--------|-------------|----------|
@@ -62,7 +62,7 @@ Complete API documentation for all Ballerina standard library modules and extend
 | `ballerinax/health.hl7v2` | HL7 v2 message processing | [API Docs](https://central.ballerina.io/ballerinax/health.hl7v2/latest) |
 | `ballerinax/health.fhir.r4` | FHIR R4 resource types | [API Docs](https://central.ballerina.io/ballerinax/health.fhir.r4/latest) |
 
-### Security Modules
+### Security modules
 
 | Module | Description | API Docs |
 |--------|-------------|----------|
@@ -71,7 +71,7 @@ Complete API documentation for all Ballerina standard library modules and extend
 | `ballerina/oauth2` | OAuth 2.0 client support | [API Docs](https://central.ballerina.io/ballerina/oauth2/latest) |
 | `ballerina/crypto` | Cryptographic operations | [API Docs](https://central.ballerina.io/ballerina/crypto/latest) |
 
-### Utility Modules
+### Utility modules
 
 | Module | Description | API Docs |
 |--------|-------------|----------|
@@ -84,7 +84,7 @@ Complete API documentation for all Ballerina standard library modules and extend
 | `ballerina/os` | Operating system utilities | [API Docs](https://central.ballerina.io/ballerina/os/latest) |
 | `ballerina/lang.runtime` | Runtime management | [API Docs](https://central.ballerina.io/ballerina/lang.runtime/latest) |
 
-### Observability Modules
+### Observability modules
 
 | Module | Description | API Docs |
 |--------|-------------|----------|
@@ -92,7 +92,7 @@ Complete API documentation for all Ballerina standard library modules and extend
 | `ballerinax/prometheus` | Prometheus metrics | [API Docs](https://central.ballerina.io/ballerinax/prometheus/latest) |
 | `ballerinax/jaeger` | Jaeger distributed tracing | [API Docs](https://central.ballerina.io/ballerinax/jaeger/latest) |
 
-### Cloud and SaaS Connector Modules
+### Cloud and SaaS connector modules
 
 | Module | Description | API Docs |
 |--------|-------------|----------|
@@ -106,7 +106,7 @@ Complete API documentation for all Ballerina standard library modules and extend
 | `ballerinax/aws.sqs` | AWS SQS messaging | [API Docs](https://central.ballerina.io/ballerinax/aws.sqs/latest) |
 | `ballerinax/azure.functions` | Azure Functions integration | [API Docs](https://central.ballerina.io/ballerinax/azure.functions/latest) |
 
-### AI and LLM Modules
+### AI and LLM modules
 
 | Module | Description | API Docs |
 |--------|-------------|----------|
@@ -115,16 +115,16 @@ Complete API documentation for all Ballerina standard library modules and extend
 | `ballerinax/openai.embeddings` | OpenAI Embeddings API client | [API Docs](https://central.ballerina.io/ballerinax/openai.embeddings/latest) |
 | `ballerinax/azure.openai` | Azure OpenAI client | [API Docs](https://central.ballerina.io/ballerinax/azure.openai/latest) |
 
-## Browsing API Docs
+## Browsing API docs
 
-### On Ballerina Central
+### On Ballerina central
 
 1. Go to [central.ballerina.io](https://central.ballerina.io)
 2. Use the search bar to find a module by name or keyword
 3. Filter by organization (`ballerina` for standard library, `ballerinax` for extended modules)
 4. Select a module to view its API documentation, including types, functions, classes, and examples
 
-### In VS Code
+### In VS code
 
 The WSO2 Integrator VS Code extension provides inline API documentation:
 
@@ -132,7 +132,7 @@ The WSO2 Integrator VS Code extension provides inline API documentation:
 - Use `Ctrl+Click` (or `Cmd+Click` on macOS) on a function or type to navigate to its definition
 - Use the command palette (`Ctrl+Shift+P`) and search for "Ballerina: Show API Docs"
 
-## See Also
+## See also
 
 - [Standard Library Functions](/docs/reference/language/stdlib) -- Functions by category
 - [Protocols Reference](/docs/reference/protocols) -- Supported protocols and modules

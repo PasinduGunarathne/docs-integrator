@@ -13,14 +13,14 @@ This quick start walks you through the core agent pattern in WSO2 Integrator: de
 - [WSO2 Integrator VS Code extension installed](/docs/get-started/install)
 - An API key for an LLM provider (OpenAI, Anthropic, Google, or Azure)
 
-## What You'll Build
+## What you'll build
 
 A customer support agent that can:
 - Answer questions about order status
 - Look up product information using a tool
 - Maintain conversation context across multiple turns
 
-## Step 1: Create a New Project
+## Step 1: Create a new project
 
 Create a new integration project and add the AI dependencies.
 
@@ -45,7 +45,7 @@ name = "openai.chat"
 version = "1.0.0"
 ```
 
-## Step 2: Define Tools
+## Step 2: Define tools
 
 Tools are Ballerina functions that the agent can call. Each tool has a description that helps the LLM decide when to use it.
 
@@ -82,7 +82,7 @@ isolated function searchProducts(string query) returns json|error {
 }
 ```
 
-## Step 3: Configure the Agent
+## Step 3: Configure the agent
 
 Create the agent with a system prompt, model connection, and the tools you defined.
 
@@ -102,7 +102,7 @@ final agent:ChatAgent supportAgent = check new (
 );
 ```
 
-## Step 4: Expose as a Chat Endpoint
+## Step 4: Expose as a chat endpoint
 
 Create an HTTP service that accepts chat messages and returns agent responses.
 
@@ -127,7 +127,7 @@ type ChatResponse record {|
 |};
 ```
 
-## Step 5: Run and Test
+## Step 5: Run and test
 
 1. Add your API key to `Config.toml`:
 
@@ -157,7 +157,7 @@ curl -X POST http://localhost:8090/support/chat \
 
 The agent will use the `getOrderStatus` tool to look up the order and respond with the status. On the follow-up, it remembers the conversation context and understands "And what about" refers to another order.
 
-## How It Works
+## How it works
 
 The agent follows a **reason-act-observe** loop:
 
@@ -169,7 +169,7 @@ The agent follows a **reason-act-observe** loop:
 
 The memory component keeps track of previous messages so the agent maintains context across turns.
 
-## What's Next
+## What's next
 
 - [Agent Architecture & Concepts](/docs/genai/agents/architecture-concepts) — Understand the full agent loop in depth
 - [Tool Binding](/docs/genai/agents/tool-binding) — Advanced tool patterns and function calling

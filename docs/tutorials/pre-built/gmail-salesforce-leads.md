@@ -13,7 +13,7 @@ Automatically parse incoming Gmail messages using OpenAI to extract lead informa
 - OpenAI API key with access to GPT-4 or GPT-3.5
 - Salesforce developer account with a connected app and OAuth 2.0 credentials
 
-## Quick Run
+## Quick run
 
 ```bash
 # Clone the samples repository
@@ -51,9 +51,9 @@ refreshToken = "<SF_REFRESH_TOKEN>"
 baseUrl = "https://your-instance.salesforce.com"
 ```
 
-## Code Walkthrough
+## Code walkthrough
 
-### Project Structure
+### Project structure
 
 ```
 gmail-to-salesforce-leads/
@@ -67,7 +67,7 @@ gmail-to-salesforce-leads/
 └── types.bal
 ```
 
-### Defining the Data Types
+### Defining the data types
 
 ```ballerina
 // Extracted lead information from OpenAI parsing
@@ -95,7 +95,7 @@ type SalesforceLead record {|
 |};
 ```
 
-### Monitoring Gmail for New Messages
+### Monitoring Gmail for new messages
 
 ```ballerina
 import ballerinax/googleapis.gmail;
@@ -126,7 +126,7 @@ function markAsRead(string messageId) returns error? {
 }
 ```
 
-### Parsing Emails with OpenAI
+### Parsing emails with OpenAI
 
 The `openai_parser.bal` file sends the email body to OpenAI with a structured prompt to extract lead information:
 
@@ -186,7 +186,7 @@ function parseEmailForLead(string subject, string body, string senderEmail) retu
 }
 ```
 
-### Creating the Salesforce Lead
+### Creating the Salesforce lead
 
 ```ballerina
 import ballerinax/salesforce;
@@ -215,7 +215,7 @@ function createSalesforceLead(ParsedLead parsed) returns error? {
 }
 ```
 
-### Orchestrating the Flow
+### Orchestrating the flow
 
 ```ballerina
 import ballerina/task;
@@ -260,21 +260,21 @@ function processNewEmails() returns error? {
 }
 ```
 
-### Key Points
+### Key points
 
 - **AI-powered extraction**: OpenAI parses unstructured email text into structured lead data, handling variations in email format and content.
 - **Structured JSON output**: The `response_format` parameter ensures OpenAI returns valid JSON, reducing parsing errors.
 - **Idempotent processing**: Emails are marked as read after successful processing to prevent duplicate lead creation.
 - **Graceful error handling**: If OpenAI cannot parse a lead from an email, the error is logged and the email is skipped rather than failing the entire batch.
 
-## Customization Notes
+## Customization notes
 
 - **Adjust the Gmail filter**: Modify `queryFilter` to match different subjects, labels, or senders relevant to your lead capture workflow.
 - **Use a different LLM**: Replace the OpenAI connector with the Anthropic or Azure OpenAI connector for alternative model providers.
 - **Add lead scoring**: Extend the OpenAI prompt to include a lead quality score (1-10) and map it to a Salesforce custom field.
 - **Duplicate detection**: Before creating a lead, query Salesforce to check if a lead with the same email already exists, and update it instead.
 
-## What's Next
+## What's next
 
 - [Google Sheets to Salesforce Contacts](google-sheets-salesforce.md) -- Sync spreadsheet rows to CRM contacts
 - [Salesforce to Twilio SMS](salesforce-twilio-sms.md) -- Send SMS notifications on Salesforce events

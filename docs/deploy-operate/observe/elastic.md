@@ -23,7 +23,7 @@ Ballerina Integration ──▶ Log Files ──▶ Filebeat ──▶ Elasticse
                          (optional) ──▶ Logstash ─┘
 ```
 
-## Step 1 -- Configure Ballerina Logging
+## Step 1 -- configure Ballerina logging
 
 Enable structured JSON logging in `Config.toml`:
 
@@ -61,7 +61,7 @@ service /api on new http:Listener(9090) {
 }
 ```
 
-## Step 2 -- Install and Configure Filebeat
+## Step 2 -- install and configure filebeat
 
 Install Filebeat to ship logs to Elasticsearch:
 
@@ -99,7 +99,7 @@ Start Filebeat:
 ./filebeat -e
 ```
 
-## Step 3 -- Configure Logstash (Optional)
+## Step 3 -- configure Logstash (Optional)
 
 For advanced log processing, use Logstash between Filebeat and Elasticsearch:
 
@@ -131,15 +131,15 @@ output {
 }
 ```
 
-## Step 4 -- Create Kibana Dashboards
+## Step 4 -- create Kibana dashboards
 
-### Index Pattern
+### Index pattern
 
 1. Open Kibana and navigate to **Stack Management** > **Index Patterns**.
 2. Create a pattern: `ballerina-integrations-*`.
 3. Select `@timestamp` as the time field.
 
-### Useful Visualizations
+### Useful visualizations
 
 | Visualization | Type | Description |
 |---------------|------|-------------|
@@ -148,7 +148,7 @@ output {
 | Service Map | Pie chart | Log distribution by service |
 | Response Times | Line chart | Average response duration over time |
 
-### Sample KQL Queries
+### Sample KQL queries
 
 | Query | Purpose |
 |-------|---------|
@@ -156,7 +156,7 @@ output {
 | `service: "order-service" AND orderId: "ORD-123"` | Trace a specific order |
 | `level: "ERROR" AND NOT message: "timeout"` | Errors excluding timeouts |
 
-## Docker Compose Setup
+## Docker compose setup
 
 ```yaml
 version: "3.8"
@@ -192,7 +192,7 @@ volumes:
   es-data:
 ```
 
-## What's Next
+## What's next
 
 - [OpenSearch](opensearch.md) -- Alternative open-source search and analytics
 - [Logging & Structured Logs](logging.md) -- Configure Ballerina logging

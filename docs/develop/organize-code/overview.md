@@ -6,14 +6,14 @@ title: Organize Code
 
 Structure your integrations for maintainability, reuse, and team collaboration. This section covers how to organize Ballerina packages and modules, manage dependencies, enforce coding standards, and generate documentation for your integration projects.
 
-## Package & Module Structure
+## Package & module structure
 
 - [Packages & Modules](packages-modules.md) -- Understand the Ballerina package and module hierarchy
 - [Package References & Imports](package-references.md) -- Import and use packages from Ballerina Central and local sources
 - [Manage Dependencies](manage-dependencies.md) -- Work with Dependencies.toml and version management
 - [Workspaces](workspaces.md) -- Organize multi-package projects with workspaces
 
-## Code Quality
+## Code quality
 
 - [Style Guide](style-guide.md) -- Follow Ballerina coding conventions and naming standards
 - [Static Code Analysis](static-code-analysis.md) -- Detect issues early with the `bal scan` tool
@@ -22,7 +22,7 @@ Structure your integrations for maintainability, reuse, and team collaboration. 
 
 - [Generate Documentation](generate-documentation.md) -- Create API documentation from your source code
 
-## Quick Reference: Project Layout
+## Quick reference: Project layout
 
 A well-organized Ballerina integration project follows this structure:
 
@@ -58,7 +58,7 @@ my-integration/
         └── ci.yml            # CI/CD pipeline
 ```
 
-## When to Split Code
+## When to split code
 
 | Signal | Action |
 |--------|--------|
@@ -68,6 +68,6 @@ my-integration/
 | Code could be reused in other projects | Create a separate package and publish to Central |
 | Tests need different setup/teardown | Use test groups and separate test files |
 
-## What's Next
+## What's next
 
 Start with [Packages & Modules](packages-modules.md) to understand the fundamental building blocks of Ballerina project organization.

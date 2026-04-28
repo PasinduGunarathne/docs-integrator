@@ -8,7 +8,7 @@ Multi-agent orchestration lets you decompose complex problems into specialized a
 
 This approach improves reliability, makes debugging easier, and lets you assign different models or configurations to different subtasks.
 
-## Why Multiple Agents?
+## Why multiple agents?
 
 A single agent with dozens of tools becomes unpredictable. Multi-agent architectures solve this by:
 
@@ -17,9 +17,9 @@ A single agent with dozens of tools becomes unpredictable. Multi-agent architect
 - **Isolation** — Errors in one agent don't cascade to others
 - **Maintainability** — Update or replace individual agents without affecting the system
 
-## Orchestration Patterns
+## Orchestration patterns
 
-### Router Pattern
+### Router pattern
 
 A router agent analyzes the incoming request and delegates to the appropriate specialist agent.
 
@@ -79,7 +79,7 @@ function routeAndRespond(string message, string sessionId) returns string|error 
 }
 ```
 
-### Pipeline Pattern
+### Pipeline pattern
 
 Agents process a request sequentially, each building on the previous agent's output.
 
@@ -139,7 +139,7 @@ function handleSupportRequest(string message, string sessionId) returns string|e
 }
 ```
 
-### Supervisor Pattern
+### Supervisor pattern
 
 A supervisor agent coordinates multiple workers and synthesizes their results.
 
@@ -180,7 +180,7 @@ isolated function delegateToResearch(string query) returns string|error {
 }
 ```
 
-### Parallel Fan-Out Pattern
+### Parallel Fan-Out pattern
 
 Send the same request to multiple agents simultaneously and combine the results.
 
@@ -212,9 +212,9 @@ type CombinedAnalysis record {|
 |};
 ```
 
-## Agent Communication
+## Agent communication
 
-### Shared Context
+### Shared context
 
 Pass context between agents through structured handoff messages.
 
@@ -248,7 +248,7 @@ function escalateWithContext(string sessionId, string targetAgent) returns error
 }
 ```
 
-## Choosing the Right Pattern
+## Choosing the right pattern
 
 | Pattern | Use Case | Complexity |
 |---------|----------|------------|
@@ -257,7 +257,7 @@ function escalateWithContext(string sessionId, string targetAgent) returns error
 | **Supervisor** | Complex requests needing multiple specialists | Medium-High |
 | **Parallel Fan-Out** | Independent analyses of the same data | Medium |
 
-## What's Next
+## What's next
 
 - [Natural Functions](natural-functions.md) — LLM-powered typed function calls
 - [Agent Tracing](/docs/genai/agent-observability/agent-tracing) — Trace multi-agent interactions

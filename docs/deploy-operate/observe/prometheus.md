@@ -14,7 +14,7 @@ Prometheus is an open-source monitoring system that collects time-series metrics
 | Ballerina | Built with `--observability-included` |
 | Network | Prometheus must be able to reach the metrics endpoint |
 
-## Step 1 -- Enable Prometheus Metrics
+## Step 1 -- enable Prometheus metrics
 
 Build your integration with observability:
 
@@ -36,7 +36,7 @@ host = "0.0.0.0"
 
 The metrics endpoint is now available at `http://<host>:9797/metrics`.
 
-## Step 2 -- Configure Prometheus
+## Step 2 -- configure Prometheus
 
 Add a scrape target to your `prometheus.yml`:
 
@@ -55,7 +55,7 @@ scrape_configs:
           service: "order-service"
 ```
 
-### Kubernetes Service Discovery
+### Kubernetes service discovery
 
 For Kubernetes deployments, use service discovery:
 
@@ -85,7 +85,7 @@ metadata:
     prometheus.io/path: "/metrics"
 ```
 
-## Step 3 -- Verify Metrics Collection
+## Step 3 -- verify metrics collection
 
 Query Prometheus to verify metrics are being collected:
 
@@ -108,7 +108,7 @@ http_request_duration_seconds_bucket{le="0.01"} 1450
 http_request_duration_seconds_bucket{le="0.025"} 1800
 ```
 
-## Default Metrics Reference
+## Default metrics reference
 
 | Metric | Type | Labels | Description |
 |--------|------|--------|-------------|
@@ -121,7 +121,7 @@ http_request_duration_seconds_bucket{le="0.025"} 1800
 | `ballerina_sql_query_duration_seconds` | Histogram | query_type | Database query latency |
 | `ballerina_sql_active_connections` | Gauge | pool_name | Active DB connections |
 
-## Custom Metrics
+## Custom metrics
 
 Define custom metrics in your Ballerina code:
 
@@ -152,7 +152,7 @@ service /api on new http:Listener(9090) {
 }
 ```
 
-## Alerting Rules
+## Alerting rules
 
 Create Prometheus alerting rules for your integrations:
 
@@ -177,7 +177,7 @@ groups:
           summary: "High p95 latency on {{ $labels.resource }}"
 ```
 
-## What's Next
+## What's next
 
 - [Grafana](grafana.md) -- Visualize Prometheus metrics with dashboards
 - [Observability Overview](overview.md) -- Full observability architecture

@@ -21,11 +21,11 @@ flowchart LR
 - Access to an SAP S/4HANA system with the Sales Order Simulation API enabled
 - SAP hostname and authentication token
 
-## Setting up the SAP S/4HANA API Sales Order Simulation integration
+## Setting up the SAP S/4HANA API sales order simulation integration
 
 > **New to WSO2 Integrator?** Follow the [Create a New Integration](../../../../develop/create-integrations/create-new-integration.md) guide to set up your integration first, then return here to add the connector.
 
-## Adding the SAP S/4HANA API Sales Order Simulation connector
+## Adding the SAP S/4HANA API sales order simulation connector
 
 ### Step 1: Open the connector palette
 
@@ -33,7 +33,7 @@ In the WSO2 Integrator sidebar, select **Add Artifact** to open the connector pa
 
 ![SAP S/4HANA connector palette open with search field before any selection](/img/connectors/catalog/erp-business/sap.s4hana.api-sales-order-simulation-srv/sap_s4hana_apisalesordersimulationsrv_screenshot_01_palette.png)
 
-## Configuring the SAP S/4HANA API Sales Order Simulation connection
+## Configuring the SAP S/4HANA API sales order simulation connection
 
 ### Step 2: Fill in the connection parameters
 
@@ -58,7 +58,7 @@ Select **Save** to create the connection. The connector appears as `apiSalesOrde
 - **sapHostname** (string) : The SAP S/4HANA server hostname
 - **sapAuthToken** (string) : The authentication token for SAP access
 
-## Configuring the SAP S/4HANA API Sales Order Simulation Create A Sales Order Simulation operation
+## Configuring the SAP S/4HANA API sales order simulation create a sales order simulation operation
 
 ### Step 5: Add an automation entry point
 
@@ -66,7 +66,7 @@ Select **Save** to create the connection. The connector appears as `apiSalesOrde
 2. Select **Automation** as the entry point type.
 3. Enter the name `main` and select **Create**.
 
-### Step 6: Select and configure the Create A Sales Order Simulation operation
+### Step 6: Select and configure the create a sales order simulation operation
 
 Select the **+** button in the automation flow to open the node selection panel. Under **Connections**, expand `apiSalesOrderSimulationSrvClient` to reveal available operations, then select **Create A Sales Order Simulation** and configure its parameters:
 

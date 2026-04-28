@@ -2,7 +2,7 @@
 title: Migration tools
 ---
 
-# Migration tools
+# Migration Tools
 
 WSO2 Integrator provides migration tools that help you move existing integrations from other platforms to WSO2 Integrator. The tools analyze your existing integration artifacts, generate equivalent Ballerina code, and produce a migration report highlighting items that require manual attention.
 

@@ -61,7 +61,7 @@ Select **Save** to create the connection. The canvas updates to show the `ceSale
 
 ## Configuring the sap.s4hana.ce_salesorder_0001 listSalesOrders operation
 
-### Step 5: Add an Automation entry point
+### Step 5: Add an automation entry point
 
 In the project overview canvas, select **Add Entry Point**, choose **Automation** as the entry point type, and keep the default name `main`. Select **Save** to create the Automation entry point. The canvas shows an empty automation flow with a **Start** node.
 

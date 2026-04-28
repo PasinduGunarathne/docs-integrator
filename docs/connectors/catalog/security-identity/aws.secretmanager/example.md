@@ -28,7 +28,7 @@ flowchart LR
 
 ## Adding the aws.secretmanager connector
 
-### Step 1: Open the Add Connection palette
+### Step 1: Open the add connection palette
 
 Select **+ Add Connection** in the Connections section of the low-code canvas sidebar to open the connector search palette.
 ![Connector palette open showing search field and connector list](/img/connectors/catalog/security-identity/aws.secretmanager/aws_secretmanager_screenshot_01_palette.png)
@@ -66,7 +66,7 @@ In the left panel of WSO2 Integrator, select **Configurations** (listed at the b
 
 ## Configuring the aws.secretmanager getSecretValue operation
 
-### Step 6: Add an Automation entry point
+### Step 6: Add an automation entry point
 
 1. On the low-code canvas, select **+ Add Artifact** and select **Automation** to add a new Automation entry point.
 2. In the **Create New Automation** dialog, select **Create** to accept defaults.

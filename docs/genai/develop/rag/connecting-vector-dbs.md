@@ -6,7 +6,7 @@ title: Connecting to Vector Databases
 
 Vector databases store and index high-dimensional embeddings for fast similarity search. They are the backbone of any RAG pipeline, enabling your application to find relevant document chunks in milliseconds.
 
-## Supported Vector Databases
+## Supported vector databases
 
 | Database | Type | Transport | Best For |
 |----------|------|-----------|----------|
@@ -149,7 +149,7 @@ function searchSimilar(float[] queryEmbedding, int topK = 5) returns DocumentChu
 }
 ```
 
-## Choosing a Vector Database
+## Choosing a vector database
 
 | Factor | ChromaDB | Pinecone | Weaviate | pgvector | Qdrant |
 |--------|----------|----------|----------|----------|--------|
@@ -160,7 +160,7 @@ function searchSimilar(float[] queryEmbedding, int topK = 5) returns DocumentChu
 | **Cost** | Free | Pay-per-use | Free/Pay | Free | Free/Pay |
 | **Best for** | Dev/small | Production | Flexible | Existing Postgres | Performance |
 
-## What's Next
+## What's next
 
 - [Chunking Documents](/docs/genai/develop/rag/chunking-documents) -- Chunking strategies for RAG
 - [Generating Embeddings](/docs/genai/develop/rag/generating-embeddings) -- Embedding model selection

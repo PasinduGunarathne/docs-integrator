@@ -4,7 +4,7 @@ title: GraphQL
 
 GraphQL is a query language and server-side runtime for APIs that lets clients request exactly the data they need. The Ballerina `ballerina/graphql` module (v1.17.0) provides both a full-featured GraphQL server framework with automatic schema generation from Ballerina service definitions, and a GraphQL client for sending queries and mutations to external GraphQL endpoints.
 
-## Key Features
+## Key features
 
 - Automatic GraphQL schema generation from Ballerina service definitions — no separate SDL required
 - Support for all three GraphQL operation types: queries, mutations, and subscriptions (over WebSocket)

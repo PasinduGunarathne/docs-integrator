@@ -9,7 +9,7 @@ title: Database
 | Connector | Description | Operations | Authentication |
 |-----------|-------------|------------|----------------|
 | [AWS Redshift](aws.redshift/overview.md) | Cloud data warehouse with SQL queries, batch operations, and stored procedure support | Query, Execute, Batch Execute, Call | Username/Password |
-| [AWS Redshift Data](aws.redshiftdata/overview.md) | Data warehouse with async SQL execution, batch operations, and streamed result retrieval via the Redshift Data API | Execute, Batch Execute, Query, Describe | AWS Access Key / IAM Role |
+| [AWS Redshift data](aws.redshiftdata/overview.md) | Data warehouse with async SQL execution, batch operations, and streamed result retrieval via the Redshift data API | Execute, Batch Execute, Query, Describe | AWS Access Key / IAM Role |
 | [CDC](cdc/overview.md) | Change Data Capture framework for streaming real-time database row changes (MySQL, PostgreSQL, MSSQL, Oracle) | Snapshot Read, Insert, Update, Delete, Truncate | Database Credentials |
 | [Java JDBC](java.jdbc/overview.md) | Generic JDBC database connectivity with queries, DML, batch operations, and stored procedures | Query, Insert, Update, Delete, Batch Execute, Call Procedures | Username/Password |
 | [MongoDB](mongodb/overview.md) | Document database with CRUD, aggregation pipelines, and index management | Insert, Find, Update, Delete, Aggregate, Index | SCRAM-SHA-256 / Connection String |

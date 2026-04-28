@@ -14,7 +14,7 @@ Zipkin is a distributed tracing system that helps gather timing data for trouble
 | Ballerina | Built with `--observability-included` |
 | Network | Integration must reach the Zipkin collector endpoint |
 
-## Step 1 -- Start Zipkin
+## Step 1 -- start Zipkin
 
 Run Zipkin using Docker:
 
@@ -26,7 +26,7 @@ docker run -d --name zipkin \
 
 The Zipkin UI is available at `http://localhost:9411`.
 
-## Step 2 -- Configure Ballerina for Zipkin
+## Step 2 -- configure Ballerina for Zipkin
 
 Build with observability:
 
@@ -46,7 +46,7 @@ reporterHostname = "localhost"
 reporterPort = 9411
 ```
 
-### Configuration Options
+### Configuration options
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
@@ -55,13 +55,13 @@ reporterPort = 9411
 | `samplerType` | string | `"const"` | Sampling strategy |
 | `samplerParam` | float | `1.0` | Sampler parameter |
 
-## Step 3 -- View Traces
+## Step 3 -- view traces
 
 1. Open the Zipkin UI at `http://localhost:9411`.
 2. Click **Run Query** to find recent traces.
 3. Click a trace to view the span timeline.
 
-### Trace Visualization
+### Trace visualization
 
 Zipkin displays traces as a timeline of spans:
 
@@ -70,7 +70,7 @@ Zipkin displays traces as a timeline of spans:
 - **Duration**: Time taken for the operation
 - **Annotations**: Client send/receive, server send/receive timestamps
 
-## Adding Custom Spans
+## Adding custom spans
 
 Use the Ballerina observe module to create custom spans:
 
@@ -90,7 +90,7 @@ function enrichOrder(json order) returns json|error {
 }
 ```
 
-## Docker Compose Setup
+## Docker compose setup
 
 Run your integration with Zipkin in a single compose file:
 
@@ -113,7 +113,7 @@ services:
       - zipkin
 ```
 
-## Zipkin with Elasticsearch Storage
+## Zipkin with Elasticsearch storage
 
 For production, use Elasticsearch as the Zipkin storage backend:
 
@@ -125,7 +125,7 @@ docker run -d --name zipkin \
   openzipkin/zipkin:latest
 ```
 
-## What's Next
+## What's next
 
 - [Jaeger](jaeger.md) -- Alternative distributed tracing with Jaeger
 - [Elastic Stack](elastic.md) -- Use Elasticsearch for trace storage and log aggregation

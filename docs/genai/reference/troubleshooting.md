@@ -6,7 +6,7 @@ title: Troubleshooting and Common Issues
 
 This page covers common issues encountered when building AI integrations with WSO2 Integrator, along with their solutions.
 
-## LLM Provider Issues
+## LLM provider issues
 
 | Issue | Cause | Solution |
 |---|---|---|
@@ -17,7 +17,7 @@ This page covers common issues encountered when building AI integrations with WS
 | Slow responses from LLM | Model overloaded or large context | Use a smaller model for simple tasks; reduce context window size |
 | `context_length_exceeded` | Input + output exceeds model limit | Reduce conversation history; use summarization memory; trim system prompt |
 
-## Agent Issues
+## Agent issues
 
 | Issue | Cause | Solution |
 |---|---|---|
@@ -27,7 +27,7 @@ This page covers common issues encountered when building AI integrations with WS
 | Agent returns empty response | Tool returned an error the agent cannot recover from | Improve error handling in tool functions; return helpful error messages |
 | Memory not persisting | Session ID not consistent | Ensure the same session ID is used across requests for the same conversation |
 
-## RAG Issues
+## RAG issues
 
 | Issue | Cause | Solution |
 |---|---|---|
@@ -37,7 +37,7 @@ This page covers common issues encountered when building AI integrations with WS
 | Irrelevant results | Embedding model mismatch | Use the same embedding model for both ingestion and queries |
 | Out of memory during ingestion | Processing too many documents at once | Batch document processing; use streaming for large files |
 
-## MCP Issues
+## MCP issues
 
 | Issue | Cause | Solution |
 |---|---|---|
@@ -46,7 +46,7 @@ This page covers common issues encountered when building AI integrations with WS
 | Tool calls fail silently | MCP tool returns error | Add error logging in MCP tool implementations |
 | AI assistant can't find tools | Tool descriptions missing | Add `@mcp:Tool` annotations with clear descriptions |
 
-## Memory Issues
+## Memory issues
 
 | Issue | Cause | Solution |
 |---|---|---|
@@ -55,7 +55,7 @@ This page covers common issues encountered when building AI integrations with WS
 | Token limit exceeded with memory | Too many messages in history | Use `TokenWindowChatMemory` with a token budget |
 | Conversations mixing between users | Session IDs not unique | Generate unique session IDs per user/conversation |
 
-## Build and Runtime Errors
+## Build and runtime errors
 
 | Issue | Cause | Solution |
 |---|---|---|
@@ -63,13 +63,13 @@ This page covers common issues encountered when building AI integrations with WS
 | `Incompatible types` in tool functions | Tool return type mismatch | Ensure tool functions return types compatible with the agent |
 | `Config variable not found` | Missing `Config.toml` entry | Add required config variables with `configurable string apiKey = ?;` |
 
-## Getting Help
+## Getting help
 
 - Check the [WSO2 Community Forums](https://community.wso2.com) for community support
 - File issues on the [WSO2 Integrator GitHub repository](https://github.com/wso2/integrator)
 - Review the [Ballerina AI module documentation](https://central.ballerina.io/ballerinax/ai.agent/latest)
 
-## What's Next
+## What's next
 
 - [AI Governance and Security](ai-governance.md) — Compliance and data handling
 - [Ballerina Copilot Guide](copilot-guide.md) — AI-assisted development

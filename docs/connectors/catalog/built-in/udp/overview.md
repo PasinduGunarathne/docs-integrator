@@ -4,7 +4,7 @@ title: UDP
 
 UDP (User Datagram Protocol) is a lightweight, connectionless transport protocol commonly used for low-latency communication such as streaming, DNS lookups, and IoT messaging. The Ballerina `ballerina/udp` connector (v1.13.3) provides both connectionless and connection-oriented UDP clients for sending and receiving datagrams, as well as a listener for building event-driven UDP services.
 
-## Key Features
+## Key features
 
 - Connectionless UDP communication via `udp:Client` for sending and receiving datagrams to/from any remote host
 - Connection-oriented UDP communication via `udp:ConnectClient` for persistent host-to-host byte transfer

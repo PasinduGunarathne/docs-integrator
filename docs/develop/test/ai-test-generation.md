@@ -4,7 +4,7 @@ title: AI-Generated Test Cases
 
 Let AI analyze your integration code and generate test cases automatically. WSO2 Integrator uses AI to produce Ballerina test functions based on your service definitions, resource functions, and data transformation logic.
 
-## How AI Test Generation Works
+## How AI test generation works
 
 The AI test generation feature reads your Ballerina source code and performs the following analysis:
 
@@ -15,7 +15,7 @@ The AI test generation feature reads your Ballerina source code and performs the
 
 The generated tests use the standard `ballerina/test` framework, so they integrate directly with the existing test runner and CLI.
 
-## Generating Tests for a Service
+## Generating tests for a service
 
 ### Step 1: Open your service
 
@@ -88,11 +88,11 @@ function testCreateOrderEmptyPayload() returns error? {
 }
 ```
 
-## Reviewing and Customizing Generated Tests
+## Reviewing and customizing generated tests
 
 AI-generated tests are a starting point, not a finished product. Review each generated test for the following:
 
-### Verify Assertions
+### Verify assertions
 
 Check that assertions match your actual business logic. The AI infers expected values from your code, but it may not capture all domain-specific rules.
 
@@ -105,7 +105,7 @@ test:assertTrue(response.orderId.toString().startsWith("ORD-"));
 test:assertEquals(response.item, "Widget");
 ```
 
-### Add Edge Cases
+### Add edge cases
 
 The AI covers common patterns, but you should add tests for edge cases specific to your integration:
 
@@ -114,7 +114,7 @@ The AI covers common patterns, but you should add tests for edge cases specific 
 - Timeout scenarios for external service calls.
 - Concurrent request handling.
 
-### Adjust Mock Behavior
+### Adjust mock behavior
 
 If the AI generated mock stubs, verify they return realistic data. Update mock return values to match your actual backend responses.
 
@@ -124,7 +124,7 @@ test:prepare(backendClient).when("get")
     .thenReturn({customerId: "C-100", name: "Jane Doe", tier: "premium"});
 ```
 
-### Rename Test Functions
+### Rename test functions
 
 The AI generates functional but sometimes generic names. Rename them to describe the specific scenario being tested.
 
@@ -136,7 +136,7 @@ function testPostOrders() returns error? { ... }
 function testCreateOrderWithValidPayloadReturnsCreated() returns error? { ... }
 ```
 
-## Generating Tests for Data Transformations
+## Generating tests for data transformations
 
 AI test generation is particularly effective for data transformation functions, where input and output types are clearly defined.
 
@@ -152,7 +152,7 @@ function transformOrder(json input) returns xml|error {
 
 The AI generates test cases covering valid inputs, missing fields, and type mismatches -- ensuring your transformation handles diverse payloads.
 
-## Coverage Analysis
+## Coverage analysis
 
 After generating tests, run them with code coverage enabled to see what percentage of your source code the AI tests cover.
 
@@ -168,7 +168,7 @@ Review the coverage report at `target/report/test_results.html` to identify gaps
 
 Use the coverage report to guide where you write additional manual tests to complement the AI-generated suite.
 
-## Best Practices
+## Best practices
 
 - **Generate first, then refine** -- use AI tests as scaffolding and add domain-specific assertions.
 - **Do not commit generated tests without review** -- always verify that assertions are correct and meaningful.
@@ -176,7 +176,7 @@ Use the coverage report to guide where you write additional manual tests to comp
 - **Combine with manual tests** -- AI covers breadth; manually written tests cover depth for critical business logic.
 - **Tag generated tests** -- use test groups like `"ai-generated"` to distinguish them from hand-written tests.
 
-## What's Next
+## What's next
 
 - [Debugging](/docs/develop/debugging/editor-debugging) -- Debug failing tests step-by-step
 - [Code Coverage](code-coverage.md) -- Measure and improve test coverage

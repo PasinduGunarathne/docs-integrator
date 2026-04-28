@@ -8,7 +8,7 @@ Ready-to-run integration samples built with Ballerina that connect popular SaaS 
 
 These samples are sourced from the [Ballerina Integrator](https://github.com/ballerina-platform/module-ballerinax-integrator) project and demonstrate real-world integration scenarios that you can customize and extend.
 
-## Available Samples
+## Available samples
 
 | Sample | Source | Target | Trigger |
 |--------|--------|--------|---------|
@@ -23,7 +23,7 @@ These samples are sourced from the [Ballerina Integrator](https://github.com/bal
 | [FTP EDI to Salesforce Opportunity](ftp-edi-salesforce.md) | FTP (EDI files) | Salesforce | New FTP file |
 | [Shopify to Outlook Welcome Email](shopify-outlook-email.md) | Shopify | Microsoft Outlook | New Shopify customer |
 
-## How to Use These Samples
+## How to use these samples
 
 Each sample follows the same workflow:
 
@@ -32,7 +32,7 @@ Each sample follows the same workflow:
 3. **Run** with `bal run`
 4. **Customize** to fit your specific requirements
 
-### Quick Start
+### Quick start
 
 ```bash
 # Clone the samples repository
@@ -50,7 +50,7 @@ cp Config-example.toml Config.toml
 bal run
 ```
 
-## What's Next
+## What's next
 
 - [Sample Projects](../samples/overview.md) -- Larger sample projects with multiple features
 - [End-to-End Walkthroughs](../walkthroughs/content-based-routing.md) -- Step-by-step tutorials

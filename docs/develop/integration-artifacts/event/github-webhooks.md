@@ -8,7 +8,7 @@ GitHub event integration is currently in **Beta**.
 
 GitHub event integrations receive webhook callbacks from GitHub and trigger handler functions as repository events occur. Use them to automate CI/CD workflows, sync issue trackers, enforce code review policies, and react to repository activity in real time.
 
-## Creating a GitHub Events service
+## Creating a GitHub events service
 
 1. Click **+ Add Artifact** in the canvas or click **+** next to **Entry Points** in the sidebar.
 2. In the **Artifacts** panel, select **GitHub** under **Event Integration**.

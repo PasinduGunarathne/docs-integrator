@@ -4,7 +4,7 @@ title: AI
 
 The Ballerina AI module provides APIs for building AI-powered applications and agents using Large Language Models (LLMs). It includes capabilities for direct LLM interaction (chat and structured output generation), intelligent AI agents with tool use and memory, and Retrieval-Augmented Generation (RAG) with document ingestion, chunking, embedding, and vector-based retrieval. The `ballerina/ai` connector (v1.10.0) serves as a unified abstraction layer that works with provider-specific modules such as `ballerinax/ai.openai` and `ballerinax/ai.anthropic`.
 
-## Key Features
+## Key features
 
 - AI Agent framework with configurable system prompts, tool use, memory, and iterative reasoning (function-call agent pattern)
 - Direct LLM interaction via `ModelProvider` abstraction — multi-turn `chat` and single-turn `generate` with structured output mapping to Ballerina types

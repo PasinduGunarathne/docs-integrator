@@ -4,7 +4,7 @@ title: TCP
 
 TCP (Transmission Control Protocol) is a foundational transport-layer protocol that provides reliable, ordered, and error-checked byte-stream delivery between applications. The Ballerina `ballerina/tcp` connector (v1.13.3) enables you to create TCP clients for sending and receiving raw bytes over persistent connections, as well as TCP listeners that accept inbound connections and process data through event-driven service callbacks.
 
-## Key Features
+## Key features
 
 - Send and receive raw byte data over TCP connections using a simple client API
 - Accept inbound TCP connections with an event-driven listener and service model

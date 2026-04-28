@@ -8,9 +8,9 @@ Chunking and embedding are the two steps that most directly impact your RAG syst
 
 Getting these right means the difference between retrieving exactly the right context and getting irrelevant or partial results.
 
-## Chunking Strategies
+## Chunking strategies
 
-### Fixed-Size Chunking
+### Fixed-Size chunking
 
 Split text into chunks of a fixed token or character count. Simple and predictable.
 
@@ -34,7 +34,7 @@ string[] chunks = check rag:chunk(documentText, fixedConfig);
 | `maxChunkSize` | 300-500 tokens | Smaller for precise retrieval, larger for more context |
 | `overlap` | 10-20% of chunk size | Too much wastes space; too little misses boundary content |
 
-### Paragraph-Based Chunking
+### Paragraph-Based chunking
 
 Split at natural paragraph boundaries. Preserves the document's logical structure.
 
@@ -58,7 +58,7 @@ Chunk 1: "## Return Policy\nItems may be returned within 30 days of delivery..."
 Chunk 2: "## Return Policy\nRefunds are processed within 5-7 business days..."
 ```
 
-### Sentence-Based Chunking
+### Sentence-Based chunking
 
 Split at sentence boundaries and group sentences up to the chunk size limit.
 
@@ -71,7 +71,7 @@ rag:ChunkConfig sentenceConfig = {
 };
 ```
 
-### Semantic Chunking
+### Semantic chunking
 
 Group semantically related sentences together by measuring embedding similarity between consecutive sentences. Produces chunks that are more coherent than fixed-size splitting.
 
@@ -92,7 +92,7 @@ string[] chunks = check rag:chunk(documentText, semanticConfig);
 
 Semantic chunking is more expensive (it requires embedding calls during chunking) but produces higher-quality chunks, especially for documents that cover multiple topics.
 
-### Recursive Chunking
+### Recursive chunking
 
 Try multiple splitting strategies in order of preference. First try to split by headings, then paragraphs, then sentences, then fixed-size as a fallback.
 
@@ -105,7 +105,7 @@ rag:ChunkConfig recursiveConfig = {
 };
 ```
 
-## Choosing a Chunking Strategy
+## Choosing a chunking strategy
 
 | Strategy | Quality | Cost | Best For |
 |----------|---------|------|----------|
@@ -115,9 +115,9 @@ rag:ChunkConfig recursiveConfig = {
 | **Semantic** | Best | High | Mixed-topic documents, highest quality needs |
 | **Recursive** | Good | Low | Documents with varying structure |
 
-## Embedding Models
+## Embedding models
 
-### OpenAI Embeddings
+### OpenAI embeddings
 
 ```ballerina
 import ballerinax/openai.embeddings;
@@ -149,7 +149,7 @@ function embedLarge(string[] texts) returns float[][]|error {
 }
 ```
 
-### Cohere Embeddings
+### Cohere embeddings
 
 ```ballerina
 import ballerinax/cohere;
@@ -168,7 +168,7 @@ function embedWithCohere(string[] texts) returns float[][]|error {
 }
 ```
 
-### Google Vertex AI Embeddings
+### Google vertex AI embeddings
 
 ```ballerina
 import ballerinax/googleapis.vertexai;
@@ -189,7 +189,7 @@ function embedWithVertex(string[] texts) returns float[][]|error {
 }
 ```
 
-## Embedding Model Comparison
+## Embedding model comparison
 
 | Model | Provider | Dimensions | Quality | Cost per 1M tokens |
 |-------|----------|------------|---------|---------------------|
@@ -198,7 +198,7 @@ function embedWithVertex(string[] texts) returns float[][]|error {
 | `embed-english-v3.0` | Cohere | 1024 | Good | $0.10 |
 | `text-embedding-004` | Google | 768 | Good | $0.025 |
 
-### Dimension Reduction
+### Dimension reduction
 
 Some models support reduced dimensions for faster search with slightly lower quality.
 
@@ -211,7 +211,7 @@ embeddings:EmbeddingResponse response = check openaiEmbeddings->createEmbedding(
 });
 ```
 
-## Batch Embedding
+## Batch embedding
 
 Process large document sets efficiently by batching embedding requests.
 
@@ -234,7 +234,7 @@ function batchEmbed(string[] texts, int batchSize = 100) returns float[][]|error
 }
 ```
 
-## Advanced: Contextual Chunking
+## Advanced: Contextual chunking
 
 Prepend document-level context to each chunk to improve retrieval quality.
 
@@ -253,7 +253,7 @@ function contextualChunk(string document, string title, string summary) returns 
 
 This technique helps the embedding model understand the broader context of each chunk, leading to better retrieval for ambiguous queries.
 
-## What's Next
+## What's next
 
 - [Building a RAG Service](building-rag-service.md) — Assemble a complete RAG service
 - [Document Ingestion](document-ingestion.md) — Build ingestion pipelines for various formats

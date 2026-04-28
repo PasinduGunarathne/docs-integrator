@@ -23,7 +23,7 @@ Step-by-step guides that build a real integration from scratch:
 | **[File Batch ETL](file-batch-etl.md)** | Batch extract-transform-load from files |
 | **[Healthcare HL7/FHIR](healthcare-hl7-fhir.md)** | Healthcare data integration with HL7 and FHIR |
 
-## Enterprise Integration Patterns
+## Enterprise integration patterns
 
 Battle-tested patterns for distributed systems:
 
@@ -38,7 +38,7 @@ Battle-tested patterns for distributed systems:
 
 [View all patterns &rarr;](patterns/content-based-router.md)
 
-## Pre-Built Samples
+## Pre-Built samples
 
 Ready-to-run integration samples you can clone and customize:
 
@@ -51,7 +51,7 @@ Ready-to-run integration samples you can clone and customize:
 
 [View all pre-built samples &rarr;](pre-built/overview.md)
 
-## Sample Projects
+## Sample projects
 
 Full GitHub projects you can clone and run:
 
@@ -61,7 +61,7 @@ Full GitHub projects you can clone and run:
 - **[Data Service with bal persist](samples/data-service-persist.md)** — Type-safe database CRUD
 - **[RESTful API with Data Mapper](samples/restful-api-data-mapper.md)** — Visual data transformations
 
-## Migration Guides
+## Migration guides
 
 Coming from another platform? Start here:
 

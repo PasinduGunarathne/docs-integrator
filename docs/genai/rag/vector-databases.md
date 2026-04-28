@@ -8,7 +8,7 @@ Vector databases store and index high-dimensional embeddings for fast similarity
 
 WSO2 Integrator supports multiple vector databases through dedicated connectors. This page covers how to connect, configure, and use each one.
 
-## Supported Vector Databases
+## Supported vector databases
 
 | Database | Type | Transport | Best For |
 |----------|------|-----------|----------|
@@ -148,7 +148,7 @@ final weaviate:Client weaviateClient = check new ({
 });
 ```
 
-### Schema and Operations
+### Schema and operations
 
 ```ballerina
 // Define a schema class
@@ -206,7 +206,7 @@ CREATE INDEX ON document_chunks USING ivfflat (embedding vector_cosine_ops)
     WITH (lists = 100);
 ```
 
-### Connection and Operations
+### Connection and operations
 
 ```ballerina
 import ballerinax/postgresql;
@@ -253,7 +253,7 @@ type DocumentChunk record {|
 |};
 ```
 
-## Choosing a Vector Database
+## Choosing a vector database
 
 | Factor | ChromaDB | Pinecone | Weaviate | pgvector | Qdrant |
 |--------|----------|----------|----------|----------|--------|
@@ -264,7 +264,7 @@ type DocumentChunk record {|
 | **Cost** | Free | Pay-per-use | Free/Pay | Free | Free/Pay |
 | **Best for** | Dev/small | Production | Flexible | Existing Postgres | Performance |
 
-## What's Next
+## What's next
 
 - [Document Ingestion](document-ingestion.md) — Build pipelines to populate your vector database
 - [Chunking & Embedding](chunking-embedding.md) — Optimize how content is vectorized

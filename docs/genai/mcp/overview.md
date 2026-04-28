@@ -8,7 +8,7 @@ The Model Context Protocol (MCP) is an open standard that defines how AI assista
 
 Think of MCP as a universal adapter between AI and enterprise systems. Instead of building custom integrations for each AI assistant, you publish an MCP server once and any MCP-compatible client can use it.
 
-## What Is MCP?
+## What is MCP?
 
 MCP defines a protocol for three types of capabilities:
 
@@ -18,7 +18,7 @@ MCP defines a protocol for three types of capabilities:
 | **Resources** | Read-only data the AI can access for context | AI reads your data |
 | **Prompts** | Pre-defined prompt templates the AI can use | AI uses your templates |
 
-### How MCP Works
+### How MCP works
 
 ```mermaid
 flowchart LR
@@ -37,7 +37,7 @@ flowchart LR
 
 WSO2 Integrator supports MCP in two directions:
 
-### As an MCP Server
+### As an MCP server
 
 Expose your existing integrations, APIs, and databases as MCP tools that AI assistants can use.
 
@@ -58,7 +58,7 @@ isolated function getOrderStatus(string orderId) returns json|error {
 - Expose internal APIs to AI-powered workflows
 - Give AI assistants access to real-time business data
 
-### As an MCP Client
+### As an MCP client
 
 Consume external MCP tools from within your agents and integrations.
 
@@ -83,11 +83,11 @@ final agent:ChatAgent myAgent = check new (
 - Compose multiple MCP servers into a single agent
 - Access external data sources through standardized MCP interfaces
 
-## Transport Options
+## Transport options
 
 MCP supports multiple transport mechanisms for different deployment scenarios.
 
-### stdio (Standard I/O)
+### Stdio (Standard I/O)
 
 The server communicates over standard input/output. Used for local MCP clients like Claude Desktop.
 
@@ -99,7 +99,7 @@ mcp:Server server = check new ({
 });
 ```
 
-### SSE (Server-Sent Events)
+### SSE (Server-Sent events)
 
 The server runs as an HTTP service with SSE for real-time communication. Used for remote or web-based clients.
 
@@ -123,7 +123,7 @@ mcp:Server server = check new ({
 });
 ```
 
-## When to Use MCP
+## When to use MCP
 
 | Scenario | MCP Server | MCP Client |
 |----------|-----------|-----------|
@@ -134,7 +134,7 @@ mcp:Server server = check new ({
 | Create a universal API layer for AI assistants | Yes | |
 | Compose multiple tool providers into one agent | | Yes |
 
-## MCP vs. Direct Tool Binding
+## MCP vs. direct tool binding
 
 | Feature | MCP Tools | Direct Agent Tools |
 |---------|-----------|-------------------|
@@ -146,7 +146,7 @@ mcp:Server server = check new ({
 
 Use MCP when you want external AI assistants to access your systems. Use direct tool binding when building internal agents where tools are tightly coupled.
 
-## What's Next
+## What's next
 
 - [Exposing MCP Servers](exposing-mcp-servers.md) — Build MCP servers with WSO2 Integrator
 - [Consuming MCP Tools](consuming-mcp-tools.md) — Use external MCP tools in your agents

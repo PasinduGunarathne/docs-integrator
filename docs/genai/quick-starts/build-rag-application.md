@@ -14,14 +14,14 @@ Retrieval-Augmented Generation (RAG) lets you combine the reasoning power of LLM
 - An API key for an LLM provider (OpenAI, Anthropic, or Google)
 - A vector database instance (this guide uses ChromaDB; [Docker setup](#chromadb-docker-setup) included)
 
-## What You'll Build
+## What you'll build
 
 A knowledge base service that:
 - Ingests text documents and generates vector embeddings
 - Stores embeddings in ChromaDB for fast similarity search
 - Answers user questions by retrieving relevant document chunks and passing them to an LLM
 
-## ChromaDB Docker Setup
+## ChromaDB Docker setup
 
 Start a local ChromaDB instance for development:
 
@@ -29,7 +29,7 @@ Start a local ChromaDB instance for development:
 docker run -d --name chromadb -p 8000:8000 chromadb/chroma:latest
 ```
 
-## Step 1: Set Up Dependencies
+## Step 1: Set up dependencies
 
 ```ballerina
 // Ballerina.toml
@@ -59,7 +59,7 @@ name = "chromadb"
 version = "0.5.0"
 ```
 
-## Step 2: Configure the Embedding Model and Vector Store
+## Step 2: Configure the embedding model and vector store
 
 Set up the embedding model to convert text into vectors and the vector store for persistence.
 
@@ -82,7 +82,7 @@ final chromadb:Client vectorStore = check new ({
 final chromadb:Collection knowledgeBase = check vectorStore.getOrCreateCollection("product_docs");
 ```
 
-## Step 3: Build the Document Ingestion Pipeline
+## Step 3: Build the document ingestion pipeline
 
 Create a function that chunks documents, generates embeddings, and stores them.
 
@@ -133,7 +133,7 @@ function ingestDocument(string content, string sourceId) returns error? {
 }
 ```
 
-## Step 4: Build the Retrieval and Generation Service
+## Step 4: Build the retrieval and generation service
 
 Create an HTTP service that retrieves relevant chunks and generates answers.
 
@@ -207,7 +207,7 @@ type QueryResponse record {|
 |};
 ```
 
-## Step 5: Run and Test
+## Step 5: Run and test
 
 1. Configure your API key in `Config.toml`:
 
@@ -243,7 +243,7 @@ curl -X POST http://localhost:8090/rag/query \
 
 The service retrieves the relevant document chunks and generates an answer grounded in your actual product documentation.
 
-## How It Works
+## How it works
 
 The RAG pipeline follows three stages:
 
@@ -251,7 +251,7 @@ The RAG pipeline follows three stages:
 2. **Retrieve** — When a question arrives, it is embedded and used to find the most similar document chunks via vector similarity search
 3. **Generate** — The retrieved chunks are passed as context to the LLM, which generates a grounded answer
 
-## What's Next
+## What's next
 
 - [RAG Architecture Overview](/docs/genai/rag/architecture-overview) — Understand the full RAG pipeline design
 - [Chunking & Embedding Strategies](/docs/genai/rag/chunking-embedding) — Optimize how you split and vectorize content

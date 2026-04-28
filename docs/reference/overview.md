@@ -61,7 +61,7 @@ Command-line tools reference:
 - **[Connecting a Runtime](icp/runtime-connection.md)** — Register an integration runtime with ICP
 - **[Deployment](icp/deployment.md)** — Docker Compose profiles and distribution commands
 
-## Specifications & Formats
+## Specifications & formats
 
 - **[Supported protocols](protocols.md)** — Complete protocol support table
 - **[Supported data formats](data-formats.md)** — Complete data format support table

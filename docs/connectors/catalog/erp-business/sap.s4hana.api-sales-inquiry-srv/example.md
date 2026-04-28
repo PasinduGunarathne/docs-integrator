@@ -20,11 +20,11 @@ flowchart LR
 
 - Access to an SAP S/4HANA system with valid credentials
 
-## Setting up the SAP S/4HANA Sales Inquiry Service integration
+## Setting up the SAP S/4HANA sales inquiry service integration
 
 > **New to WSO2 Integrator?** Follow the [Create a New Integration](../../../../develop/create-integrations/create-new-integration.md) guide to set up your integration first, then return here to add the connector.
 
-## Adding the SAP S/4HANA Sales Inquiry Service connector
+## Adding the SAP S/4HANA sales inquiry service connector
 
 ### Step 1: Open the connector palette and search for the connector
 
@@ -32,7 +32,7 @@ Select **Add Connection** in the WSO2 Integrator sidebar to open the connector p
 
 ![SAP S/4HANA Sales Inquiry Service connector palette open with search field before any selection](/img/connectors/catalog/erp-business/sap.s4hana.api-sales-inquiry-srv/sap_s4hana_apisalesinquirysrv_screenshot_01_palette.png)
 
-## Configuring the SAP S/4HANA Sales Inquiry Service connection
+## Configuring the SAP S/4HANA sales inquiry service connection
 
 ### Step 2: Fill in the connection parameters
 
@@ -58,7 +58,7 @@ Select **Save Connection** to persist the configuration and confirm the connecto
 - **sapS4HanaUsername** (string) : Your SAP S/4HANA login username
 - **sapS4HanaPassword** (string) : Your SAP S/4HANA login password
 
-## Configuring the SAP S/4HANA Sales Inquiry Service listA_SalesInquiries operation
+## Configuring the SAP S/4HANA sales inquiry service listA_SalesInquiries operation
 
 ### Step 5: Add an automation entry point
 

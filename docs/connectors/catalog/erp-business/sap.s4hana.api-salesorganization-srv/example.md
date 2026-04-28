@@ -21,23 +21,23 @@ flowchart LR
 - Access to an SAP S/4HANA system with the `API_SALESORGANIZATION_SRV` OData service enabled
 - SAP S/4HANA hostname, username, and password
 
-## Setting up the SAP S/4HANA API Sales Organization Service integration
+## Setting up the SAP S/4HANA API sales organization service integration
 
 > **New to WSO2 Integrator?** Follow the [Create a New Integration](../../../../develop/create-integrations/create-new-integration.md) guide to set up your integration first, then return here to add the connector.
 
-## Adding the SAP S/4HANA API Sales Organization Service connector
+## Adding the SAP S/4HANA API sales organization service connector
 
-### Step 1: Open the Add connection panel
+### Step 1: Open the add connection panel
 
 In the WSO2 Integrator sidebar, expand the project tree and select **Add Connection** to open the connector palette.
 
 ![SAP S/4HANA connector palette open with search field before any selection](/img/connectors/catalog/erp-business/sap.s4hana.api-salesorganization-srv/sap_s4hana_apisalesorganizationsrv_screenshot_01_palette.png)
 
-### Step 2: Select the SAP S/4HANA API Sales Organization Service connector
+### Step 2: Select the SAP S/4HANA API sales organization service connector
 
 Search for `sap.s4hana.api_salesorganization_srv` in the palette and select the **SAP S/4HANA API Sales Organization Service** connector card to open the connection form.
 
-## Configuring the SAP S/4HANA API Sales Organization Service connection
+## Configuring the SAP S/4HANA API sales organization service connection
 
 ### Step 3: Fill in the connection parameters
 
@@ -63,7 +63,7 @@ In the left panel, select **Configurations** and set a value for each configurab
 - **sapS4HanaUsername** (string) : Your SAP S/4HANA username
 - **sapS4HanaPassword** (string) : Your SAP S/4HANA password
 
-## Configuring the SAP S/4HANA API Sales Organization Service listA_SalesOrganizations operation
+## Configuring the SAP S/4HANA API sales organization service listA_SalesOrganizations operation
 
 ### Step 6: Add an automation entry point
 

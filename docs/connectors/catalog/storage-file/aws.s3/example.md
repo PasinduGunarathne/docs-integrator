@@ -71,7 +71,7 @@ In the left panel of WSO2 Integrator, select **Configurations** (listed at the b
 
 ## Configuring the aws.s3 createBucket operation
 
-### Step 6: Add an Automation entry point
+### Step 6: Add an automation entry point
 
 1. On the low-code canvas, select **+ Add Artifact** and select **Automation** from the artifact list.
 2. If a configuration dialog appears, accept the default trigger settings and select **Create** to add the automation block to the canvas.

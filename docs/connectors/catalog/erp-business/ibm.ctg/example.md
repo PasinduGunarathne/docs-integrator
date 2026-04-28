@@ -31,7 +31,7 @@ flowchart LR
 
 ## Adding the IBM CTG connector
 
-### Step 1: Open the Add Connection panel
+### Step 1: Open the add connection panel
 
 Select the **+** button next to **Connections** in the project tree to open the **Add Connection** palette, which displays available pre-built connectors.
 
@@ -67,13 +67,13 @@ In the left panel, select **Configurations** and set a value for each configurab
 - **ibmCtgUserId** (string) : User ID for CTG authentication
 - **ibmCtgPassword** (string) : Password for CTG authentication
 
-## Configuring the IBM CTG Execute operation
+## Configuring the IBM CTG execute operation
 
-### Step 5: Add an Automation entry point
+### Step 5: Add an automation entry point
 
 Select the **+** button next to **Entry Points** in the project tree and select **Automation** as the entry point type. The automation flow canvas opens with a **Start** node, an empty placeholder, and an **Error Handler** node.
 
-### Step 6: Select and configure the Execute operation
+### Step 6: Select and configure the execute operation
 
 Expand **ctgClient** in the **Connections** section of the node panel to view available operations, then select **Execute** to add it to the automation flow and configure its parameters.
 

@@ -6,9 +6,9 @@ title: Runtime Security
 
 Securing your Ballerina integrations at runtime involves hardening the JVM, managing keystores and certificates, running as non-root, and applying network-level controls. This page covers production security best practices.
 
-## JVM Hardening
+## JVM hardening
 
-### Disable Unnecessary Features
+### Disable unnecessary features
 
 ```bash
 java \
@@ -19,7 +19,7 @@ java \
   -jar my_integration.jar
 ```
 
-### Recommended JVM Security Flags
+### Recommended JVM security flags
 
 | Flag | Purpose |
 |------|---------|
@@ -29,7 +29,7 @@ java \
 | `-XX:+UseContainerSupport` | Respect container memory limits |
 | `-XX:MaxRAMPercentage=75.0` | Limit heap to 75% of available RAM |
 
-### Use the Latest JDK
+### Use the latest JDK
 
 Always run on a supported, patched JDK version. Subscribe to security advisories:
 
@@ -38,9 +38,9 @@ java -version
 # Ensure JDK 17.0.x or later with latest patch
 ```
 
-## Keystores and Certificates
+## Keystores and certificates
 
-### Creating a Keystore
+### Creating a keystore
 
 Generate a keystore for TLS:
 
@@ -99,7 +99,7 @@ listener http:Listener mtlsEP = new (9443, {
 });
 ```
 
-### Truststore Configuration
+### Truststore configuration
 
 Configure trusted CA certificates for outbound connections:
 
@@ -114,7 +114,7 @@ final http:Client secureClient = check new ("https://api.example.com", {
 });
 ```
 
-### Certificate Rotation
+### Certificate rotation
 
 Automate certificate rotation using a script or cert-manager (Kubernetes):
 
@@ -134,7 +134,7 @@ spec:
   renewBefore: 720h  # Renew 30 days before expiry
 ```
 
-## Non-Root Execution
+## Non-Root execution
 
 ### Linux
 
@@ -187,7 +187,7 @@ spec:
           drop: ["ALL"]
 ```
 
-## File System Security
+## File system security
 
 | Practice | Implementation |
 |----------|---------------|
@@ -207,9 +207,9 @@ volumeMounts:
     mountPath: /tmp
 ```
 
-## Network Security
+## Network security
 
-### Restrict Listening Interfaces
+### Restrict listening interfaces
 
 Bind to specific interfaces instead of `0.0.0.0`:
 
@@ -219,7 +219,7 @@ host = "127.0.0.1"  # Only local access to metrics
 port = 9797
 ```
 
-### Kubernetes Network Policies
+### Kubernetes network policies
 
 Restrict pod-to-pod communication:
 
@@ -253,7 +253,7 @@ spec:
           port: 5432
 ```
 
-## Security Checklist
+## Security checklist
 
 | Item | Status |
 |------|--------|
@@ -268,7 +268,7 @@ spec:
 | Rotate certificates before expiry | Required |
 | Encrypt secrets in Config.toml | Required |
 
-## What's Next
+## What's next
 
 - [Secrets & Encryption](secrets-encryption.md) -- Manage secrets and encryption
 - [Authentication](authentication.md) -- Configure authentication for services

@@ -13,7 +13,7 @@ New Relic provides a full-stack observability platform for monitoring your Balle
 | New Relic Account | Active account with an Ingest License Key |
 | Ballerina | Built with `--observability-included` |
 
-## Step 1 -- Forward Metrics via Prometheus Remote Write
+## Step 1 -- forward metrics via Prometheus remote write
 
 Configure Prometheus to forward Ballerina metrics to New Relic:
 
@@ -41,11 +41,11 @@ docker run -d \
   newrelic/nri-prometheus:latest
 ```
 
-## Step 2 -- Forward Traces via OpenTelemetry
+## Step 2 -- forward traces via OpenTelemetry
 
 Configure Ballerina to export traces to New Relic via the OpenTelemetry Collector:
 
-### OpenTelemetry Collector Configuration
+### OpenTelemetry collector configuration
 
 ```yaml
 # otel-collector-config.yaml
@@ -68,7 +68,7 @@ service:
       exporters: [otlp]
 ```
 
-### Ballerina Configuration
+### Ballerina configuration
 
 ```toml
 [ballerina.observe]
@@ -80,9 +80,9 @@ agentHostname = "localhost"
 agentPort = 6831
 ```
 
-## Step 3 -- Forward Logs
+## Step 3 -- forward logs
 
-### Using the New Relic Infrastructure Agent
+### Using the new relic infrastructure agent
 
 Install and configure the infrastructure agent to tail log files:
 
@@ -96,7 +96,7 @@ logs:
       environment: production
 ```
 
-### Using Fluent Bit
+### Using fluent bit
 
 ```ini
 [INPUT]
@@ -111,7 +111,7 @@ logs:
     endpoint https://log-api.newrelic.com/log/v1
 ```
 
-## Step 4 -- Create Dashboards in New Relic
+## Step 4 -- create dashboards in new relic
 
 Use NRQL to query your Ballerina metrics:
 
@@ -131,7 +131,7 @@ Create alert policies in New Relic:
 3. Add an NRQL alert condition.
 4. Define the threshold and notification channels.
 
-## What's Next
+## What's next
 
 - [Datadog](datadog.md) -- Alternative full-stack observability platform
 - [Prometheus](prometheus.md) -- Self-managed metrics collection

@@ -4,7 +4,7 @@ title: WebSocket
 
 WebSocket is a communication protocol that provides full-duplex communication channels over a single TCP connection. The Ballerina `ballerina/websocket` connector (v2.15.1) provides both a synchronous client for connecting to WebSocket servers and a listener for building WebSocket servers, enabling real-time bidirectional communication in your Ballerina integration flows.
 
-## Key Features
+## Key features
 
 - Synchronous WebSocket client with blocking read and write operations
 - Full-duplex bidirectional messaging with text, binary, and typed data support

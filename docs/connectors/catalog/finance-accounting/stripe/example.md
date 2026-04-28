@@ -27,7 +27,7 @@ flowchart LR
 
 ## Adding the Stripe connector
 
-### Step 1: Open the Add Connection panel
+### Step 1: Open the add connection panel
 
 Open the WSO2 Integrator side panel and hover over the **Connections** tree item, then select the **+** button that appears to open the **Add Connection** palette.
 

@@ -4,7 +4,7 @@ title: FTP
 
 FTP (File Transfer Protocol) is a standard network protocol used for transferring files between a client and a server. The Ballerina `ballerina/ftp` connector (v2.18.0) provides programmatic access to FTP, FTPS, and SFTP servers, enabling you to read, write, and manage remote files and directories, as well as listen for file change events in your Ballerina integration flows.
 
-## Key Features
+## Key features
 
 - Read remote files in multiple formats — bytes, text, JSON, XML, and CSV — with built-in data binding
 - Write files to remote servers in bytes, text, JSON, XML, and CSV formats with overwrite or append options

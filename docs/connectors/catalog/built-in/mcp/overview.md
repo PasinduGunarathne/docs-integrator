@@ -4,7 +4,7 @@ title: MCP
 
 Model Context Protocol (MCP) is an open standard that enables seamless integration between Large Language Models (LLMs) and external data sources through structured JSON-RPC 2.0 communication over HTTP transport. The Ballerina `ballerina/mcp` connector (v1.0.3) allows you to build both MCP clients that consume tools from remote servers and MCP servers that expose tools to AI agents, enabling powerful AI-driven integration flows.
 
-## Key Features
+## Key features
 
 - MCP client support for connecting to any MCP-compatible server and invoking tools remotely
 - MCP server support with automatic tool discovery from annotated Ballerina remote functions
