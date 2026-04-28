@@ -168,5 +168,5 @@ Yes. The two products use different runtimes and can coexist in the same environ
 ## What's next
 
 - [Get Started](/docs/get-started/install) -- Install and set up WSO2 Integrator
-- [Quick Start Guide](/docs/get-started/quick-start-api) -- Build your first integration
+- [Build an API Integration](/docs/get-started/build-api-integration) -- Build your first integration
 - [Glossary](/docs/reference/glossary) -- Definitions of key terms

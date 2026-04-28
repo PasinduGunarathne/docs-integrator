@@ -1,5 +1,5 @@
 ---
-title: 'Quick Start: Build a Conversational Agent'
+title: Build a Conversational Agent
 ---
 
 # Build a Conversational Agent

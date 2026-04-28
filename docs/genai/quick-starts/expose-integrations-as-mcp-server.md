@@ -1,5 +1,5 @@
 ---
-title: 'Quick Start: Expose Integrations as an MCP Server'
+title: Expose Integrations as an MCP Server
 ---
 
 # Expose Integrations as an MCP Server
