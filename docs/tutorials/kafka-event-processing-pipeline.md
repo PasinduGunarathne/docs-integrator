@@ -418,4 +418,4 @@ bal test
 ## Full source code
 
 Find the complete working project on GitHub:
-[wso2/integrator-samples/kafka-event-pipeline](https://github.com/wso2/integrator-samples/tree/main/kafka-event-pipeline)
+[wso2/integration-samples/integrator-default-profile/connectors/kafka_consumer_connector_sample](https://github.com/wso2/integration-samples/tree/main/integrator-default-profile/connectors/kafka_consumer_connector_sample)
