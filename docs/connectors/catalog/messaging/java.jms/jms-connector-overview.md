@@ -46,6 +46,8 @@ See the **[Trigger Reference](triggers.md)** for listener configuration, service
 
 * **[Trigger Reference](triggers.md)**: Reference for event-driven integration using the listener and service model.
 
+* **[Example](example.md)**: Learn how to build and configure an integration using the **JMS** connector, including connection setup, operation configuration, execution flow, and event-driven trigger setup.
+
 ## How to contribute
 
 As an open source project, WSO2 welcomes contributions from the community.

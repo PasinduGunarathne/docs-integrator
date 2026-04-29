@@ -29,6 +29,8 @@ See the **[Action Reference](actions.md)** for the full list of operations, para
 
 * **[Action Reference](actions.md)**: Full reference for all clients — operations, parameters, return types, and sample code.
 
+* **[Example](example.md)**: Learn how to build and configure an integration using the **HubSpot CRM Products** connector, including connection setup, operation configuration, and execution flow.
+
 ## How to contribute
 
 As an open source project, WSO2 welcomes contributions from the community.
