@@ -40,59 +40,73 @@ For MI runtimes, see [MI Observability Setup](observability-setup-mi.md).
 
 Any single-node or clustered OpenSearch deployment works. ICP needs HTTP(S) access to the OpenSearch REST API.
 
-### Docker (recommended for evaluation)
+Note the host, port, and credentials — you will configure them in the ICP Server and Fluent Bit.
 
-The bundled Docker Compose stack in `icp_server/resources/observability/opensearch-observability-dashboard/` starts OpenSearch, OpenSearch Dashboards, Fluent Bit, and Data Prepper together:
+### Evaluation setup
 
-```bash
-cd icp_server/resources/observability/opensearch-observability-dashboard/
+For a quick single-node setup, download and extract the [OpenSearch distribution](https://opensearch.org/downloads.html). To skip TLS and authentication during evaluation, disable the security plugin:
 
-# Create the external Docker network (required — the compose file references it)
-docker network create observability_network
-
-# Edit config/.env and set a strong admin password
-vim config/.env   # set OPENSEARCH_INITIAL_ADMIN_PASSWORD=YourStr0ng!Pass
-
-docker compose up -d
+```yaml
+# config/opensearch.yml — append:
+plugins.security.disabled: true
 ```
 
-### Existing OpenSearch cluster
+Then start OpenSearch:
 
-If you already have OpenSearch running, skip to Step 2. Note the host, port, and credentials — you will configure them in the ICP Server.
+```bash
+# Linux / macOS
+./bin/opensearch
+
+# Windows
+.\bin\opensearch.bat
+```
+
+Verify:
+
+```bash
+curl http://localhost:9200
+```
+
+With security disabled, OpenSearch listens on plain HTTP (port 9200). Set `tls Off` in Fluent Bit and use `http://` in the ICP Server config (see Steps 3 and 5).
 
 ## Step 2: Create Index Templates
 
 Index templates ensure OpenSearch maps fields with the correct types before any data arrives. Apply them once per cluster.
 
-The shipped template file is at:
-
-```
-icp_server/resources/observability/opensearch-observability-dashboard/setup/index-template-request.json
-```
-
-Apply it:
+### Application logs template
 
 ```bash
-curl -X PUT 'https://<opensearch-host>:9200/_index_template/wso2_integration_application_log_template' \
-  -ku admin:<password> \
-  -H 'Content-Type: application/json' \
-  -d @setup/index-template-request.json
-```
-
-This template covers `ballerina-application-logs-*` and `mi-application-logs-*` index patterns.
-
-For metrics indices, a separate template is recommended to ensure correct numeric types:
-
-```bash
-curl -X PUT 'https://<opensearch-host>:9200/_index_template/wso2_integration_metrics_log_template' \
-  -ku admin:<password> \
+curl -X PUT 'http://<opensearch-host>:9200/_index_template/wso2_integration_application_log_template' \
   -H 'Content-Type: application/json' \
   -d '{
-    "index_patterns": ["ballerina-metrics-logs-*", "mi-metrics-logs-*"],
+    "index_patterns": ["ballerina-application-logs-*"],
     "template": {
       "mappings": {
         "properties": {
-          "time":                   { "type": "date" },
+          "time":           { "type": "date", "format": "yyyy-MM-dd'\''T'\''HH:mm:ss.SSS'\''Z'\''||strict_date_optional_time||epoch_millis" },
+          "message":        { "type": "text" },
+          "icp_runtimeId":  { "type": "keyword" }
+        }
+      }
+    }
+  }'
+```
+
+If your OpenSearch requires authentication, add `-u admin:<password>`. For HTTPS with self-signed certs, add `-k`.
+
+### Metrics logs template
+
+A separate template ensures correct numeric types for latency fields:
+
+```bash
+curl -X PUT 'http://<opensearch-host>:9200/_index_template/wso2_integration_metrics_log_template' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "index_patterns": ["ballerina-metrics-logs-*"],
+    "template": {
+      "mappings": {
+        "properties": {
+          "time":                   { "type": "date", "format": "yyyy-MM-dd'\''T'\''HH:mm:ss.SSS'\''Z'\''||strict_date_optional_time||epoch_millis" },
           "message":                { "type": "text" },
           "response_time_seconds":  { "type": "float" },
           "response_time":          { "type": "long" }
@@ -101,8 +115,6 @@ curl -X PUT 'https://<opensearch-host>:9200/_index_template/wso2_integration_met
     }
   }'
 ```
-
-If you use the bundled Docker Compose, the `opensearch-setup` service applies the application-log template automatically. You still need to apply the metrics template manually.
 
 ## Step 3: Configure ICP Server
 
@@ -114,26 +126,29 @@ opensearchUsername = "admin"
 opensearchPassword = "<your-opensearch-password>"
 ```
 
-ICP Server exposes the observability adapter on port `9449` by default. The Console calls it through the main ICP port — no additional port needs to be exposed to users.
-
-For self-signed TLS on OpenSearch, also set:
+If OpenSearch is running without TLS (e.g. with the security plugin disabled), use `http://`:
 
 ```toml
-[observabilitySecureSocket]
-allowInsecureTLS = true   # accepts self-signed certs (non-production)
-
-# For production, use a proper truststore instead:
-# [observabilitySecureSocket]
-# allowInsecureTLS = false
-# truststorePath = "/path/to/truststore.p12"
-# truststorePassword = "changeit"
+opensearchUrl = "http://localhost:9200"
 ```
+
+The ICP config file ships with `opensearchUrl`, `opensearchUsername`, and `opensearchPassword` commented out near the bottom, after `[ballerina.http.traceLogAdvancedConfig]`. **Do not uncomment those lines.** Because they fall under a `[section]` header, Ballerina treats them as section-scoped values and rejects them. Always add the OpenSearch keys **before the first `[section]` header** — ideally the very first lines of the file.
 
 ## Step 4: Configure the Integration
 
 Observability requires changes in the integration project itself — these are not server-side settings.
 
-### 1. Add the runtime bridge and metrics dependencies
+### 1. Add dependencies and enable observability
+
+In `Ballerina.toml`, enable both remote management and observability:
+
+```toml
+[build-options]
+remoteManagement = true
+observabilityIncluded = true
+```
+
+`observabilityIncluded = true` is required for metrics collection. Without it, the `ballerinax/metrics.logs` module cannot emit per-request metrics.
 
 In your Ballerina project's `main.bal` (or any `.bal` file), import the ICP runtime bridge and metrics logger:
 
@@ -194,17 +209,12 @@ The `secret` must be created **before** starting the BI runtime. See [Connect an
 
 ## Step 5: Configure Fluent Bit
 
-Fluent Bit tails the BI log files and ships them to OpenSearch. The full reference configuration is in:
+Fluent Bit tails the BI log files and ships them to OpenSearch.
 
-```
-icp_server/resources/observability/opensearch-observability-dashboard/config/fluent-bit/
-```
+You need two config files side by side:
 
-### Key files
-
-- **`fluent-bit.conf`** — main pipeline config (inputs, filters, outputs)
-- **`parsers.conf`** — log format parsers
-- **`scripts/scripts.lua`** — Lua enrichment and routing logic
+- **`fluent-bit.conf`** — pipeline (inputs, filters, outputs)
+- **`parsers.conf`** — log format parser
 
 ### Inputs and outputs
 
@@ -215,97 +225,48 @@ Since the integration writes app logs and metrics to separate files, Fluent Bit 
 | `<bi-logs>/app.log` | `ballerina_app_logs` | `bal_logfmt_parser` | `ballerina-application-logs-` | Application logs |
 | `<bi-logs>/metrics.log` | `ballerina_metrics` | `bal_logfmt_parser` | `ballerina-metrics-logs-` | Per-request metrics |
 
-### Minimal Fluent Bit config
+### Parser definition
 
-The shipped `scripts/scripts.lua` provides these Lua functions used by the filters below:
+Ballerina logfmt logs use ISO 8601 timestamps (`2026-04-30T07:09:27.966Z`). Define the parser in `parsers.conf`:
 
-- `extract_app_from_path` — derives `app_name` from the log file path
-- `enrich_bal_logs` — adds `product` and `app_module` fields
-- `construct_bal_app_name` — builds the `app` and `deployment` fields
-- `extract_bal_metrics_data` — parses metrics-specific fields (response time, status, etc.)
-- `generate_document_id` — creates a hash-based `doc_id` for deduplication
+```ini
+# parsers.conf
+
+[PARSER]
+    Name        bal_logfmt_parser
+    Format      logfmt
+    Time_Key    time
+    Time_Format %Y-%m-%dT%H:%M:%S.%LZ
+    Time_Keep   On
+```
+
+### fluent-bit.conf
+
+Replace `<bi-logs>` with the actual path to your BI application's `logs/` directory. Use forward slashes on all platforms.
 
 ```ini
 [SERVICE]
     Flush        1
     Parsers_File parsers.conf
+    Log_Level    info
 
 # ── App logs ──
 [INPUT]
     Name         tail
-    Path         /path/to/bi/logs/app.log
+    Path         <bi-logs>/app.log
     Parser       bal_logfmt_parser
     Tag          ballerina_app_logs
     Read_from_Head On
     Path_Key     log_file_path
 
-# ── Metrics logs (separate file) ──
+# ── Metrics logs ──
 [INPUT]
     Name         tail
-    Path         /path/to/bi/logs/metrics.log
+    Path         <bi-logs>/metrics.log
     Parser       bal_logfmt_parser
     Tag          ballerina_metrics
     Read_from_Head On
     Path_Key     log_file_path
-
-# ── Enrich app logs ──
-[FILTER]
-    Name    lua
-    Match   ballerina_app_logs
-    Script  scripts/scripts.lua
-    Call    extract_app_from_path
-
-[FILTER]
-    Name    lua
-    Match   ballerina_app_logs
-    Script  scripts/scripts.lua
-    Call    enrich_bal_logs
-
-[FILTER]
-    Name    lua
-    Match   ballerina_app_logs
-    Script  scripts/scripts.lua
-    Call    construct_bal_app_name
-
-# ── Enrich metrics logs ──
-[FILTER]
-    Name    lua
-    Match   ballerina_metrics
-    Script  scripts/scripts.lua
-    Call    extract_app_from_path
-
-[FILTER]
-    Name    lua
-    Match   ballerina_metrics
-    Script  scripts/scripts.lua
-    Call    enrich_bal_logs
-
-[FILTER]
-    Name    lua
-    Match   ballerina_metrics
-    Script  scripts/scripts.lua
-    Call    construct_bal_app_name
-
-[FILTER]
-    Name    lua
-    Match   ballerina_metrics
-    Script  scripts/scripts.lua
-    Call    extract_bal_metrics_data
-
-# ── Document IDs ──
-[FILTER]
-    Name    lua
-    Match   ballerina_app_logs
-    Script  scripts/scripts.lua
-    Call    generate_document_id
-    time_as_table true
-
-[FILTER]
-    Name    lua
-    Match   ballerina_metrics
-    Script  scripts/scripts.lua
-    Call    generate_document_id
-    time_as_table true
 
 # ── Outputs ──
 [OUTPUT]
@@ -317,11 +278,9 @@ The shipped `scripts/scripts.lua` provides these Lua functions used by the filte
     Logstash_Prefix ballerina-application-logs
     Replace_Dots    On
     Suppress_Type_Name On
-    Id_Key          doc_id
-    tls             On
-    tls.verify      Off
+    tls             Off
     HTTP_User       admin
-    HTTP_Passwd     <password>
+    HTTP_Passwd     admin
 
 [OUTPUT]
     Name            opensearch
@@ -332,12 +291,14 @@ The shipped `scripts/scripts.lua` provides these Lua functions used by the filte
     Logstash_Prefix ballerina-metrics-logs
     Replace_Dots    On
     Suppress_Type_Name On
-    Id_Key          doc_id
-    tls             On
-    tls.verify      Off
+    tls             Off
     HTTP_User       admin
-    HTTP_Passwd     <password>
+    HTTP_Passwd     admin
 ```
+
+**TLS**: Set `tls On` and `tls.verify Off` if OpenSearch uses HTTPS with a self-signed certificate. Set `tls Off` for plain HTTP (e.g. security plugin disabled).
+
+**Auth**: `HTTP_User` / `HTTP_Passwd` are required even when OpenSearch has security disabled — Fluent Bit sends them and OpenSearch ignores them.
 
 `Replace_Dots On` is important — Ballerina logfmt fields contain dots (e.g. `src.module`, `http.method`) which OpenSearch rejects as field names. This setting converts them to underscores.
 
@@ -348,23 +309,17 @@ The shipped `scripts/scripts.lua` provides these Lua functions used by the filte
 After the BI runtime has been running for a minute or two:
 
 ```bash
-curl -ku admin:<password> https://localhost:9200/_cat/indices?v
+curl http://localhost:9200/_cat/indices/ballerina-*?v
 ```
 
 You should see:
 
 ```
-ballerina-application-logs-2026-04-28
-ballerina-metrics-logs-2026-04-28
+ballerina-application-logs-2026.04.30
+ballerina-metrics-logs-2026.04.30
 ```
 
-### Check Fluent Bit health
-
-```bash
-curl http://localhost:2020/api/v1/metrics
-```
-
-Look for non-zero `proc_records` in the output sections and zero `errors`.
+If your OpenSearch requires authentication, add `-u admin:<password>`. For HTTPS, add `-k`.
 
 ### Check ICP Console
 
