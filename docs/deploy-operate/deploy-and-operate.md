@@ -54,10 +54,11 @@ Monitor, trace, and debug in production:
 
 Harden your integrations for production:
 
-- **[Runtime Security](secure/runtime-security.md)** — JVM security, keystores, non-root execution
+- **[Keystores and Truststores](secure/keystore-truststore.md)** — Create and configure keystores, truststores, and TLS certificates
+- **[Runtime Security](secure/runtime-security.md)** — JVM security, non-root execution, network policies
 - **[Authentication](secure/authentication.md)** — OAuth 2.0, JWT, mTLS
 - **[API security and rate limiting](secure/api-security-rate-limiting.md)** — Protect your endpoints
-- **[Secrets and encryption](secure/secrets-encryption.md)** — Keystores, environment variables, vault integration
+- **[Secrets and encryption](secure/secrets-encryption.md)** — Environment variables, vault integration
 - **[Compliance](secure/compliance-considerations.md)** — Compliance considerations
 
 ## Capacity planning

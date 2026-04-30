@@ -38,101 +38,13 @@ java -version
 # Ensure JDK 17.0.x or later with latest patch
 ```
 
-## Keystores and certificates
+## Keystores and truststores
 
-### Creating a keystore
+Creating keystores, truststores is covered in detail in [Keystores and Truststores](keystore-truststore.md). That page covers:
 
-Generate a keystore for TLS:
-
-```bash
-keytool -genkeypair \
-  -alias integration-server \
-  -keyalg RSA \
-  -keysize 2048 \
-  -validity 365 \
-  -keystore keystore.p12 \
-  -storetype PKCS12 \
-  -storepass changeit \
-  -dname "CN=integration.example.com,O=MyOrg,L=City,ST=State,C=US"
-```
-
-### Configuring TLS in Ballerina
-
-```ballerina
-import ballerina/http;
-
-listener http:Listener secureEP = new (9443, {
-    secureSocket: {
-        key: {
-            path: "/opt/integrations/keystore.p12",
-            password: "changeit"
-        }
-    }
-});
-
-service /api on secureEP {
-    resource function get health() returns string {
-        return "OK";
-    }
-}
-```
-
-### Mutual TLS (mTLS)
-
-Enable client certificate verification:
-
-```ballerina
-listener http:Listener mtlsEP = new (9443, {
-    secureSocket: {
-        key: {
-            path: "/opt/integrations/keystore.p12",
-            password: "changeit"
-        },
-        mutualSsl: {
-            cert: {
-                path: "/opt/integrations/truststore.p12",
-                password: "changeit"
-            },
-            verifyClient: http:REQUIRE
-        }
-    }
-});
-```
-
-### Truststore configuration
-
-Configure trusted CA certificates for outbound connections:
-
-```ballerina
-final http:Client secureClient = check new ("https://api.example.com", {
-    secureSocket: {
-        cert: {
-            path: "/opt/integrations/truststore.p12",
-            password: "changeit"
-        }
-    }
-});
-```
-
-### Certificate rotation
-
-Automate certificate rotation using a script or cert-manager (Kubernetes):
-
-```yaml
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: integration-cert
-spec:
-  secretName: integration-tls
-  issuerRef:
-    name: letsencrypt-prod
-    kind: ClusterIssuer
-  commonName: integration.example.com
-  dnsNames:
-    - integration.example.com
-  renewBefore: 720h  # Renew 30 days before expiry
-```
+- Generating keystores and truststores using `keytool`
+- Configuring TLS and mutual TLS for HTTP and gRPC services
+- Keeping certificate paths and passwords out of source code using `Config.toml` and environment variables
 
 ## Non-Root execution
 
@@ -270,6 +182,7 @@ spec:
 
 ## What's next
 
+- [Keystores and Truststores](keystore-truststore.md) -- Create and configure TLS certificates, keystores, and truststores
 - [Secrets & Encryption](secrets-encryption.md) -- Manage secrets and encryption
 - [Authentication](authentication.md) -- Configure authentication for services
 - [API Security](api-security-rate-limiting.md) -- Secure your API endpoints
