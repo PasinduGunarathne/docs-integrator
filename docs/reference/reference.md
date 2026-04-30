@@ -58,7 +58,10 @@ Command-line tools reference:
 - **[Server Configuration](icp/server-configuration.md)** — Server settings and authentication token keys
 - **[Database Configuration](icp/database-configuration.md)** — Main database and credentials database setup
 - **[Authentication](icp/authentication.md)** — Authentication backends and LDAP configuration
-- **[Connecting a Runtime](icp/connecting-a-runtime.md)** — Register an integration runtime with ICP
+- **[Connect an Integration to ICP](icp/connect-runtime.md)** — Register an integration runtime with ICP
+- **[Connect MI Integration to ICP](icp/connect-runtime-mi.md)** — Register a Micro Integrator runtime with ICP
+- **[Observability Setup](icp/observability-setup.md)** — Set up centralized logs and metrics monitoring with Fluent Bit and OpenSearch
+- **[MI Observability Setup](icp/observability-setup-mi.md)** — Set up centralized logs and metrics monitoring for MI runtimes
 - **[Deployment](icp/deployment.md)** — Docker Compose profiles and distribution commands
 
 ## Specifications & formats
