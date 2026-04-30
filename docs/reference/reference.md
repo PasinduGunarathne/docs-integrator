@@ -62,6 +62,7 @@ Command-line tools reference:
 - **[Connect MI Integration to ICP](icp/connect-runtime-mi.md)** — Register a Micro Integrator runtime with ICP
 - **[Observability Setup](icp/observability-setup.md)** — Set up centralized logs and metrics monitoring with Fluent Bit and OpenSearch
 - **[MI Observability Setup](icp/observability-setup-mi.md)** — Set up centralized logs and metrics monitoring for MI runtimes
+- **[MI Artifacts](icp/manage-mi-artficats.md)** — Navigate and manage MI artifacts in the ICP console
 - **[Deployment](icp/deployment.md)** — Docker Compose profiles and distribution commands
 
 ## Specifications & formats
