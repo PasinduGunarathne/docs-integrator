@@ -4,9 +4,7 @@ title: Overview and Architecture
 
 # Overview and Architecture
 
-WSO2 Integrator is a Ballerina-powered integration platform that allows you to connect anything and solve any integration challenge. It combines low-code simplicity with pro-code power, enabling you to build AI agents, APIs, data, and events across cloud, on-premises, and hybrid environments.
-
-You design integrations visually in the [WSO2 Integrator IDE](https://wso2.com/integration-platform/integrator/), and the platform generates production-ready Ballerina code or you write code directly and see it reflected in the visual designer.
+WSO2 Integrator is a 100% open-source integration solution that allows you to connect AI agents, APIs, data, and events across cloud, on-prem, and hybrid environments, and build any type of integration and AI agent. The AI-assisted development experience provides 100% low-code and pro-code parity, enabling you to combine low-code simplicity with pro-code power.
 
 ## High-level architecture
 
@@ -14,9 +12,9 @@ You design integrations visually in the [WSO2 Integrator IDE](https://wso2.com/i
 
 The platform follows a three-layer architecture:
 
-1. Design time : WSO2 Integrator IDE with a visual designer and a code editor (both enhanced by AI assistance).
-2. Runtime : Ballerina-powered execution engine with built-in networking, concurrency, and type safety.
-3. Deployment : Deploy anywhere: Docker, Kubernetes, cloud providers, or as a SaaS.
+1. Design time: The WSO2 Integrator IDE with a visual designer and a code editor (both enhanced by AI assistance).
+2. Runtime: A Ballerina-powered execution engine with built-in networking, concurrency, and type safety.
+3. Deployment: Available as self-hosted software that can be deployed on Docker, Kubernetes, cloud, and VMs, or as a fully-managed SaaS.
 
 ## Run it your way
 
@@ -36,12 +34,12 @@ Zero infrastructure to manage. WSO2 handles provisioning, upgrades, scaling, and
 - Continuous updates, zero downtime
 - Multi-region availability
 
-## Low-code / pro-code duality
+## 100% low-code and pro-code parity
 
 This is the key differentiator. Every integration can be built two ways, and both stay in sync:
 
-- Low-code (Visual designer) : Add components through a visual interface, configure properties visually, see the flow as a diagram
-- Pro-code (Ballerina editor) : Write code directly with full IDE support, auto-complete, and type checking
+- Low-code (Graphical designer): Add components through a graphical interface, configure properties visually, and see the flow as a diagram
+- Pro-code (Ballerina editor): Write code directly with full IDE support, auto-complete, and type checking
 
 Changes in one view are instantly reflected in the other. There's no "export" step and no loss of fidelity. Both experiences are further enhanced by AI assistance to speed up development.
 
@@ -49,10 +47,10 @@ Changes in one view are instantly reflected in the other. There's no "export" st
 
 Under the hood, every integration is a Ballerina program. This means:
 
-- Cloud-native by design : Built-in support for HTTP, gRPC, GraphQL, WebSocket, Kafka, and more
-- Type-safe data handling : Catch data mapping errors at compile time, not in production
-- Sequence diagrams as code : Ballerina's unique sequence diagram view shows exactly how your integration communicates with external systems
-- Standard library : Rich set of packages for data formats (JSON, XML, CSV, EDI), protocols, and connectors
+- Cloud-native by design: Built-in support for HTTP, gRPC, GraphQL, WebSocket, Kafka, and more
+- Type-safe data handling: Catch data mapping errors at compile time, not in production
+- Sequence diagrams as code: Ballerina's unique sequence diagram view shows exactly how your integration communicates with external systems
+- Standard library: Rich set of packages for data formats (JSON, XML, CSV, EDI), protocols, and connectors
 
 ## Next steps
 
