@@ -1,16 +1,21 @@
+---
+title: Salesforce
+---
+
 # Salesforce Connector Overview
 
-Salesforce is a cloud-based CRM platform that provides tools for sales, service, marketing, and more. The Ballerina `ballerinax/salesforce` connector (v8.3.0) provides programmatic access to Salesforce through the REST API, Bulk API, SOAP API, and Change Data Capture events, enabling you to integrate Salesforce data into your Ballerina integration flows.
+Salesforce is a cloud-based CRM platform that provides tools for sales, service, marketing, and more. The Ballerina `ballerinax/salesforce` connector (v8.6.0) provides programmatic access to Salesforce through the REST API, Bulk API, SOAP API, and Change Data Capture / Platform Events, enabling you to integrate Salesforce data into your Ballerina integration flows.
 
-## Key features
+## Key Features
 
 - Full CRUD operations on Salesforce records (sObjects) using record IDs and external IDs
 - SOQL query and SOSL search support for flexible data retrieval
 - Bulk data operations for large datasets using Bulk API v1 (`salesforce.bulk`) and v2 (`salesforce.bulkv2`)
 - Change Data Capture triggers for real-time event-driven processing of record creates, updates, deletes, and restores
+- Platform Events support for publishing and subscribing to custom event channels
 - Apex REST execution for custom server-side logic via the `salesforce.apex` module
 - SOAP API access for lead conversion via the `salesforce.soap` module
-- Metadata access, report execution, and password management operations
+- Metadata access, report execution, password management, and batch request operations
 
 ## Actions
 
@@ -28,7 +33,7 @@ See the **[Action Reference](actions.md)** for the full list of operations, para
 
 ## Triggers
 
-Triggers allow your integration to react to events happening in Salesforce in real time. The connector uses Salesforce Change Data Capture (CDC) to stream record change events to a `salesforce:Listener`, which invokes your service callbacks automatically — no polling required.
+Triggers allow your integration to react to events happening in Salesforce in real time. The connector uses Salesforce Change Data Capture (CDC) and Platform Events to stream events to a `salesforce:Listener`, which invokes your service callbacks automatically — no polling required.
 
 Supported trigger events:
 
@@ -38,6 +43,7 @@ Supported trigger events:
 | Record updated | `onUpdate` | Fired when an existing record is modified. |
 | Record deleted | `onDelete` | Fired when a record is deleted. |
 | Record restored | `onRestore` | Fired when a deleted record is undeleted. |
+| Platform event received | `onMessage` | Fired when a platform event is published. |
 
 See the **[Trigger Reference](triggers.md)** for listener configuration, service callbacks, and the `EventData` payload structure.
 

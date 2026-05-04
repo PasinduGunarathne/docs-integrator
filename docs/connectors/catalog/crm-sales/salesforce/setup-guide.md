@@ -81,3 +81,8 @@ https://your-instance.salesforce.com
 ```
 
 You can find it in the token exchange response as `instance_url`, or in Setup under **My Domain**.
+
+## Next steps
+
+- [Action Reference](actions.md) - Available operations
+- [Trigger Reference](triggers.md) - Event-driven integration

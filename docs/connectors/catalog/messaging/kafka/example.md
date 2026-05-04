@@ -72,10 +72,10 @@ Select **Save** on the connection form. The canvas updates to show the `kafkaPro
 #### Step 5: Add an automation entry point
 
 1. In the left panel under **Entry Points**, select **+** (**Add Entry Point**).
-2. Select **Automation** from the entry point type list.
-3. Accept the default name `main` and select **Save**.
+2. Under **Automation**, select **Automation**.
+3. In the **Create New Automation** dialog, accept the default settings and select **Create**.
 
-The Automation flow opens on the canvas with a **Start** node and an **Error Handler** node.
+The canvas switches to the Automation flow view, showing a **Start** node, an **Error Handler** node, and an **End** node.
 
 #### Step 6: Select and configure the send operation
 
@@ -182,7 +182,11 @@ In the left panel, select **Configurations**, then set a value for each configur
 
 #### Step 6: Add an automation entry point
 
-In the WSO2 Integrator panel, expand **Entry Points**, then select **+ Add Entry Point** and choose **Automation**. An entry point named `main` is created and the Automation flow canvas opens.
+1. In the left panel under **Entry Points**, select **+** (**Add Entry Point**).
+2. Under **Automation**, select **Automation**.
+3. In the **Create New Automation** dialog, accept the default settings and select **Create**.
+
+The canvas switches to the Automation flow view, showing a **Start** node, an **Error Handler** node, and an **End** node.
 
 #### Step 7: Select and configure the poll operation
 
