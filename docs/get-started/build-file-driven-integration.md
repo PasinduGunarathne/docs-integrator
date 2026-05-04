@@ -8,6 +8,14 @@ title: Build a File-Driven Integration
 
 File integrations are ideal for batch uploads, scheduled file processing, and ETL workflows triggered by files appearing in a folder or FTP server.
 
+<ThemedImage
+    alt="File-driven integration diagram"
+    sources={{
+        light: useBaseUrl('/img/get-started/build-file-driven-integration/file-diagram-light.svg'),
+        dark: useBaseUrl('/img/get-started/build-file-driven-integration/file-diagram-dark.svg'),
+    }}
+/>
+
 ## Prerequisites
 
 - [WSO2 Integrator installed](install.md)

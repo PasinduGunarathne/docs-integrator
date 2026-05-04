@@ -8,6 +8,14 @@ title: Build an Event-Driven Integration
 
 Event integrations are ideal for reactive workflows triggered by messages from Kafka, RabbitMQ, MQTT, or other message brokers.
 
+<ThemedImage
+    alt="Event-driven integration diagram"
+    sources={{
+        light: useBaseUrl('/img/get-started/build-event-driven-integration/event-diagram-light.svg'),
+        dark: useBaseUrl('/img/get-started/build-event-driven-integration/event-diagram-dark.svg'),
+    }}
+/>
+
 ## Prerequisites
 
 - [WSO2 Integrator extension installed](install.md)
