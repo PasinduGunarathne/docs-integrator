@@ -129,7 +129,7 @@ public function main() returns error? {
 
 ### Customizing Page Size, Margins, and Fonts
 
-`parseHtml` accepts a set of named options — page size, margins, a `maxPages` cap, custom fonts for non-Latin scripts, and extra CSS injected into every render.
+`parseHtml` accepts a set of named options — page size, margins, a `maxPages` cap, custom fonts for non-Latin scripts, a `fallbackFontSize` applied when CSS does not specify one, and extra CSS injected into every render.
 
 1. **Add a Variable step for the font bytes (optional)** — If you need to render non-Latin scripts such as Chinese, Japanese, Korean, Arabic, or Devanagari, click **+** and select **Call Function**. Call `io:fileReadBytes("./resources/NotoSansSC.ttf")` and assign the result to a `byte[] & readonly` variable named `fontBytes`.
 
@@ -156,7 +156,9 @@ public function renderWithOptions(string html) returns byte[]|error {
 }
 ```
 
-For the complete list of options, the `StandardPageSize` enum, the `CustomPageSize` record, and the `Font` record, see the [ballerina/pdf action reference](../../connectors/catalog/built-in/pdf/action-reference.md#conversionoptions).
+For landscape orientation, use a `pdf:CustomPageSize` with the width and height of the standard portrait size swapped.
+
+For the complete list of options, the `StandardPageSize` enum, the `CustomPageSize` record, and the `Font` record, see the [ballerina/pdf API reference on Ballerina Central](https://central.ballerina.io/ballerina/pdf/latest).
 
 ### Supported HTML and CSS
 
@@ -226,9 +228,10 @@ For a full step-by-step walkthrough covering templates, custom fonts for non-Lat
 - **Escape untrusted input before rendering** — any value that ends up in the HTML must be escaped for angle brackets, quotes, and ampersands. Treat query parameters, form inputs, and user-supplied data as untrusted.
 - **Load custom fonts once at module level** — font files are several megabytes each. Read them into a `readonly` module-level variable at startup so every render reuses the same bytes.
 - **Set `maxPages` on user-driven renders** — cap the number of pages rendered from any template that takes external input to avoid runaway documents and memory pressure.
+- **Catch the right error type** — `parseHtml` raises `pdf:HtmlParseError` for malformed HTML and `pdf:RenderError` during rendering; `extractText`, `toImages`, and their `file*`/`url*` variants raise `pdf:ReadError` when the input PDF cannot be read. Match on a specific subtype only when you need to retry or substitute behavior; otherwise check the base `pdf:Error`.
 
 ## What's Next
 
-- [ballerina/pdf action reference](../../connectors/catalog/built-in/pdf/action-reference.md) — full signatures, supporting records, and error types.
+- [ballerina/pdf API reference](https://central.ballerina.io/ballerina/pdf/latest) — full signatures, supporting records, and error types.
 - [PDF Generation Service](../../tutorials/pdf-generation-service.md) — end-to-end tutorial covering HTML templates, custom fonts, and production considerations.
 - [HTTP Service](../integration-artifacts/service/http-service.md) — return PDFs as binary payloads from an HTTP resource.

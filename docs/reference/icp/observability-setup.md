@@ -44,14 +44,33 @@ Note the host, port, and credentials — you will configure them in the ICP Serv
 
 ### Evaluation setup
 
-For a quick single-node setup, download and extract the [OpenSearch distribution](https://opensearch.org/downloads.html). To skip TLS and authentication during evaluation, disable the security plugin:
+For a quick single-node setup, download and extract the [OpenSearch distribution](https://opensearch.org/downloads.html). Run the **demo security configuration** installer that ships with OpenSearch:
+
+```bash
+# Set a strong admin password (required since OpenSearch 2.12)
+export OPENSEARCH_INITIAL_ADMIN_PASSWORD="YourStrong@Pass2026!"
+export OPENSEARCH_HOME="/path/to/opensearch-2.19.1"
+
+# Linux / macOS
+cd $OPENSEARCH_HOME/plugins/opensearch-security/tools
+./install_demo_configuration.sh -y
+
+# Windows (PowerShell)
+$env:OPENSEARCH_INITIAL_ADMIN_PASSWORD = "YourStrong@Pass2026!"
+$env:OPENSEARCH_HOME = "C:\opensearch\opensearch-2.19.1"
+cd $env:OPENSEARCH_HOME\plugins\opensearch-security\tools
+cmd /c install_demo_configuration.bat -y
+```
+
+Then add single-node discovery and auto-initialization to `config/opensearch.yml`:
 
 ```yaml
 # config/opensearch.yml — append:
-plugins.security.disabled: true
+discovery.type: single-node
+plugins.security.allow_default_init_securityindex: true
 ```
 
-Then start OpenSearch:
+Start OpenSearch:
 
 ```bash
 # Linux / macOS
@@ -61,13 +80,15 @@ Then start OpenSearch:
 .\bin\opensearch.bat
 ```
 
-Verify:
+Verify (note HTTPS and `-k` for the self-signed demo certificate):
 
 ```bash
-curl http://localhost:9200
+curl -sk -u admin:YourStrong@Pass2026! https://localhost:9200
 ```
 
-With security disabled, OpenSearch listens on plain HTTP (port 9200). Set `tls Off` in Fluent Bit and use `http://` in the ICP Server config (see Steps 3 and 5).
+The demo security configuration keeps the security plugin **enabled** with self-signed TLS certificates and basic authentication. Set `tls On` and `tls.verify Off` in Fluent Bit, and use `https://` in the ICP Server config (see Steps 3 and 5).
+
+The demo configuration is for evaluation only. In production, use properly signed certificates and strong credentials. See the [OpenSearch security documentation](https://opensearch.org/docs/latest/security/) for details.
 
 ## Step 2: Create Index Templates
 
@@ -211,10 +232,11 @@ The `secret` must be created **before** starting the BI runtime. See [Connect an
 
 Fluent Bit tails the BI log files and ships them to OpenSearch.
 
-You need two config files side by side:
+You need three config files side by side:
 
 - **`fluent-bit.conf`** — pipeline (inputs, filters, outputs)
 - **`parsers.conf`** — log format parser
+- **`scripts/scripts.lua`** — Lua enrichment scripts (adds fields required by ICP's Metrics page)
 
 ### Inputs and outputs
 
@@ -239,6 +261,32 @@ Ballerina logfmt logs use ISO 8601 timestamps (`2026-04-30T07:09:27.966Z`). Defi
     Time_Format %Y-%m-%dT%H:%M:%S.%LZ
     Time_Keep   On
 ```
+
+### Lua enrichment scripts
+
+The Lua scripts enrich log records with fields that the ICP Metrics page requires (e.g. `response_time` in milliseconds, `status`, `integration`). They also generate hash-based document IDs for deduplication.
+
+Download [`scripts.lua`](https://github.com/wso2/integration-control-plane/blob/main/icp_server/resources/observability/opensearch-observability-dashboard/config/fluent-bit/scripts/scripts.lua) and place it in a `scripts/` subdirectory next to your `fluent-bit.conf`:
+
+```
+fluent-bit/
+├── fluent-bit.conf
+├── parsers.conf
+└── scripts/
+    └── scripts.lua
+```
+
+The key Lua functions used in the pipeline:
+
+| Function | Purpose |
+|----------|---------|
+| `extract_app_from_path` | Derives `app_name` from the log file path |
+| `enrich_bal_logs` | Adds `product` and `app_module` fields |
+| `construct_bal_app_name` | Builds the `app` and `deployment` fields |
+| `extract_bal_metrics_data` | Parses metrics-specific fields (response time in ms, status, method, URL) |
+| `generate_document_id` | Creates a hash-based `doc_id` for deduplication |
+
+The Lua enrichment is **required** for the ICP Metrics page to display data. Without `extract_bal_metrics_data`, the ICP server cannot categorize inbound vs. outbound metrics, and the Metrics page shows "No metrics data" even when the underlying OpenSearch index contains records.
 
 ### fluent-bit.conf
 
@@ -268,6 +316,65 @@ Replace `<bi-logs>` with the actual path to your BI application's `logs/` direct
     Read_from_Head On
     Path_Key     log_file_path
 
+# ── Enrich app logs ──
+[FILTER]
+    Name    lua
+    Match   ballerina_app_logs
+    Script  scripts/scripts.lua
+    Call    extract_app_from_path
+
+[FILTER]
+    Name    lua
+    Match   ballerina_app_logs
+    Script  scripts/scripts.lua
+    Call    enrich_bal_logs
+
+[FILTER]
+    Name    lua
+    Match   ballerina_app_logs
+    Script  scripts/scripts.lua
+    Call    construct_bal_app_name
+
+# ── Enrich metrics logs ──
+[FILTER]
+    Name    lua
+    Match   ballerina_metrics
+    Script  scripts/scripts.lua
+    Call    extract_app_from_path
+
+[FILTER]
+    Name    lua
+    Match   ballerina_metrics
+    Script  scripts/scripts.lua
+    Call    enrich_bal_logs
+
+[FILTER]
+    Name    lua
+    Match   ballerina_metrics
+    Script  scripts/scripts.lua
+    Call    construct_bal_app_name
+
+[FILTER]
+    Name    lua
+    Match   ballerina_metrics
+    Script  scripts/scripts.lua
+    Call    extract_bal_metrics_data
+
+# ── Document IDs (deduplication) ──
+[FILTER]
+    Name    lua
+    Match   ballerina_app_logs
+    Script  scripts/scripts.lua
+    Call    generate_document_id
+    time_as_table true
+
+[FILTER]
+    Name    lua
+    Match   ballerina_metrics
+    Script  scripts/scripts.lua
+    Call    generate_document_id
+    time_as_table true
+
 # ── Outputs ──
 [OUTPUT]
     Name            opensearch
@@ -278,9 +385,11 @@ Replace `<bi-logs>` with the actual path to your BI application's `logs/` direct
     Logstash_Prefix ballerina-application-logs
     Replace_Dots    On
     Suppress_Type_Name On
-    tls             Off
+    Id_Key          doc_id
+    tls             On
+    tls.verify      Off
     HTTP_User       admin
-    HTTP_Passwd     admin
+    HTTP_Passwd     <password>
 
 [OUTPUT]
     Name            opensearch
@@ -291,14 +400,18 @@ Replace `<bi-logs>` with the actual path to your BI application's `logs/` direct
     Logstash_Prefix ballerina-metrics-logs
     Replace_Dots    On
     Suppress_Type_Name On
-    tls             Off
+    Id_Key          doc_id
+    tls             On
+    tls.verify      Off
     HTTP_User       admin
-    HTTP_Passwd     admin
+    HTTP_Passwd     <password>
 ```
 
-**TLS**: Set `tls On` and `tls.verify Off` if OpenSearch uses HTTPS with a self-signed certificate. Set `tls Off` for plain HTTP (e.g. security plugin disabled).
+**TLS**: The config above assumes OpenSearch with the demo security configuration (HTTPS with self-signed certs). Set `tls Off` if OpenSearch runs plain HTTP.
 
-**Auth**: `HTTP_User` / `HTTP_Passwd` are required even when OpenSearch has security disabled — Fluent Bit sends them and OpenSearch ignores them.
+**Auth**: `HTTP_User` / `HTTP_Passwd` are the OpenSearch credentials configured during setup.
+
+**Id_Key**: `doc_id` enables deduplication — if Fluent Bit restarts and re-reads the same log lines, OpenSearch overwrites instead of creating duplicates.
 
 `Replace_Dots On` is important — Ballerina logfmt fields contain dots (e.g. `src.module`, `http.method`) which OpenSearch rejects as field names. This setting converts them to underscores.
 
@@ -309,7 +422,7 @@ Replace `<bi-logs>` with the actual path to your BI application's `logs/` direct
 After the BI runtime has been running for a minute or two:
 
 ```bash
-curl http://localhost:9200/_cat/indices/ballerina-*?v
+curl -sk -u admin:<password> https://localhost:9200/_cat/indices/ballerina-*?v
 ```
 
 You should see:
@@ -319,14 +432,24 @@ ballerina-application-logs-2026.04.30
 ballerina-metrics-logs-2026.04.30
 ```
 
-If your OpenSearch requires authentication, add `-u admin:<password>`. For HTTPS, add `-k`.
+For plain HTTP OpenSearch (no TLS), use `http://` and drop `-k`.
 
 ### Check ICP Console
 
-1. Log into the ICP Console.
-2. Navigate to a project that has a connected BI runtime.
-3. Open **Logs** — you should see runtime log entries.
-4. Open **Metrics** — you should see request counts and latency charts.
+1. Log into the ICP Console at `https://<icp-host>:9446`.
+2. Navigate to **Projects → \<project\> → Components → \<component\>**.
+3. The component overview shows the service endpoints and environment cards with runtime status.
+4. Click the **Logs** icon in the sidebar (📋) — you should see runtime log entries with timestamps, log levels, and messages. Use the environment, level, and time range filters to narrow results.
+5. Click the **Metrics** icon in the sidebar (📊) — you should see:
+   - Summary cards: Total Requests, Error Count, Error Percentage, 95th Percentile latency
+   - **Requests Per Minute** chart (success vs. failed)
+   - **Request Latency** chart (average, P50, P95, P99)
+   - **Most Used APIs** table showing each endpoint with request count, error count, and average response time
+
+Metrics are generated per inbound HTTP request. If the Metrics page shows "No metrics data", send some traffic to your integration first:
+```bash
+curl http://localhost:8090/<your-endpoint>
+```
 
 ## Troubleshooting
 
@@ -335,6 +458,7 @@ If your OpenSearch requires authentication, add `-u admin:<password>`. For HTTPS
 | Metrics page shows "No metrics data" | BI runtime has no inbound HTTP requests | Metrics are generated per-request — send traffic first |
 | Metrics page shows "No metrics data" | `metricsLogsEnabled` not set | Add `metricsLogsEnabled = true` to `[ballerina.observe]` in `Config.toml` |
 | Metrics page shows "No metrics data" | Metrics log file not configured | Set `logFilePath` in `[ballerinax.metrics.logs]` |
+| Metrics page shows "No metrics data" | Lua enrichment scripts missing from Fluent Bit config | Add the Lua `[FILTER]` blocks (especially `extract_bal_metrics_data`) — see Step 5 |
 | Logs page shows "Observability service is unavailable" | ICP Server can't reach OpenSearch | Verify `opensearchUrl` in ICP Server's `deployment.toml` |
 | OpenSearch rejects documents with "total fields [1000] exceeded" | Deeply nested JSON in log messages | Increase limit: `curl -X PUT '.../_settings' -d '{"index.mapping.total_fields.limit": 2000}'` or add to the index template |
 
