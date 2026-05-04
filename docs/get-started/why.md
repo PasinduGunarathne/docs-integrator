@@ -4,7 +4,7 @@ title: Why WSO2 Integrator
 
 # Why WSO2 Integrator
 
-Connect anything, and solve any integration challenge. Connect AI agents, APIs, data, and events across cloud, on-premises, and hybrid environments. Build any type of integration and AI agent with the 100% open-source WSO2 Integrator.
+Connect AI agents, APIs, data, and events across cloud, on-premises, and hybrid environments. Build any type of integration and AI agent with the 100% open-source WSO2 Integrator.
 
 ## Build any type of AI agent or integration
 
@@ -32,8 +32,8 @@ Visually map and transform complex data structures between different formats wit
 ### Ballerina-powered
 Built on Ballerina, a language designed specifically for integration. You get compile-time type safety for data transformations, built-in network primitives, and sequence diagram visualization—capabilities that general-purpose languages can't match.
 
-### More than 200 connectors
-Pre-built connectors for Software as a Service (SaaS) applications, databases, messaging systems, cloud services, AI and LLM providers, and protocols. You also gain the ability to use any Ballerina package from Central.
+### More than 600 connectors
+Pre-built connectors for Software as a Service (SaaS) applications, databases, messaging systems, cloud services, AI and LLM providers, and protocols. You also gain the ability to use any Ballerina package from Ballerina Central.
 
 ### Monitoring and management
 Gain centralized control and observability to monitor integrations and agents continuously. Ensure the health and performance of your ecosystem with built-in metrics and logs.
