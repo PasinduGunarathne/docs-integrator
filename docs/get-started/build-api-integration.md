@@ -12,17 +12,13 @@ title: Build an API Integration
 
 ## Architecture
 
-```mermaid
-sequenceDiagram
-    participant Client
-    participant Service as Your Service<br/>/hello:9090
-    participant ExtAPI as External API<br/>apis.wso2.com
-
-    Client->>Service: GET /greeting
-    Service->>ExtAPI: GET /mi-qsg/v1.0
-    ExtAPI-->>Service: {"message":"Hello"}
-    Service-->>Client: {"message":"Hello!!!"}
-```
+<ThemedImage
+    alt="API Integration Architecture"
+    sources={{
+        light: useBaseUrl('/img/get-started/build-api-integration/api-diagram-light.svg'),
+        dark: useBaseUrl('/img/get-started/build-api-integration/api-diagram-dark.svg'),
+    }}
+/>
 
 ## Step 1: Create the project
 
