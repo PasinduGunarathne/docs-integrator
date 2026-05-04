@@ -91,9 +91,9 @@ Select **Save**. The completed automation flow now shows the full **Start → Ge
 
 Try this sample in WSO2 Integration Platform.
 
-[![Deploy to Devant](https://openindevant.choreoapps.dev/images/DeployDevant-White.svg)](https://console.devant.dev/new?gh=wso2/integration-samples/tree/main/connectors/azure.ai.search_connector_sample)
+[![Deploy to Devant](https://openindevant.choreoapps.dev/images/DeployDevant-White.svg)](https://console.devant.dev/new?gh=wso2/integration-samples/tree/main/integrator-default-profile/connectors/azure.ai.search_connector_sample)
 
-[View source on GitHub](https://github.com/wso2/integration-samples/tree/main/connectors/azure.ai.search_connector_sample)
+[View source on GitHub](https://github.com/wso2/integration-samples/tree/main/integrator-default-profile/connectors/azure.ai.search_connector_sample)
 
 ## More code examples
 

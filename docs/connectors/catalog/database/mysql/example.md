@@ -93,6 +93,6 @@ Fill in the operation fields, then click **Save** to add the step to the automat
 
 Try this sample in WSO2 Integration Platform.
 
-[![Deploy to Devant](https://openindevant.choreoapps.dev/images/DeployDevant-White.svg)](https://console.devant.dev/new?gh=wso2/integration-samples/tree/main/connectors/mysql_connector_sample)
+[![Deploy to Devant](https://openindevant.choreoapps.dev/images/DeployDevant-White.svg)](https://console.devant.dev/new?gh=wso2/integration-samples/tree/main/integrator-default-profile/connectors/mysql_connector_sample)
 
-[View source on GitHub](https://github.com/wso2/integration-samples/tree/main/connectors/mysql_connector_sample)
+[View source on GitHub](https://github.com/wso2/integration-samples/tree/main/integrator-default-profile/connectors/mysql_connector_sample)

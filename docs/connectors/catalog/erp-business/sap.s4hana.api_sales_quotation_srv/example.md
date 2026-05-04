@@ -92,9 +92,9 @@ Select **Save** to create the connection. The `apiSalesQuotationSrvClient` entry
 
 Try this sample in WSO2 Integration Platform.
 
-[![Deploy to Devant](https://openindevant.choreoapps.dev/images/DeployDevant-White.svg)](https://console.devant.dev/new?gh=wso2/integration-samples/tree/main/connectors/sap.s4hana.api_sales_quotation_srv_connector_sample)
+[![Deploy to Devant](https://openindevant.choreoapps.dev/images/DeployDevant-White.svg)](https://console.devant.dev/new?gh=wso2/integration-samples/tree/main/integrator-default-profile/connectors/sap.s4hana.api_sales_quotation_srv_connector_sample)
 
-[View source on GitHub](https://github.com/wso2/integration-samples/tree/main/connectors/sap.s4hana.api_sales_quotation_srv_connector_sample)
+[View source on GitHub](https://github.com/wso2/integration-samples/tree/main/integrator-default-profile/connectors/sap.s4hana.api_sales_quotation_srv_connector_sample)
 
 ## More code examples
 

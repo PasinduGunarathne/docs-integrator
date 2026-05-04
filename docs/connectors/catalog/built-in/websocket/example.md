@@ -88,6 +88,6 @@ In the WSO2 Integrator explorer, select **Add Artifact**, choose **Automation** 
 
 Try this sample in WSO2 Integration Platform.
 
-[![Deploy to Devant](https://openindevant.choreoapps.dev/images/DeployDevant-White.svg)](https://console.devant.dev/new?gh=wso2/integration-samples/tree/main/connectors/websocket_connector_sample)
+[![Deploy to Devant](https://openindevant.choreoapps.dev/images/DeployDevant-White.svg)](https://console.devant.dev/new?gh=wso2/integration-samples/tree/main/integrator-default-profile/connectors/websocket_connector_sample)
 
-[View source on GitHub](https://github.com/wso2/integration-samples/tree/main/connectors/websocket_connector_sample)
+[View source on GitHub](https://github.com/wso2/integration-samples/tree/main/integrator-default-profile/connectors/websocket_connector_sample)

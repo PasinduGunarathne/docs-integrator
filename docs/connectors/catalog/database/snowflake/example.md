@@ -89,7 +89,7 @@ Click **Query** to open the Query operation configuration form and fill in the f
 
 ![Completed flow on the canvas showing Start → snowflake:query → Error Handler → End](/img/connectors/catalog/database/snowflake/snowflake_screenshot_06_completed_flow.png)
 
-[![Deploy to Devant](https://openindevant.choreoapps.dev/images/DeployDevant-White.svg)](https://console.devant.dev/new?gh=wso2/integration-samples/tree/main/connectors/snowflake_connector_demo)
+[![Deploy to Devant](https://openindevant.choreoapps.dev/images/DeployDevant-White.svg)](https://console.devant.dev/new?gh=wso2/integration-samples/tree/main/integrator-default-profile/connectors/snowflake_db_connector)
 
 ## More code examples
 
