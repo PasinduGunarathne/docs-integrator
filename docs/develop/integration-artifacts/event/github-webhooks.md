@@ -37,7 +37,7 @@ GitHub event integrations receive webhook callbacks from GitHub and trigger hand
    All event handlers for the selected channel are added automatically. Click any handler to open it in the flow diagram view and implement the logic.
 
 ```ballerina
-import ballerinax/github;
+import ballerinax/trigger.github;
 import ballerina/log;
 
 configurable string webhookSecret = ?;
@@ -47,34 +47,34 @@ listener github:Listener githubListener = new (port, {webhookSecret: webhookSecr
 
 service github:IssuesService on githubListener {
 
-    remote function onOpened(github:IssueEvent event) returns error? {
+    remote function onOpened(github:IssuesEvent event) returns error? {
         log:printInfo("Issue opened",
                       number = event.issue.number,
                       title = event.issue.title,
                       repo = event.repository.name);
     }
 
-    remote function onClosed(github:IssueEvent event) returns error? {
+    remote function onClosed(github:IssuesEvent event) returns error? {
         log:printInfo("Issue closed", number = event.issue.number);
     }
 
-    remote function onReopened(github:IssueEvent event) returns error? {
+    remote function onReopened(github:IssuesEvent event) returns error? {
         log:printInfo("Issue reopened", number = event.issue.number);
     }
 
-    remote function onAssigned(github:IssueEvent event) returns error? {
+    remote function onAssigned(github:IssuesEvent event) returns error? {
         log:printInfo("Issue assigned", number = event.issue.number);
     }
 
-    remote function onUnassigned(github:IssueEvent event) returns error? {
+    remote function onUnassigned(github:IssuesEvent event) returns error? {
         log:printInfo("Issue unassigned", number = event.issue.number);
     }
 
-    remote function onLabeled(github:IssueEvent event) returns error? {
+    remote function onLabeled(github:IssuesEvent event) returns error? {
         log:printInfo("Issue labeled", number = event.issue.number);
     }
 
-    remote function onUnlabeled(github:IssueEvent event) returns error? {
+    remote function onUnlabeled(github:IssuesEvent event) returns error? {
         log:printInfo("Issue unlabeled", number = event.issue.number);
     }
 }
@@ -163,11 +163,9 @@ When a GitHub Events service is created, WSO2 Integrator adds all handlers for t
 | `onUnassigned` | A reviewer is unassigned |
 | `onLabeled` | A label is added |
 | `onUnlabeled` | A label is removed |
-| `onSynchronize` | New commits are pushed to the pull request branch |
+| `onEdited` | A pull request title, body, or base branch is edited |
 | `onReviewRequested` | A review is requested |
 | `onReviewRequestRemoved` | A review request is removed |
-| `onReadyForReview` | A draft pull request is marked ready for review |
-| `onConvertedToDraft` | A pull request is converted to a draft |
 
 ### IssueCommentService handlers
 
@@ -202,7 +200,7 @@ When a GitHub Events service is created, WSO2 Integrator adds all handlers for t
 | `onCreated` | A release draft is created |
 | `onEdited` | A release is edited |
 | `onDeleted` | A release is deleted |
-| `onPrereleased` | A release is marked as a pre-release |
+| `onPreReleased` | A release is marked as a pre-release |
 | `onReleased` | A pre-release is promoted to a full release |
 
 ### LabelService handlers
