@@ -355,4 +355,4 @@ The same pattern — parameterised HTML template plus `pdf:parseHtml` — is the
 
 - [HTTP Service](../develop/integration-artifacts/service/http.md) — the reference for services, resources, and return types
 - [REST API Aggregation Service](rest-api-aggregation-service.md) — another HTTP-service walkthrough, with parallel backend calls
-- [Data Mapper](../develop/integration-artifacts/supporting/data-mapper.md) — transform request payloads before rendering, when your input shape doesn't match the template's slots directly
+- [Data Mapper](../develop/integration-artifacts/supporting/data-mapper/data-mapper.md) — transform request payloads before rendering, when your input shape doesn't match the template's slots directly

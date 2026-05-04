@@ -250,4 +250,4 @@ service on fileListener {
 
 - [FTP / SFTP](ftp-sftp.md) — monitor a remote file server instead of a local directory
 - [Connections](../supporting/connections.md) — reuse connection credentials across services
-- [Data Mapper](../supporting/data-mapper.md) — transform incoming file payloads between formats
+- [Data Mapper](../supporting/data-mapper/data-mapper.md) — transform incoming file payloads between formats

@@ -830,5 +830,5 @@ listener ftp:Listener ftpListener = new (
 
 - [Local files](local-files.md) — monitor a local directory instead of a remote server
 - [Connections](../supporting/connections.md) — reuse FTP connection credentials across services
-- [Data Mapper](../supporting/data-mapper.md) — transform incoming file payloads between formats
+- [Data Mapper](../supporting/data-mapper/data-mapper.md) — transform incoming file payloads between formats
 - [FTP file processing tutorial](../../../tutorials/walkthroughs/process-edi-documents-from-ftp.md) — end-to-end walkthrough for EDI file processing over FTP

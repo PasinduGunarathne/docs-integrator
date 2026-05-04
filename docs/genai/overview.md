@@ -1,29 +1,46 @@
 ---
-title: GenAI Overview
+title: AI Integrations Overview
 ---
 
-# GenAI
+# AI Integrations
 
-Build AI-powered integrations with WSO2 Integrator — agents, RAG pipelines, MCP servers, and direct LLM connectivity.
+Build AI-powered integrations with WSO2 Integrator — direct LLM calls, natural functions, RAG pipelines, AI agents, and MCP servers — all from a single `ballerina/ai` abstraction that works with any LLM provider.
 
 ## Getting started
 
-- **[Setup](getting-started/setting-up-ai.md)** — Configure AI capabilities in your project
-- **[Smart Calculator](getting-started/build-a-smart-calculator-assistant.md)** — Build your first AI integration
-- **[Hotel Booking Agent](getting-started/build-a-sample-hotel-booking-agent.md)** — Create an AI agent with tools
+- **[Setting Up WSO2 Integrator](getting-started/setup.md)** — Install and configure your first AI-ready project
+- **[Build a Smart Calculator Assistant](getting-started/smart-calculator.md)** — Your first agent with tool calling
+- **[Build a Sample Hotel Booking Agent](getting-started/hotel-booking-agent.md)** — Conversational agent with memory and a chat endpoint
 
 ## Key concepts
 
+- **[What is an LLM?](key-concepts/what-is-llm.md)**
+- **[What is a Natural Function?](key-concepts/what-is-natural-function.md)**
 - **[What is an AI Agent?](key-concepts/what-is-ai-agent.md)**
-- **[What is RAG?](key-concepts/what-is-rag.md)**
-- **[What is MCP?](key-concepts/what-is-mcp.md)**
 - **[What are Tools?](key-concepts/what-are-tools.md)**
-- **[What is a Natural Function?](key-concepts/what-is-a-natural-function.md)**
+- **[What is AI Agent Memory?](key-concepts/what-is-agent-memory.md)**
+- **[What is MCP?](key-concepts/what-is-mcp.md)**
+- **[What is RAG?](key-concepts/what-is-rag.md)**
 
-## Build with AI
+## Develop AI Applications
 
-- **[AI Agents](agents/architecture-concepts.md)** — Multi-agent orchestration, tool binding, memory
-- **[RAG Pipelines](rag/architecture-overview.md)** — Document ingestion, embeddings, vector databases
-- **[MCP Servers](mcp/model-context-protocol-overview.md)** — Expose and consume Model Context Protocol tools
-- **[LLM Connectivity](llm-connectivity/model-selection.md)** — Connect to OpenAI, Anthropic, Azure, and more
-- **[Guardrails](guardrails/inputoutput.md)** — Content filtering, token management, responsible AI
+- **[Direct LLM Calls](develop/direct-llm/overview.md)** — Model providers, the `generate` node, prompts, and typed responses
+- **[Natural Functions](develop/natural-functions/overview.md)** — Typed Ballerina functions whose body is plain English
+- **[RAG](develop/rag/overview.md)** — Knowledge bases, chunkers, embeddings, vector stores, and query nodes
+- **[AI Agents](develop/agents/overview.md)** — The AI Chat Agent Wizard, tools, memory, observability, and evaluations
+- **[MCP Integration](develop/mcp/overview.md)** — Expose services as MCP servers or consume MCP tools from an agent
+
+## Tutorials
+
+- **[Email Generator with Direct LLM](tutorials/email-generator-direct-llm.md)**
+- **[Review Summarizer with Natural Function](tutorials/review-summarizer-natural-function.md)**
+- **[HR Knowledge Base Agent with RAG](tutorials/hr-knowledge-base-rag.md)**
+- **[Customer Care Agent with MCP](tutorials/customer-care-mcp.md)**
+- **[IT Helpdesk Chatbot with Persistent Memory](tutorials/it-helpdesk-chatbot.md)**
+- **[Legal Document Q&A with MCP and RAG](tutorials/legal-doc-qa.md)**
+
+## Reference
+
+- **[Ballerina Copilot Setup and Usage](reference/copilot-guide.md)**
+- **[AI Governance and Security](reference/ai-governance.md)**
+- **[Troubleshooting and Common Issues](reference/troubleshooting.md)**

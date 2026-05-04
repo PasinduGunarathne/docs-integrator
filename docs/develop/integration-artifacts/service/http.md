@@ -352,4 +352,4 @@ service /orders on new http:Listener(8090) {
 
 - [gRPC Service](grpc.md) — define services using Protocol Buffers
 - [Connections](../supporting/connections.md) — configure HTTP client connections to call external services
-- [Data Mapper](../supporting/data-mapper.md) — transform request/response payloads between formats
+- [Data Mapper](../supporting/data-mapper/data-mapper.md) — transform request/response payloads between formats

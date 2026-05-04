@@ -4,92 +4,87 @@ title: What is MCP?
 
 # What is MCP?
 
-The Model Context Protocol (MCP) is an open standard that defines how AI assistants discover and interact with external tools, data sources, and services. Think of MCP as a universal adapter between AI and enterprise systems.
+**MCP** stands for **Model Context Protocol**. It's a standard way for an AI assistant — like Claude Desktop, GitHub Copilot, or your own AI agent — to talk to external tools and data.
 
-Instead of building custom integrations for each AI assistant, you publish an MCP server once and any MCP-compatible client can use it.
+Think of MCP as a **universal plug**. Before MCP, every AI assistant had its own custom way of being connected to your systems. Each integration had to be built from scratch. With MCP, you publish your tools once, in one shape, and any MCP-compatible assistant can use them — no custom code on the assistant side, no custom code on your side beyond the server.
 
-## Why MCP?
+## Why Does This Matter?
 
-Before MCP, connecting AI assistants to enterprise data required custom code for each client. MCP standardizes this with a single protocol:
+Imagine you have a useful internal system — a CRM, a knowledge base, a ticketing tool. You want your AI assistants to use it: look up customers, search tickets, file new ones.
 
-- **Claude Desktop** can query your CRM
-- **GitHub Copilot** can access your internal APIs
-- **Custom agents** can use community MCP servers for Slack, GitHub, and file systems
+Without MCP, you would build:
 
-All through the same protocol, with no client-specific code.
+- An adapter for Claude Desktop.
+- A plugin for GitHub Copilot.
+- A custom integration for your own AI agent.
+- Another one for whatever new AI assistant launches next month.
 
-## How MCP works
+With MCP, you build the adapter **once** as an MCP **server**, and every assistant that speaks MCP can use it. Same shape, same protocol, same tool descriptions. The plug fits everywhere.
 
-```mermaid
-flowchart LR
-    Client["MCP Client<br/>(AI Assistant)<br/>Claude Desktop<br/>GitHub Copilot<br/>Custom Agent"]
-    Server["MCP Server<br/>(Your Service)<br/>WSO2 Integrator<br/>Functions, APIs<br/>Databases, etc."]
+## The Two Sides of MCP
 
-    Client <==> |MCP Protocol| Server
-```
+Every MCP relationship has two sides:
 
-1. **Discovery** -- The client connects and asks the server what tools, resources, and prompts are available
-2. **Invocation** -- The client calls a tool or reads a resource with structured parameters
-3. **Response** -- The server executes the request and returns results
-4. **Context** -- The AI assistant incorporates the results into its reasoning
+| Role | What it is | Example |
+|---|---|---|
+| **MCP Server** | The thing that exposes tools, data, or prompts. | A service in WSO2 Integrator that lets AI assistants look up your customers. |
+| **MCP Client** | The thing that uses those tools. | Claude Desktop, GitHub Copilot, or an AI agent inside WSO2 Integrator. |
 
-## MCP capabilities
+WSO2 Integrator can play either role:
 
-MCP defines three types of capabilities:
+- **As a server** — turn an integration into a set of tools that any AI assistant can call.
+- **As a client** — let your AI agents consume tools from any MCP server, including community servers for Slack, GitHub, file systems, and so on.
 
-| Capability | Description | Direction |
-|------------|-------------|-----------|
-| **Tools** | Functions the AI can call with parameters and receive results | AI calls your code |
-| **Resources** | Read-only data the AI can access for context | AI reads your data |
-| **Prompts** | Pre-defined prompt templates the AI can use | AI uses your templates |
+You can also do both at once: an integration that exposes some tools through MCP for outside assistants, and uses other MCP servers as part of its own AI agents.
 
-## MCP in WSO2 Integrator
+## What Can an MCP Server Offer?
 
-WSO2 Integrator supports MCP in two directions:
+MCP defines three kinds of things a server can expose:
 
-### As an MCP server
+| Capability | What it is | Example |
+|---|---|---|
+| **Tools** | Functions the AI can call (with arguments, with a return value). | *"Look up customer by ID"*, *"Create a ticket"*. |
+| **Resources** | Read-only data the AI can ask for. | A live snapshot of your knowledge base, a configuration file. |
+| **Prompts** | Reusable prompt templates the AI can fill in. | A standard *"Onboard a new employee"* template. |
 
-Expose your integrations as tools that AI assistants can discover and call.
+Most teams start with tools — they're the most useful and the easiest to wrap. Resources and prompts are powerful add-ons for richer integrations.
 
-```ballerina
-import ballerinax/mcp;
+> **What WSO2 Integrator supports today:** Tools are fully supported, both for [exposing your integration as an MCP server](/docs/genai/develop/mcp/exposing-as-mcp) and for [consuming MCP servers from an agent](/docs/genai/develop/mcp/consuming-mcp-from-agent). Resources and Prompts are part of the MCP specification but are not yet documented for use in WSO2 Integrator.
 
-@mcp:Tool {
-    name: "getOrderStatus",
-    description: "Look up the status of a customer order by order ID"
-}
-isolated function getOrderStatus(string orderId) returns json|error {
-    return check orderApi->get(string `/orders/${orderId}/status`);
-}
-```
+## How a Conversation Looks Over MCP
 
-### As an MCP client
+The protocol itself is simple. Here is the rhythm of a typical interaction:
 
-Consume external MCP tools from within your agents.
+1. The client connects and asks the server: *"What can you do?"*
+2. The server answers with the list of tools, their descriptions, and their parameter shapes.
+3. When the AI needs something, the client says: *"Please run `lookupCustomer` with `customerId = 'C-1234'`"*.
+4. The server runs the function and sends back the result.
+5. The AI uses the result to answer the user — or to decide what to do next.
 
-```ballerina
-final mcp:Client githubMcp = check new ({
-    serverCommand: "npx",
-    serverArgs: ["-y", "@modelcontextprotocol/server-github"]
-});
+The AI assistant never sees the server's source code. It only sees the *shape* of each tool — the same way an [AI agent](what-is-ai-agent.md) sees its own tools. This is why writing clear descriptions on your MCP tools is just as important as writing clear descriptions on your local tools.
 
-final agent:ChatAgent myAgent = check new (
-    model: llmClient,
-    systemPrompt: "You are a development assistant.",
-    tools: check githubMcp.getTools()
-);
-```
+## Why It Matters for Integrations
 
-## Transport options
+The reason MCP is a big deal for an integration platform is that it standardises something that used to be one-off and brittle:
 
-| Transport | Use Case |
-|-----------|----------|
-| **stdio** | Local MCP clients like Claude Desktop |
-| **SSE** | Remote or web-based clients |
-| **Streamable HTTP** | Modern HTTP with streaming support |
+- **Reusability** — one server, many AI assistants.
+- **Decoupling** — you can change the assistant without rebuilding the integration, and vice versa.
+- **Ecosystem** — community-maintained MCP servers exist for many popular SaaS products. Your AI agent can plug straight in.
+- **Governance** — because MCP is a clear boundary between "AI side" and "tools side", it's a natural place to put authentication, rate limiting, and auditing.
+
+In short: MCP turns "AI plus your stuff" from a custom build into a configuration exercise.
+
+## What MCP Is *Not*
+
+A few common misconceptions:
+
+- **MCP is not an LLM.** It does not generate text. It just connects AI assistants to tools.
+- **MCP is not a replacement for your APIs.** It sits in front of them. The MCP server still calls your existing APIs, databases, and services.
+- **MCP is not magic security.** Anything you expose over MCP becomes accessible to whoever connects. Treat your MCP server like any other public surface — authenticate, authorise, log.
 
 ## What's next
 
-- [What is RAG?](what-is-rag.md) -- Retrieval-augmented generation concepts
-- [Creating an MCP Server](/docs/genai/develop/mcp/creating-mcp-server) -- Build your own MCP server
-- [Building AI Agents with MCP Servers](/docs/genai/develop/mcp/agents-with-mcp) -- Consume MCP tools in agents
+- [What are Tools?](what-are-tools.md) — How tools work in general; MCP is one way to deliver them.
+- [What is an AI Agent?](what-is-ai-agent.md) — The natural consumer of MCP servers.
+- [Exposing a Service as MCP](/docs/genai/develop/mcp/exposing-as-mcp) — Expose your integrations as MCP tools.
+- [Consuming MCP from an Agent](/docs/genai/develop/mcp/consuming-mcp-from-agent) — Use MCP tools from inside an agent.

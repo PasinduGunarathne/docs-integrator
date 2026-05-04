@@ -4,248 +4,36 @@ title: Setting Up WSO2 Integrator for AI
 
 # Setting Up WSO2 Integrator for AI
 
-Before building AI integrations, you need the WSO2 Integrator development environment set up with the correct AI dependencies. This page walks you through the installation, project setup, and configuration required to start building agents, RAG pipelines, and MCP servers.
+Before building AI integrations, make sure your development environment is ready and that you have credentials for WSO2 Integrator Copilot — the AI features (agents, RAG, MCP, natural functions) all rely on it for the default model provider.
 
 ## Prerequisites
 
-- [WSO2 Integrator VS Code extension installed](/docs/get-started/install)
-- An LLM provider API key (OpenAI, Anthropic, Google, or Azure)
-- Ballerina Swan Lake installed (bundled with WSO2 Integrator)
+- **WSO2 Integrator** installed — follow the [Install WSO2 Integrator](/docs/get-started/install) guide. The Ballerina runtime and the AI/MCP modules ship with the distribution, so no extra setup is required.
+- **WSO2 Integrator Copilot access** — Sign into WSO2 Integrator Copilot using the following steps.
 
-## Step 1: Create a new integration project
+## Sign in to WSO2 Integrator Copilot
 
-Open VS Code with the WSO2 Integrator extension and create a new project.
+1. In your WSO2 Integrator project view, click the **Open WSO2 Integrator Copilot** icon (the chat-bot icon) in the top-right corner of the editor toolbar.
 
-```bash
-bal new my_ai_project
-cd my_ai_project
-```
+   ![Open WSO2 Integrator Copilot icon](/img/genai/getting-started/01-open-copilot-icon.png)
 
-## Step 2: Add AI dependencies
+2. The Copilot welcome screen opens with the available sign-in options.
 
-Add the required AI packages to your `Ballerina.toml` file depending on your use case.
+   ![WSO2 Integrator Copilot welcome screen](/img/genai/getting-started/02-copilot-welcome.png)
 
-### For AI agents
+   - **Login using WSO2 Integration Platform** — recommended. Signs you in with your WSO2 account and provisions a ready-to-use default model provider, no third-party API key required.
+   - **Enter your Anthropic API key** — use your own Anthropic key to power Copilot and the default model provider.
+   - **Enter your AWS Bedrock credentials** — use your AWS Bedrock account.
+   - **Enter your Google Vertex AI credentials** — use your Google Vertex AI account.
 
-```toml
-# Ballerina.toml
-[package]
-org = "myorg"
-name = "my_ai_project"
-version = "0.1.0"
+3. Pick one option and complete the sign-in. Once authenticated, Copilot opens its chat view and the default model provider is configured for any AI integration you build.
 
-[build-options]
-observabilityIncluded = true
+   ![WSO2 Integrator Copilot signed in](/img/genai/getting-started/03-copilot-signed-in.png)
 
-[[dependency]]
-org = "ballerinax"
-name = "ai.agent"
-version = "0.8.0"
-```
-
-### For RAG applications
-
-```toml
-[[dependency]]
-org = "ballerinax"
-name = "ai.rag"
-version = "1.0.0"
-
-[[dependency]]
-org = "ballerinax"
-name = "openai.embeddings"
-version = "1.0.0"
-
-[[dependency]]
-org = "ballerinax"
-name = "chromadb"
-version = "0.5.0"
-```
-
-### For MCP servers
-
-```toml
-[[dependency]]
-org = "ballerinax"
-name = "mcp"
-version = "1.0.0"
-```
-
-## Step 3: Configure your LLM provider
-
-Create a `Config.toml` file in your project root with your LLM provider credentials.
-
-### OpenAI
-
-```toml
-# Config.toml
-openAiApiKey = "sk-your-api-key-here"
-```
-
-```ballerina
-import ballerinax/ai.provider.openai;
-
-configurable string openAiApiKey = ?;
-
-final openai:Client llmClient = check new ({
-    auth: {token: openAiApiKey},
-    model: "gpt-4o"
-});
-```
-
-### Anthropic
-
-```toml
-# Config.toml
-anthropicApiKey = "sk-ant-your-key-here"
-```
-
-```ballerina
-import ballerinax/ai.provider.anthropic;
-
-configurable string anthropicApiKey = ?;
-
-final anthropic:Client llmClient = check new ({
-    auth: {token: anthropicApiKey},
-    model: "claude-sonnet-4-20250514"
-});
-```
-
-### Google gemini
-
-```toml
-# Config.toml
-googleApiKey = "your-google-key-here"
-```
-
-```ballerina
-import ballerinax/ai.provider.google;
-
-configurable string googleApiKey = ?;
-
-final google:Client llmClient = check new ({
-    auth: {token: googleApiKey},
-    model: "gemini-2.0-flash"
-});
-```
-
-### Azure OpenAI
-
-```toml
-# Config.toml
-azureKey = "your-azure-key"
-azureEndpoint = "https://your-deployment.openai.azure.com"
-deploymentId = "gpt-4o"
-```
-
-```ballerina
-import ballerinax/ai.provider.azure;
-
-configurable string azureKey = ?;
-configurable string azureEndpoint = ?;
-configurable string deploymentId = ?;
-
-final azure:Client llmClient = check new ({
-    auth: {token: azureKey},
-    endpoint: azureEndpoint,
-    deploymentId: deploymentId,
-    apiVersion: "2024-06-01"
-});
-```
-
-### Ollama (Local / On-Premises)
-
-No API key required. Start Ollama locally and configure the endpoint.
-
-```toml
-# Config.toml
-ollamaEndpoint = "http://localhost:11434"
-ollamaModel = "llama3"
-```
-
-```ballerina
-import ballerinax/ai.provider.ollama;
-
-configurable string ollamaEndpoint = ?;
-configurable string ollamaModel = ?;
-
-final ollama:Client llmClient = check new ({
-    endpoint: ollamaEndpoint,
-    model: ollamaModel
-});
-```
-
-## Step 4: Verify the setup
-
-Create a simple test to confirm your setup works.
-
-```ballerina
-import ballerina/io;
-import ballerinax/ai.agent;
-
-configurable string openAiApiKey = ?;
-
-public function main() returns error? {
-    agent:ChatAgent testAgent = check new (
-        model: check new openai:Client({auth: {token: openAiApiKey}}),
-        systemPrompt: "You are a helpful assistant. Respond with 'Setup complete!' to any message."
-    );
-
-    string response = check testAgent.chat("Hello", "test-session");
-    io:println(response);
-}
-```
-
-Run the project:
-
-```bash
-bal run
-```
-
-If you see a response from the LLM, your setup is complete.
-
-## Environment-Based configuration
-
-Use separate `Config.toml` files for development and production environments.
-
-```toml
-# Config.toml (Development)
-llmProvider = "ollama"
-llmModel = "llama3"
-```
-
-```toml
-# Config.toml (Production)
-llmProvider = "openai"
-llmModel = "gpt-4o"
-llmApiKey = "sk-..."
-```
-
-```ballerina
-configurable string llmProvider = "openai";
-configurable string llmModel = "gpt-4o";
-configurable string llmApiKey = ?;
-
-function createLlmClient() returns agent:LlmModel|error {
-    match llmProvider {
-        "openai" => {
-            return check new openai:Client({auth: {token: llmApiKey}, model: llmModel});
-        }
-        "anthropic" => {
-            return check new anthropic:Client({auth: {token: llmApiKey}, model: llmModel});
-        }
-        "ollama" => {
-            return check new ollama:Client({endpoint: "http://localhost:11434", model: llmModel});
-        }
-        _ => {
-            return error(string `Unsupported LLM provider: ${llmProvider}`);
-        }
-    }
-}
-```
+By signing in, you agree to the WSO2 Integrator Copilot Terms of Use shown on the welcome screen.
 
 ## What's next
 
-- [Build a Smart Calculator Assistant](build-a-smart-calculator-assistant.md) -- Your first AI integration with tool calling
-- [Build a Sample Hotel Booking Agent](build-a-sample-hotel-booking-agent.md) -- A more complete agent with memory and multiple tools
-- [Key Concepts: What is an LLM?](/docs/genai/key-concepts/what-is-llm) -- Understand the foundational technology
+- [Build a Smart Calculator Assistant](smart-calculator.md) — Your first AI integration using tool calling.
+- [Build a Sample Hotel Booking Agent](hotel-booking-agent.md) — An agent with memory and multiple tools.
+- [Key Concepts: What is an LLM?](/docs/genai/key-concepts/what-is-llm) — Understand the foundational technology.

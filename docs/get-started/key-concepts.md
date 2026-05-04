@@ -56,9 +56,9 @@ Integrations where the listener connects to a remote file server (FTP, SFTP, FTP
 
 Pre-built modules for connecting to external systems—Salesforce, databases, Kafka, OpenAI, and 200+ more. Each connector handles authentication, serialization, and error handling. For more information, see [Connectors](/docs/connectors/overview).
 
-## Visual data mapper
+## Data mapper
 
-A visual data transformation tool in the WSO2 Integrator design view. Map fields between source and target schemas using the design interface, with AI-assisted suggestions. For more information, see [Visual data mapper](/docs/develop/transform/data-mapper).
+A visual data transformation tool in the WSO2 Integrator design view. Map fields between source and target schemas using the design interface, with AI-assisted suggestions. For more information, see [Data mapper](/docs/develop/integration-artifacts/supporting/data-mapper/data-mapper).
 
 ## Natural functions
 
