@@ -15,17 +15,13 @@ If you use an API key, configure it before running the integration, either in `C
 
 ## Architecture
 
-```mermaid
-sequenceDiagram
-    participant User
-    participant Agent as AI Chat Agent
-    participant LLM as LLM (OpenAI)
-
-    User->>Agent: Send message ("Hello")
-    Agent->>LLM: Instructions + prompt
-    LLM-->>Agent: Generated response
-    Agent-->>User: Chat reply
-```
+<ThemedImage
+    alt="AI Agent Architecture"
+    sources={{
+        light: useBaseUrl('/img/get-started/build-ai-agent/ai-agent-diagram-light.svg'),
+        dark: useBaseUrl('/img/get-started/build-ai-agent/ai-agent-diagram-dark.svg'),
+    }}
+/>
 
 ## Step 1: Create the project
 
