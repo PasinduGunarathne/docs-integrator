@@ -4,9 +4,14 @@ title: Configurations
 
 # Configurations
 
-Configuration artifacts externalize values that change between environments using Ballerina's `configurable` keyword. This separates environment-specific settings (URLs, credentials, feature flags) from your integration logic. At runtime, the integration resolves each variable from `Config.toml`, environment variables, or command-line arguments.
+**Configurable variables** are settings you declare in your integration and supply values separately at runtime. They keep two things out of your code:
 
-For the underlying configuration model, the full list of supported sources, and resolution priority, see [Configuration management](../../design-logic/configuration-management.md).
+- **Secrets** — credentials, API keys, and tokens you don't want in source control.
+- **Environment-specific settings** — URLs, ports, and feature flags that differ between development, staging, and production.
+
+Because the values live outside the code, the same integration runs unchanged in every environment.
+
+WSO2 Integrator's configuration support is built on Ballerina's config variable model. For the underlying model, advanced usage, and resolution priority, see [Configuration management](../../design-logic/configuration-management.md).
 
 ## Adding a configuration
 
@@ -22,19 +27,19 @@ For the underlying configuration model, the full list of supported sources, and 
 
    | Field | Description |
    |---|---|
-   | **Variable Name** | The identifier used to reference the variable in code (for example, `apiEndpoint`). Required. |
-   | **Variable Type** | The Ballerina type of the variable (for example, `string`, `int`, `boolean`, or a record type). Required. |
-   | **Default Value** | An optional default value. Leave empty to make the variable required — the integration fails to start unless a value is supplied through `Config.toml`, an environment variable, or a CLI argument. |
+   | **Variable Name** | The identifier used to reference the variable within your integration (for example, `apiEndpoint`). Required. |
+   | **Variable Type** | The type of the variable (for example, `string`, `int`, `boolean`, or a record type). Required. |
+   | **Default Value** | An optional default value. Leave empty to make the variable required. The integration fails to start unless you supply a value at runtime. |
    | **Documentation** | Optional Markdown description rendered as inline documentation. |
 
-4. Click **Save**. The variable is added to your project's configurable declarations.
+4. Click **Save**. The variable is written to a `config.bal` file at the project root and appears under **Configurations** in the sidebar.
 
 Declare configurable variables at the module level using the `configurable` keyword:
 
 ```ballerina
 // config.bal
 
-// Required configuration -- must be supplied at runtime
+// Required configuration
 configurable string apiEndpoint = ?;
 configurable string apiKey = ?;
 
@@ -58,22 +63,28 @@ configurable NotificationConfig notificationConfig = {
 };
 ```
 
-Variables initialized with `?` have no default and must be supplied at runtime; otherwise, the integration fails to start.
+The `?` placeholder marks a configurable variable as required. The integration fails to start unless you supply a value at runtime.
 
 ## Viewing configurations
 
-Click the configurations icon next to **Configurations** in the sidebar to open the **Configurable Variables** panel.
+Click the icon next to **Configurations** in the sidebar to open the **Configurable Variables** panel.
 
 ![Configurable Variables panel showing variables grouped by Integration and Imported libraries](/img/develop/integration-artifacts/supporting/configurations/step-3.png)
 
 The panel organizes variables into two groups:
 
-- **Integration** — variables declared in your integration project. Each entry shows the variable name, type, and default value.
-- **Imported libraries** — configurable variables exposed by libraries your integration depends on (for example, `ballerina/http` or `ballerina/log`).
+1. **Integration** — variables declared in your integration project. Each entry shows the variable name, type, and default value.
+2. **Imported libraries** — configurable variables exposed by libraries your integration uses (for example, the HTTP listener's `port`).
 
 Use the **Search Configurables** box to filter by name. Click a variable to edit or delete it.
 
+Configurable variables added through the visual designer are written to a `config.bal` file at the project root. Open the file directly to review them.
+
+Configurables exposed by imported libraries are declared in the libraries' own source. Refer to each library's API documentation to see which configurables it exposes.
+
 ## Providing values
+
+Use the **Config Editor** in the **Configurable Variables** panel to set values for your configurable variables. The editor writes them to the project's `Config.toml` file. To open the panel, see [Viewing configurations](#viewing-configurations).
 
 Place a `Config.toml` file at the project root (alongside `Ballerina.toml`) to supply values for configurable variables. The runtime reads it automatically at startup.
 
@@ -91,16 +102,16 @@ slackEnabled = true
 slackWebhookUrl = "https://hooks.slack.com/services/..."
 ```
 
+:::tip Learn more
 For the full list of supported types, alternative value sources (environment variables, CLI arguments, inline TOML), and resolution priority, see [Configuration management](../../design-logic/configuration-management.md). To target different environments, point `BAL_CONFIG_FILES` at a per-environment file — see [Per-environment configuration](../../design-logic/configuration-management.md#per-environment-configuration).
 
 ## Best practices
 
 | Practice | Description |
 |---|---|
-| **Dedicated file** | Keep configurable declarations in a dedicated `config.bal` file so all settings are easy to locate. |
-| **Mark required values explicitly** | Use `?` for values that must come from the environment (endpoints, credentials) so misconfiguration fails fast at startup. |
-| **Group related settings** | Use record types to group settings that belong to the same subsystem (for example, database, CRM, notifications). |
 | **Never commit secrets** | Keep secrets out of `Config.toml` files in version control. Supply them through environment variables or a gitignored secrets file. See [Secrets and encryption](../../../deploy-operate/secure/secrets-encryption.md). |
+| **Mark required values explicitly** | For configurations that must come from the environment (such as endpoints and credentials), leave **Default Value** empty in the Visual Designer and use the `?` placeholder in code so the value is required and misconfiguration fails fast at startup. |
+| **Group related settings** | Use record types to group settings that belong to the same subsystem (for example, database configuration or CRM settings). |
 | **Document defaults** | Use the **Documentation** field (or code comments) to explain the purpose and valid range of each setting. |
 
 ## What's next
