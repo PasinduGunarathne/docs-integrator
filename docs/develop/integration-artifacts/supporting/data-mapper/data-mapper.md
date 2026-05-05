@@ -4,7 +4,7 @@ title: Data mapper
 
 # Data mapper
 
-The data mapper transforms data between different record types using a visual canvas. Map fields one-to-one, write inline expressions, iterate over arrays, aggregate values, and reuse common mappings as submappings, all without leaving the integration flow.
+The data mapper transforms data between different record types using a visual canvas. Map fields, write inline expressions, iterate over arrays, aggregate values, and reuse common mappings as submappings, all without leaving the integration flow.
 
 :::info Prerequisites
 - WSO2 Integrator installed ([Install guide](../../../../get-started/install.md))
