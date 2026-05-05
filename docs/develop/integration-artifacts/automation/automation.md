@@ -8,20 +8,20 @@ Automations run without an external request. Use them for scheduled data sync, b
 
 ## Creating an automation
 
-In the WSO2 Integrator sidebar, click **+** next to **Automations**. The automation creation form opens.
+In the WSO2 Integrator sidebar, select **+** next to **Automations**. The automation creation form opens.
 
 Fill in the following fields:
 
-- **Name** — enter a name for the automation. This is used as the function name in the generated code.
-- **Schedule** — choose between a **Scheduled** (runs on a recurring interval) or **Manual** (triggered on demand) execution type.
+- **Name**: enter a name for the automation. This name is used as the function name in the generated code.
+- **Schedule**: choose between a **Scheduled** (runs on a recurring interval) or **Manual** (triggered on demand) execution type.
 
-Click **Create** to generate the automation.
+Select **Create** to generate the automation.
 
 ## Designing the automation
 
 After creation, WSO2 Integrator opens the automation in the flow designer. Use the design view to build your automation logic by adding actions, connections, and control flow.
 
-To update the schedule or change the execution type after creation, click **Configure** in the design view toolbar. This reopens the configuration panel where you can edit the automation settings.
+To update the schedule or change the execution type after creation, select **Configure** in the design view toolbar. This action reopens the configuration panel where you can edit the automation settings.
 
 ## Generated code
 

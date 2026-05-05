@@ -1,10 +1,10 @@
 ---
-title: Build an Automation
+title: Build an automation
 ---
 
-# Build an Automation
+# Build an automation
 
-**Time:** Under 10 minutes | **What you'll build:** An automation that can run on demand or configured for periodic invocation from external systems.
+**Time:** Under 10 minutes | **What you'll build:** An automation that can run on demand or be configured for periodic invocation from external systems.
 
 Automations are ideal for data synchronization, report generation, and routine maintenance jobs.
 
@@ -87,14 +87,14 @@ Automations are ideal for data synchronization, report generation, and routine m
 
 Periodic invocation is configured in an external system once the automation is deployed. Available options include:
 
-- **Cron job** — schedule the automation from a `cron` entry on a Unix or Linux host.
-- **Kubernetes** — define a `CronJob` resource to run the automation on a recurring schedule.
-- **VM** — use a host scheduler such as Windows Task Scheduler or `systemd` timers.
-- **WSO2 Cloud** — configure the schedule in WSO2 Cloud when the integration is pushed to the cloud.
+- **Cron job**: schedule the automation from a `cron` entry on a Unix or Linux host.
+- **Kubernetes**: define a `CronJob` resource to run the automation on a recurring schedule.
+- **VM**: use a host scheduler such as Windows Task Scheduler or `systemd` timers.
+- **WSO2 Integration Platform**: configure the schedule in the WSO2 Integration Platform when the integration is pushed to the cloud.
 
 ## What's next
 
-- [AI agent](build-ai-agent.md) -- Build an intelligent agent
-- [Integration as API](build-api-integration.md) -- Build an HTTP service
-- [Event-driven integration](build-event-driven-integration.md) -- React to messages from brokers
-- [File-driven integration](build-file-driven-integration.md) -- Process files from FTP or local directories
+- [AI agent](build-ai-agent.md) — Build an intelligent agent
+- [Integration as API](build-api-integration.md) — Build an HTTP service
+- [Event-driven integration](build-event-driven-integration.md) — React to messages from brokers
+- [File-driven integration](build-file-driven-integration.md) — Process files from FTP or local directories
