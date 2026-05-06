@@ -6,11 +6,14 @@ title: Migrate from MuleSoft
 
 ## Overview
 
-The MuleSoft migration tool converts MuleSoft Anypoint flows (XML configurations) to Ballerina code. It handles HTTP listeners, request connectors, DataWeave transformations, routers, and error handling patterns.
+The MuleSoft migration tool converts MuleSoft Anypoint flows (XML configurations) to Ballerina code. It handles HTTP listeners, request connectors, DataWeave transformations, routers, error handling patterns and more.
 
 ## Run the MuleSoft migration tool
 
 The migration wizard guides you through a 5-step process to convert your MuleSoft project(s) into a WSO2 Integrator project.
+
+### Prerequisite
+- Ensure WSO2 Integrator is installed and available on your system.
 
 ### Step 1: Configure source
 
@@ -101,20 +104,59 @@ While the agent is running:
 - Click **Pause** to pause the AI enhancement. Click **Resume** to continue.
 - Click **Done** to exit the wizard, or **Open Project** to open the project without waiting for the agent to finish.
 
-   ![Ehancing with ai-agent](/img/develop/tools/migration-tools/mule-ai-enhancement.png)
+   ![Enhancing with ai-agent](/img/develop/tools/migration-tools/mule-ai-enhancement.png)
 
 When the AI enhancement completes, the status shows **AI Enhancement completed**. Click **Open Project** to open the migrated project or **Done** to exit.
 
-```bash
-# Migrate a MuleSoft project
-bal migrate mule -i /path/to/mule-project/ -o migrated/
+You can migrate MuleSoft projects using the Ballerina CLI tool. Follow these steps:
 
-# Specify the MuleSoft version
-bal migrate mule -i /path/to/mule-project/ --version 4 -o migrated/
+### CLI prerequisite
+- Ensure Ballerina is installed, and the `bal` command is available in your environment.
 
-# Generate report only
-bal migrate mule -i /path/to/mule-project/ --report-only
-```
+### Steps
+1. **Install the migration tool:**
+   Install the migration tool by running:
+   ```bash
+   bal tool pull migrate-mule
+   ```
+2. **Run the migration command:**
+   Use the following command syntax to migrate your projects:
+   ```bash
+   bal migrate-mule <source-project-directory-or-file> [-o|--out <output-directory>] [-f|--force-version <3|4>] [-k|--keep-structure] [-v|--verbose] [-d|--dry-run] [-m|--multi-root]
+   ```
+
+#### Key parameters
+- `<source-project-directory-or-file>`: Path to the MuleSoft project directory or a standalone Mule XML file.
+- `-o, --out <output-directory>`: (Optional) Output directory for the generated Ballerina package.
+- `-f, --force-version <3|4>`: (Optional) Force Mule version if auto-detection fails.
+- `-k, --keep-structure`: (Optional) Preserve original Mule project structure.
+- `-v, --verbose`: (Optional) Enable verbose output.
+- `-d, --dry-run`: (Optional) Analyze and generate a migration report without creating Ballerina code.
+- `-m, --multi-root`: (Optional) Treat each child directory as a separate Mule project and convert all.
+
+### Examples
+
+Here are some example commands you can use:
+
+- Migrate a MuleSoft project to a specific output directory:
+  ```bash
+  bal migrate-mule /path/to/mule-project -o /path/to/output-dir
+  ```
+
+- Migrate all MuleSoft projects in a directory (multi-root mode):
+  ```bash
+  bal migrate-mule /path/to/projects-directory -o /path/to/output-dir -m
+  ```
+
+- Analyze all MuleSoft projects without generating code (dry-run):
+  ```bash
+  bal migrate-mule /path/to/projects-directory -o /path/to/output-dir -m -d
+  ```
+
+For more CLI options and usage, see the [official migration tool documentation](https://central.ballerina.io/wso2/tool_migrate_mule/latest).
+
+---
+**Note:** The migration AI enhancement feature is currently only available in the wizard (UI) workflow. It is not available when using the CLI tool.
 
 ## Component mapping
 

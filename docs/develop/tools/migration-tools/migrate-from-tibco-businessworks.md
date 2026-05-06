@@ -6,11 +6,14 @@ title: Migrate from TIBCO BusinessWorks
 
 ## Overview
 
-The TIBCO migration tool converts TIBCO BusinessWorks process definitions to Ballerina code. It handles process flows, activities, transitions, shared resources, and error handling configurations.
+The TIBCO migration tool converts TIBCO BusinessWorks process definitions to Ballerina code. It handles process flows, activities, transitions, shared resources, error handling configurations and more.
 
 ## Run the TIBCO migration tool
 
 The migration wizard guides you through a 5-step process to convert your TIBCO BusinessWorks project(s) into a WSO2 Integrator project.
+
+### Prerequisite
+- Ensure WSO2 Integrator is installed and available on your system.
 
 ### Step 1: Configure source
 
@@ -43,7 +46,6 @@ When the dry run completes, the wizard displays a summary of the migration cover
 Click **View Full Report** to open the full HTML report. The report includes:
 
 - **Migration Coverage Overview** — Overall coverage percentage with a breakdown of total, migratable, and non-migratable code lines.
-- **Breakdown Components** — Separate coverage for Mule Elements and DataWeave expressions.
 - **Manual Work Estimation** — Estimated effort (best, average, and worst case) for completing non-migratable items.
 - **Currently Unsupported Elements** — List of elements that could not be automatically migrated.
 - **Element Blocks that Require Manual Conversion** — Specific code blocks that need manual implementation.
@@ -74,7 +76,7 @@ After the migration completes successfully, the **AI Enhancement (Recommended)**
 - **Enhance with AI** — AI automatically resolves unmapped elements, fixes build errors, and improves migration quality.
 - **Skip for Now – Enhance Later** — Keep the project as-is. You can trigger AI enhancement later from the WSO2 Integrator Copilot.
 
-Click **Start AI Enhancement** to proceed to Step 5, or if you chose to skip, click **Open Workspace** to open the migrated workspace or **Done** to exit.
+Click **Start AI Enhancement** to proceed to Step 5, or if you chose to skip, click **Open Project** to open the migrated project or **Done** to exit.
 
    ![Rule-based migration step](/img/develop/tools/migration-tools/rule-based-migration.png)
 
@@ -97,22 +99,62 @@ After signing in, the AI agent runs automatically and streams its progress. The 
 While the agent is running:
 
 - Click **Pause** to pause the AI enhancement. Click **Resume** to continue.
-- Click **Done** to exit the wizard, or **Open Workspace** to open the workspace without waiting for the agent to finish.
+- Click **Done** to exit the wizard, or **Open Project** to open the project without waiting for the agent to finish.
 
-   ![Ehancing with ai-agent](/img/develop/tools/migration-tools/tibco-ai-enhancement.png)
+   ![Enhancing with ai-agent](/img/develop/tools/migration-tools/tibco-ai-enhancement.png)
 
-When the AI enhancement completes, the status shows **AI Enhancement completed**. Click **Open Workspace** to open the migrated workspace or **Done** to exit.
+When the AI enhancement completes, the status shows **AI Enhancement completed**. Click **Open Project** to open the migrated project or **Done** to exit.
 
-```bash
-# Migrate a TIBCO BusinessWorks project
-bal migrate tibco -i /path/to/tibco-project/ -o migrated/
+You can migrate TIBCO BusinessWorks projects using the Ballerina CLI tool. Follow these steps:
 
-# Specify the TIBCO BusinessWorks version
-bal migrate tibco -i /path/to/tibco-project/ --version 6 -o migrated/
+### CLI prerequisite
+- Ensure Ballerina is installed, and the `bal` command is available in your environment.
 
-# Generate report only
-bal migrate tibco -i /path/to/tibco-project/ --report-only
-```
+### Steps
+1. **Install the migration tool:**
+    Install the migration tool by running:
+    ```bash
+    bal tool pull migrate-tibco
+    ```
+2. **Run the migration command:**
+    Use the following command syntax to migrate your projects:
+    ```bash
+    bal migrate-tibco <source-project-directory-or-file> [-o|--out <output-directory>] [-k|--keep-structure] [-v|--verbose] [-d|--dry-run] [-m|--multi-root] [-g|--org-name <organization-name>] [-p|--project-name <project-name>]
+    ```
+
+#### Key parameters
+- `<source-project-directory-or-file>`: Path to the TIBCO BusinessWorks project directory or a standalone process file.
+- `-o, --out <output-directory>`: (Optional) Output directory for the generated Ballerina package.
+- `-k, --keep-structure`: (Optional) Preserve original process structure.
+- `-v, --verbose`: (Optional) Enable verbose output.
+- `-d, --dry-run`: (Optional) Analyze and generate a migration report without creating Ballerina code.
+- `-m, --multi-root`: (Optional) Treat each child directory as a separate TIBCO project and convert all.
+- `-g, --org-name <organization-name>`: (Optional) Organization name for the generated Ballerina package.
+- `-p, --project-name <project-name>`: (Optional) Project name for the generated Ballerina package.
+
+### Examples
+
+Here are some example commands you can use:
+
+- Migrate a TIBCO BusinessWorks project to a specific output directory:
+    ```bash
+    bal migrate-tibco /path/to/tibco-project -o /path/to/output-dir
+    ```
+
+- Migrate all TIBCO BusinessWorks projects in a directory (multi-root mode):
+    ```bash
+    bal migrate-tibco /path/to/projects-directory -o /path/to/output-dir -m
+    ```
+
+- Analyze all TIBCO BusinessWorks projects without generating code (dry-run):
+    ```bash
+    bal migrate-tibco /path/to/projects-directory -o /path/to/output-dir -m -d
+    ```
+
+For more CLI options and usage, see the [official migration tool documentation](https://central.ballerina.io/wso2/tool_migrate_tibco/latest).
+
+---
+**Note:** The migration AI enhancement feature is currently only available in the wizard (UI) workflow. It is not available when using the CLI tool.
 
 ## Component mapping
 
