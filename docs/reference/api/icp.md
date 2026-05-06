@@ -1,349 +1,258 @@
 ---
-title: ICP API
+title: ICP Runtime API
 ---
 
-# Integration Control Plane (ICP) API
+# ICP Runtime API
 
-The Integration Control Plane (ICP) provides a REST API for monitoring, observing, and managing running integrations deployed in WSO2 Integrator environments. The ICP dashboard uses this API internally, but it is also available for programmatic access, custom dashboards, and CI/CD pipeline integration.
+The Integration Control Plane (ICP) exposes a dedicated REST service for runtime agents (Micro Integrator and Ballerina Integrator) to register themselves and continuously report their state. The ICP uses the data from this service to drive reconciliation — pushing control commands back to runtimes to align their state with the desired configuration.
+
+This API is consumed by runtime agents, not by end users. It is separate from the [Management API](management.md) (GraphQL) and the [Authentication API](auth-api.md) (user-facing REST).
 
 ## Base URL
 
-```
-https://<icp-host>:<port>/api/v1
+```bash
+https://<icp-host>:9445/icp
 ```
 
-The default ICP port is `9164`. The base path is configurable in the deployment settings.
+The default runtime listener port is `9445`.
+
+---
 
 ## Authentication
 
-All ICP API requests require authentication. The API supports Basic Authentication and OAuth 2.0 bearer tokens.
-
-### Basic Authentication
+All requests must include a signed JWT in the `Authorization` header:
 
 ```bash
-curl -k -u admin:admin https://localhost:9164/api/v1/integrations
+Authorization: Bearer <runtime-jwt>
 ```
 
-### Bearer Token
+The token is validated using **kid-based lookup**:
 
-Obtain a token from the token endpoint, then include it in the `Authorization` header:
+1. The JWT header must contain a `kid` claim identifying the org secret key.
+2. The ICP looks up the HMAC secret associated with that `kid`.
+3. The JWT is validated against that secret with:
+   - **Issuer**: `icp-runtime-jwt-issuer`
+   - **Audience**: `icp-server`
+   - **Required scope claim**: `runtime_agent`
+   - **Clock skew tolerance**: 10 seconds
 
-```bash
-# Obtain token
-curl -k -X POST https://localhost:9164/api/v1/auth/token \
-  -H "Content-Type: application/json" \
-  -d '{"username": "admin", "password": "admin"}'
+Tokens are provisioned when a runtime key is created in the ICP (via the Management API). A key can be unbound (not yet associated with a project/component) or bound.
 
-# Use token
-curl -k https://localhost:9164/api/v1/integrations \
-  -H "Authorization: Bearer <access_token>"
-```
+---
 
-**Response:**
+## Endpoints
+
+### `POST /icp/heartbeat`
+
+Submits a full heartbeat from a runtime. This is the primary registration and state-reporting mechanism. On the first heartbeat from an unbound key, the ICP auto-provisions the project and component and binds the key to them.
+
+After processing the heartbeat, the ICP runs reconciliation and returns any pending control commands for the runtime to execute.
+
+**Request body:**
 
 ```json
 {
-  "accessToken": "eyJhbGciOi...",
-  "tokenType": "Bearer",
-  "expiresIn": 3600
-}
-```
-
-## Integration Discovery Endpoints
-
-### List All Integrations
-
-Returns all deployed integrations and their status.
-
-```
-GET /api/v1/integrations
-```
-
-**Response:**
-
-```json
-{
-  "count": 3,
-  "list": [
-    {
-      "name": "OrderService",
-      "type": "service",
-      "status": "active",
-      "version": "1.0.0",
-      "deployedAt": "2025-10-15T08:30:00Z",
-      "listeners": ["http:9090"]
-    },
-    {
-      "name": "InventorySync",
-      "type": "automation",
-      "status": "active",
-      "version": "2.1.0",
-      "deployedAt": "2025-10-14T12:00:00Z",
-      "listeners": []
-    }
-  ]
-}
-```
-
-### Get Integration Details
-
-Returns detailed information about a specific integration.
-
-```
-GET /api/v1/integrations/{name}
-```
-
-**Parameters:**
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `name` | path | The integration name |
-
-**Response:**
-
-```json
-{
-  "name": "OrderService",
-  "type": "service",
-  "status": "active",
+  "heartbeatVersion": "v1.0",
+  "runtimeId": "runtime-abc123",
+  "runtimeType": "wso2-mi",
+  "status": "RUNNING",
+  "environment": "dev-env",
+  "project": "MyProject",
+  "component": "OrderService",
   "version": "1.0.0",
-  "package": "wso2/order_service",
-  "deployedAt": "2025-10-15T08:30:00Z",
-  "listeners": [
+  "runtimeHostname": "mi-host.example.com",
+  "runtimePort": "9164",
+  "nodeInfo": {
+    "platformName": "wso2-mi",
+    "platformVersion": "4.3.0",
+    "osName": "Linux",
+    "osVersion": "5.15.0",
+    "osArch": "amd64",
+    "javaVersion": "17.0.9",
+    "javaVendor": "Eclipse Adoptium",
+    "totalMemory": 2147483648,
+    "freeMemory": 1073741824,
+    "maxMemory": 2147483648,
+    "usedMemory": 1073741824
+  },
+  "artifacts": {
+    "listeners": [],
+    "services": [],
+    "apis": [{ "name": "OrderAPI", "state": "enabled" }],
+    "proxyServices": [],
+    "sequences": [],
+    "tasks": [],
+    "templates": [],
+    "messageStores": [],
+    "messageProcessors": [],
+    "localEntries": [],
+    "dataServices": [],
+    "carbonApps": [],
+    "dataSources": [],
+    "connectors": [],
+    "registryResources": [],
+    "endpoints": [],
+    "inboundEndpoints": []
+  },
+  "runtimeHash": "sha256-abc123...",
+  "timestamp": "2025-05-01T10:00:00Z"
+}
+```
+
+**Request fields:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `heartbeatVersion` | string | No | Heartbeat format version. Default: `"v1.0"` |
+| `runtimeId` | string | Yes | Unique identifier for this runtime instance |
+| `runtimeType` | string | Yes | Runtime type identifier (e.g., `"wso2-mi"`) |
+| `status` | string | Yes | Current runtime status (`"RUNNING"`, `"STOPPED"`, etc.) |
+| `environment` | string | Yes | Environment handler or UUID the runtime belongs to |
+| `project` | string | Yes | Project name or UUID |
+| `component` | string | Yes | Component/integration name or UUID |
+| `version` | string | No | Runtime version |
+| `runtimeHostname` | string | No | Hostname of the MI management API |
+| `runtimePort` | string | No | Port of the MI management API |
+| `nodeInfo` | object | Yes | Host system information (see below) |
+| `artifacts` | object | Yes | All deployed artifacts grouped by type (see below) |
+| `runtimeHash` | string | Yes | Hash of the full runtime state, used for delta comparison |
+| `timestamp` | string | Yes | ISO 8601 UTC timestamp of the heartbeat |
+| `logLevels` | object | No | Current log levels as a `{ "loggerName": "LEVEL" }` map (Ballerina runtimes) |
+
+**`nodeInfo` fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `platformName` | string | Platform identifier (default: `"wso2-mi"`) |
+| `platformVersion` | string | Platform/product version |
+| `platformHome` | string | Installation directory |
+| `ballerinaHome` | string | Ballerina home directory (BI runtimes) |
+| `osName` | string | Operating system name |
+| `osVersion` | string | OS version |
+| `osArch` | string | CPU architecture |
+| `javaVersion` | string | JVM version |
+| `javaVendor` | string | JVM vendor |
+| `carbonHome` | string | Carbon home directory (MI runtimes) |
+| `totalMemory` | integer | Total JVM heap memory in bytes |
+| `freeMemory` | integer | Free JVM heap memory in bytes |
+| `maxMemory` | integer | Maximum JVM heap memory in bytes |
+| `usedMemory` | integer | Used JVM heap memory in bytes |
+
+**`artifacts` fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `listeners` | array | Active HTTP/HTTPS listeners (BI) |
+| `services` | array | Deployed Ballerina services (BI) |
+| `main` | object | Main Ballerina package info: `packageOrg`, `packageName`, `packageVersion` (BI) |
+| `apis` | array | REST APIs (MI) |
+| `proxyServices` | array | Proxy services (MI) |
+| `sequences` | array | Sequences (MI) |
+| `tasks` | array | Scheduled tasks (MI) |
+| `templates` | array | Templates (MI) |
+| `messageStores` | array | Message stores (MI) |
+| `messageProcessors` | array | Message processors (MI) |
+| `localEntries` | array | Local entries (MI) |
+| `dataServices` | array | Data services (MI) |
+| `carbonApps` | array | Carbon applications (MI) |
+| `dataSources` | array | Data sources (MI) |
+| `connectors` | array | Connectors (MI) |
+| `registryResources` | array | Registry resources (MI) |
+| `endpoints` | array | Named endpoints (MI) |
+| `inboundEndpoints` | array | Inbound endpoints (MI) |
+
+Each artifact entry includes at minimum a `name` field and a `state` field (`"enabled"` or `"disabled"`).
+
+**Response `200 OK`:**
+
+```json
+{
+  "acknowledged": true,
+  "fullHeartbeatRequired": false,
+  "commands": [
     {
-      "protocol": "http",
-      "port": 9090,
-      "host": "0.0.0.0"
+      "commandId": "cmd-001",
+      "runtimeId": "runtime-abc123",
+      "targetArtifact": { "name": "OrderAPI" },
+      "action": "STOP",
+      "issuedAt": "2025-05-01T10:01:00Z",
+      "status": "PENDING"
     }
   ],
-  "resources": [
-    {
-      "method": "GET",
-      "path": "/orders",
-      "returnType": "Order[]|error"
-    },
-    {
-      "method": "POST",
-      "path": "/orders",
-      "returnType": "Order|error"
-    }
-  ]
+  "errors": []
 }
 ```
 
-## Artifact Discovery Endpoints
+| Field | Type | Description |
+|-------|------|-------------|
+| `acknowledged` | boolean | `true` if the heartbeat was accepted and processed |
+| `fullHeartbeatRequired` | boolean | If `true`, the runtime must send a full heartbeat on the next cycle |
+| `commands` | array | Control commands to execute (may be empty) |
+| `errors` | array | Error messages if processing partially failed |
 
-### List Services
+**`commands` entry fields:**
 
-Returns all deployed Ballerina services.
+| Field | Type | Description |
+|-------|------|-------------|
+| `commandId` | string | Unique command identifier |
+| `runtimeId` | string | Target runtime |
+| `targetArtifact.name` | string | Name of the artifact to act on |
+| `action` | string | `START`, `STOP`, or `SET_LOGGER_LEVEL` |
+| `issuedAt` | string | ISO 8601 UTC timestamp |
+| `status` | string | `PENDING`, `SENT`, `ACKNOWLEDGED`, `FAILED`, or `COMPLETED` |
+| `payload` | string | JSON-encoded additional data for the action (e.g., log level settings) |
 
-```
-GET /api/v1/services
-```
+**Error responses:**
 
-**Response:**
+| Status | Reason |
+|--------|--------|
+| `400 Bad Request` | Invalid heartbeat payload, unknown `kid`, or invalid project/component name |
+| `401 Unauthorized` | Missing or invalid JWT, or insufficient scope (requires `runtime_agent`) |
+| `409 Conflict` | Environment or runtime type mismatch between the JWT key binding and the heartbeat |
+
+---
+
+### `POST /icp/deltaHeartbeat`
+
+Submits a lightweight delta heartbeat containing only the runtime ID and a hash of its current state. If the hash matches the ICP's last known state, no full resync is needed, reducing overhead for stable runtimes.
+
+If the key is unbound (not yet associated with a project/component), the ICP cannot resolve the context from a delta heartbeat alone and instructs the runtime to send a full heartbeat.
+
+**Request body:**
 
 ```json
 {
-  "count": 2,
-  "list": [
-    {
-      "name": "OrderService",
-      "basePath": "/orders",
-      "listeners": ["http:9090"],
-      "resourceCount": 4
-    }
-  ]
+  "heartbeatVersion": "v1.0",
+  "runtimeId": "runtime-abc123",
+  "runtimeHash": "sha256-abc123...",
+  "timestamp": "2025-05-01T10:05:00Z"
 }
 ```
 
-### List Listeners
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `heartbeatVersion` | string | No | Heartbeat format version. Default: `"v1.0"` |
+| `runtimeId` | string | Yes | Unique identifier for this runtime instance |
+| `runtimeHash` | string | Yes | Hash of the full runtime state |
+| `timestamp` | string | Yes | ISO 8601 UTC timestamp |
 
-Returns all active listeners across all integrations.
+**Response `200 OK`:**
 
-```
-GET /api/v1/listeners
-```
-
-**Response:**
+Same structure as the full heartbeat response. If `fullHeartbeatRequired` is `true`, the runtime must send a `POST /icp/heartbeat` on the next cycle.
 
 ```json
 {
-  "count": 2,
-  "list": [
-    {
-      "protocol": "http",
-      "port": 9090,
-      "host": "0.0.0.0",
-      "attachedServices": ["OrderService", "HealthCheck"]
-    }
-  ]
+  "acknowledged": true,
+  "fullHeartbeatRequired": false,
+  "commands": [],
+  "errors": []
 }
 ```
 
-### List Connectors
+**Error responses:**
 
-Returns all external connectors (clients) in use by deployed integrations.
-
-```
-GET /api/v1/connectors
-```
-
-**Response:**
-
-```json
-{
-  "count": 3,
-  "list": [
-    {
-      "name": "mysqlClient",
-      "type": "ballerinax/mysql:Client",
-      "integration": "OrderService",
-      "status": "connected"
-    },
-    {
-      "name": "httpClient",
-      "type": "ballerina/http:Client",
-      "integration": "OrderService",
-      "targetUrl": "https://inventory.example.com"
-    }
-  ]
-}
-```
-
-## Monitoring Endpoints
-
-### Health Check
-
-Returns the health status of the ICP server and connected runtimes.
-
-```
-GET /api/v1/health
-```
-
-**Response:**
-
-```json
-{
-  "status": "healthy",
-  "uptime": "72h15m30s",
-  "connectedRuntimes": 3,
-  "timestamp": "2025-10-15T10:30:00Z"
-}
-```
-
-### Get Metrics
-
-Returns runtime metrics for a specific integration or the entire deployment.
-
-```
-GET /api/v1/metrics
-GET /api/v1/metrics/{integrationName}
-```
-
-**Query Parameters:**
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `period` | string | `"1h"` | Time window for metrics (`5m`, `1h`, `24h`, `7d`) |
-| `type` | string | `"all"` | Metric type filter (`requests`, `errors`, `latency`, `all`) |
-
-**Response:**
-
-```json
-{
-  "integrationName": "OrderService",
-  "period": "1h",
-  "metrics": {
-    "totalRequests": 15230,
-    "errorCount": 12,
-    "errorRate": 0.079,
-    "avgLatencyMs": 45.2,
-    "p95LatencyMs": 120.5,
-    "p99LatencyMs": 250.0,
-    "activeConnections": 8
-  }
-}
-```
-
-### Get Logs
-
-Retrieves log entries for an integration.
-
-```
-GET /api/v1/logs/{integrationName}
-```
-
-**Query Parameters:**
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `level` | string | `"INFO"` | Minimum log level (`DEBUG`, `INFO`, `WARN`, `ERROR`) |
-| `limit` | int | `100` | Maximum number of log entries |
-| `since` | string | — | ISO 8601 timestamp to fetch logs from |
-
-**Response:**
-
-```json
-{
-  "integrationName": "OrderService",
-  "entries": [
-    {
-      "timestamp": "2025-10-15T10:29:55Z",
-      "level": "ERROR",
-      "message": "Failed to connect to database",
-      "module": "wso2/order_service:db",
-      "error": "Connection refused"
-    }
-  ]
-}
-```
-
-## Runtime Management Endpoints
-
-### Activate/Deactivate an Integration
-
-```
-PUT /api/v1/integrations/{name}/status
-```
-
-**Request Body:**
-
-```json
-{
-  "status": "inactive"
-}
-```
-
-**Response:**
-
-```json
-{
-  "name": "OrderService",
-  "previousStatus": "active",
-  "currentStatus": "inactive",
-  "updatedAt": "2025-10-15T10:35:00Z"
-}
-```
-
-## Error Responses
-
-All error responses follow a consistent format:
-
-```json
-{
-  "error": {
-    "code": "INTEGRATION_NOT_FOUND",
-    "message": "Integration 'UnknownService' not found",
-    "status": 404
-  }
-}
-```
-
-| Status Code | Description |
-|-------------|-------------|
-| `400` | Bad request -- invalid parameters |
-| `401` | Unauthorized -- missing or invalid credentials |
-| `403` | Forbidden -- insufficient permissions |
-| `404` | Not found -- the specified resource does not exist |
-| `500` | Internal server error |
+| Status | Reason |
+|--------|--------|
+| `400 Bad Request` | Unknown `kid` |
+| `401 Unauthorized` | Missing or invalid JWT |
+| `409 Conflict` | Runtime type mismatch |
