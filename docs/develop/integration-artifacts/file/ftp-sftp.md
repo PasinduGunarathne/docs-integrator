@@ -46,7 +46,7 @@ Use this flow for plain (unencrypted) FTP. Default port: `21`. Supports anonymou
 
    ![Service Designer showing the FTP service canvas](/img/develop/integration-artifacts/file/ftp-sftp/step-service-designer.png)
 
-8. Click **+ Add File Handler** to define how incoming files are processed.
+8. Click [**+ Add File Handler**](#adding-a-file-handler) to define how incoming files are processed.
 
 **FTP with anonymous access:**
 
@@ -139,7 +139,7 @@ part of the configuration.
 
 6. Enter the **Monitoring Path** and click **Create**.
 
-7. Click **+ Add File Handler** in the Service Designer to define how incoming files are processed.
+7. Click [**+ Add File Handler**](#adding-a-file-handler) in the Service Designer to define how incoming files are processed.
 
 **FTPS with username and password and a truststore:**
 
@@ -214,7 +214,7 @@ Use this flow for SFTP (FTP over SSH). Default port: `22`. The form collects the
 
 6. Enter the **Username** that matches the configured private key and the **Monitoring Path**.
 
-7. Click **Create**. Then click **+ Add File Handler** in the Service Designer.
+7. Click **Create**. Then click [**+ Add File Handler**](#adding-a-file-handler) in the Service Designer.
 
 **SFTP with username and password:**
 
@@ -565,13 +565,13 @@ Every FTP/SFTP integration you see in the project tree is built from two pieces:
 | **Listener** | The connection to the remote server. Holds the protocol, host, port, credentials, and how often to poll. Each listener represents one server. |
 | **Service** | The processing logic for a single directory on that server. Holds the monitoring path, file filters, and the file handlers that run when a file arrives. |
 
-You can reuse either side of the pair. The same listener can feed several services (for example, different directories on one server that need different handling), and a single service can draw from several listeners (for example, a primary and a backup server feeding the same pipeline). Three topologies cover the common cases:
+You can reuse either side of the pair. The same listener can feed several services (for example, different directories on one server that need different handling), and a single service can draw from several listeners (for example, a primary and a backup server feeding the same integration). Three topologies cover the common cases:
 
 | Topology | When to use |
 |---|---|
-| **One listener ↔ one service** | The default. One remote server, one processing pipeline for one directory. |
+| **One listener ↔ one service** | The default. One remote server, one integration handling one directory. |
 | **One listener ↔ many services** | One remote server with multiple directories that need different handlers (for example, `/orders` and `/invoices` on the same FTP server). Create one listener and attach several services to it. |
-| **One service ↔ many listeners** | One processing pipeline that drains two (or more) remote servers — typical for HA/failover setups or for consolidating identical file feeds from multiple partners. |
+| **One service ↔ many listeners** | One integration that drains two (or more) remote servers — typical for HA/failover setups or for consolidating identical file feeds from multiple partners. |
 
 ### One listener ↔ many services
 
@@ -609,7 +609,7 @@ service on ftpListener {
 
 A single **FTP Integration - `<path>`** entry lists both (or all) of its listeners under **Attached Listeners** in the **FTP Integration Configuration** panel:
 
-![Service Configuration panel showing two listeners attached to a single service](/img/develop/integration-artifacts/file/ftp-sftp/step-topology-multi-listener.png)
+![Service Configuration panel showing two listeners attached to a single service](/img/develop/integration-artifacts/file/ftp-sftp/step-attach-attached-listeners-list.png)
 
 Build this topology by opening the service's Configure panel and clicking **+ Attach Listener** — see [Attaching an additional listener to an existing service](#attaching-an-additional-listener-to-an-existing-service).
 
@@ -646,11 +646,11 @@ Once the integration has at least one listener, two flows wire up the topologies
 Use this flow to build the **one listener ↔ many services** topology. After the first FTP service is saved, the **Create FTP Integration** form defaults to **Use existing** when you open it again — every subsequent service attaches to an existing listener unless you explicitly switch to **Create new**.
 
 1. Click **+ Add Artifact** → **FTP / SFTP** under **File Integration** to open the **Create FTP Integration** form.
-2. When the integration already has at least one FTP listener, the **Select an existing FTP listener or create a new one** picker at the top of the form defaults to **Use existing** — sharing a listener is the encouraged flow for the second and subsequent services. Pick **Create new** instead only when you want a dedicated listener for this service.
+2. When the integration already has at least one FTP listener, the **Select an existing FTP listener or create a new one** picker at the top of the form defaults to **Use existing**. Sharing a listener is the encouraged flow for the second and subsequent services. (**Create new** should only be used when you want a dedicated listener for this service.)
 
    ![Create new vs Use existing radio selector, with Use existing selected by default](/img/develop/integration-artifacts/file/ftp-sftp/step-attach-use-existing-enabled.png)
 
-3. The **Listener Name** field is a dropdown prefilled with the first available listener. Pick a different one if needed. **Protocol**, **Host**, **Port Number**, and the authentication method are locked — they belong to the listener, not to this service — so you can see the settings the new service will inherit but cannot change them here.
+3. The **Listener Name** field is a dropdown prefilled with the first available listener. Pick a different one if needed. **Protocol**, **Host**, **Port Number**, and the authentication method are locked (they belong to the listener, not to this service) so you can see the settings the new service will inherit but cannot change them here.
 
    ![Use existing listener — listener fields locked, Monitoring Path editable](/img/develop/integration-artifacts/file/ftp-sftp/step-attach-use-existing-form.png)
 
@@ -791,9 +791,9 @@ The listener controls **how** to connect — protocol, host, authentication, pol
 | **Socket Config** | Socket read/write timeouts. See [`ftp:SocketConfig` reference](https://central.ballerina.io/ballerina/ftp/latest#SocketConfig). | — |
 | **Proxy** | Proxy configuration for SFTP connections (SFTP only). | — |
 | **File Transfer Mode** | `BINARY` or `ASCII`. Use `ASCII` only for text-only files on servers that require line-ending conversion. | `BINARY` |
-| **Sftp Compression** | SSH compression algorithms to negotiate with the server (SFTP only). | — |
-| **Sftp Ssh Known Hosts** | Path to an SSH `known_hosts` file (SFTP only). | — |
-| **Csv Fail Safe** | Fail-safe options for CSV content processing. Malformed records are skipped and written to a side file in the working directory. | — |
+| **SFTP Compression** | SSH compression algorithms to negotiate with the server (SFTP only). | — |
+| **SFTP SSH Known Hosts** | Path to an SSH `known_hosts` file (SFTP only). | — |
+| **CSV Fail Safe** | Fail-safe options for CSV content processing. Malformed records are skipped and written to a side file in the working directory. | — |
 | **Retry Config** | Retry configuration for transient failures during polling or file retrieval. For the retry-with-backoff mechanics and field reference, see [`ftp:RetryConfig`](https://central.ballerina.io/ballerina/ftp/latest#RetryConfig); for the broader pattern, see the [Circuit breaker tutorial](../../../tutorials/patterns/circuit-breaker-retry.md). | — |
 | **Coordination** | Distributed coordination for multi-instance deployments. See [High availability](high-availability-and-coordination.md). | — |
 
